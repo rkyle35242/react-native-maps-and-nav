@@ -90,3 +90,317 @@ namespace facebook::react {
         setMethodArgConversionSelector(@"getCoordinateForPoint", 1, @"JS_NativeAirMapsModule_Point:");
   }
 } // namespace facebook::react
+
+@implementation NativeRNMapsNavModuleSpecBase
+- (void)emitOnLocationChanged:(NSDictionary *)value
+{
+  _eventEmitterCallback("onLocationChanged", value);
+}
+- (void)emitOnArrival:(NSDictionary *)value
+{
+  _eventEmitterCallback("onArrival", value);
+}
+- (void)emitOnRemainingTimeOrDistanceChanged:(NSDictionary *)value
+{
+  _eventEmitterCallback("onRemainingTimeOrDistanceChanged", value);
+}
+- (void)emitOnRouteChanged
+{
+  _eventEmitterCallback("onRouteChanged", nil);
+}
+- (void)emitOnReroutingRequestedByOffRoute
+{
+  _eventEmitterCallback("onReroutingRequestedByOffRoute", nil);
+}
+- (void)emitOnStartGuidance
+{
+  _eventEmitterCallback("onStartGuidance", nil);
+}
+- (void)emitOnTurnByTurn:(NSDictionary *)value
+{
+  _eventEmitterCallback("onTurnByTurn", value);
+}
+- (void)emitOnRawLocationChanged:(NSDictionary *)value
+{
+  _eventEmitterCallback("onRawLocationChanged", value);
+}
+- (void)emitOnTrafficUpdated
+{
+  _eventEmitterCallback("onTrafficUpdated", nil);
+}
+- (void)emitLogDebugInfo:(NSDictionary *)value
+{
+  _eventEmitterCallback("logDebugInfo", value);
+}
+
+- (void)setEventEmitterCallback:(EventEmitterCallbackWrapper *)eventEmitterCallbackWrapper
+{
+  _eventEmitterCallback = std::move(eventEmitterCallbackWrapper->_eventEmitterCallback);
+}
+@end
+
+@implementation RCTCxxConvert (NativeRNMapsNavModule_TermsAndConditionsUIParamsSpec)
++ (RCTManagedPointer *)JS_NativeRNMapsNavModule_TermsAndConditionsUIParamsSpec:(id)json
+{
+  return facebook::react::managedPointer<JS::NativeRNMapsNavModule::TermsAndConditionsUIParamsSpec>(json);
+}
+@end
+@implementation RCTCxxConvert (NativeRNMapsNavModule_RoutingOptionsSpec)
++ (RCTManagedPointer *)JS_NativeRNMapsNavModule_RoutingOptionsSpec:(id)json
+{
+  return facebook::react::managedPointer<JS::NativeRNMapsNavModule::RoutingOptionsSpec>(json);
+}
+@end
+@implementation RCTCxxConvert (NativeRNMapsNavModule_DisplayOptionsSpec)
++ (RCTManagedPointer *)JS_NativeRNMapsNavModule_DisplayOptionsSpec:(id)json
+{
+  return facebook::react::managedPointer<JS::NativeRNMapsNavModule::DisplayOptionsSpec>(json);
+}
+@end
+@implementation RCTCxxConvert (NativeRNMapsNavModule_RouteTokenOptionsSpec)
++ (RCTManagedPointer *)JS_NativeRNMapsNavModule_RouteTokenOptionsSpec:(id)json
+{
+  return facebook::react::managedPointer<JS::NativeRNMapsNavModule::RouteTokenOptionsSpec>(json);
+}
+@end
+@implementation RCTCxxConvert (NativeRNMapsNavModule_SpeedAlertOptionsSpec)
++ (RCTManagedPointer *)JS_NativeRNMapsNavModule_SpeedAlertOptionsSpec:(id)json
+{
+  return facebook::react::managedPointer<JS::NativeRNMapsNavModule::SpeedAlertOptionsSpec>(json);
+}
+@end
+@implementation RCTCxxConvert (NativeRNMapsNavModule_AudioGuidanceSettingsSpec)
++ (RCTManagedPointer *)JS_NativeRNMapsNavModule_AudioGuidanceSettingsSpec:(id)json
+{
+  return facebook::react::managedPointer<JS::NativeRNMapsNavModule::AudioGuidanceSettingsSpec>(json);
+}
+@end
+@implementation RCTCxxConvert (NativeRNMapsNavModule_LatLngSpec)
++ (RCTManagedPointer *)JS_NativeRNMapsNavModule_LatLngSpec:(id)json
+{
+  return facebook::react::managedPointer<JS::NativeRNMapsNavModule::LatLngSpec>(json);
+}
+@end
+@implementation RCTCxxConvert (NativeRNMapsNavModule_LocationSimulationOptionsSpec)
++ (RCTManagedPointer *)JS_NativeRNMapsNavModule_LocationSimulationOptionsSpec:(id)json
+{
+  return facebook::react::managedPointer<JS::NativeRNMapsNavModule::LocationSimulationOptionsSpec>(json);
+}
+@end
+namespace facebook::react {
+  
+    static facebook::jsi::Value __hostFunction_NativeRNMapsNavModuleSpecJSI_areTermsAccepted(facebook::jsi::Runtime& rt, TurboModule &turboModule, const facebook::jsi::Value* args, size_t count) {
+      return static_cast<ObjCTurboModule&>(turboModule).invokeObjCMethod(rt, PromiseKind, "areTermsAccepted", @selector(areTermsAccepted:reject:), args, count);
+    }
+
+    static facebook::jsi::Value __hostFunction_NativeRNMapsNavModuleSpecJSI_showTermsAndConditionsDialog(facebook::jsi::Runtime& rt, TurboModule &turboModule, const facebook::jsi::Value* args, size_t count) {
+      return static_cast<ObjCTurboModule&>(turboModule).invokeObjCMethod(rt, PromiseKind, "showTermsAndConditionsDialog", @selector(showTermsAndConditionsDialog:companyName:showOnlyDisclaimer:uiParams:resolve:reject:), args, count);
+    }
+
+    static facebook::jsi::Value __hostFunction_NativeRNMapsNavModuleSpecJSI_resetTermsAccepted(facebook::jsi::Runtime& rt, TurboModule &turboModule, const facebook::jsi::Value* args, size_t count) {
+      return static_cast<ObjCTurboModule&>(turboModule).invokeObjCMethod(rt, PromiseKind, "resetTermsAccepted", @selector(resetTermsAccepted:reject:), args, count);
+    }
+
+    static facebook::jsi::Value __hostFunction_NativeRNMapsNavModuleSpecJSI_initializeNavigationSession(facebook::jsi::Runtime& rt, TurboModule &turboModule, const facebook::jsi::Value* args, size_t count) {
+      return static_cast<ObjCTurboModule&>(turboModule).invokeObjCMethod(rt, PromiseKind, "initializeNavigationSession", @selector(initializeNavigationSession:taskRemovedBehavior:resolve:reject:), args, count);
+    }
+
+    static facebook::jsi::Value __hostFunction_NativeRNMapsNavModuleSpecJSI_cleanup(facebook::jsi::Runtime& rt, TurboModule &turboModule, const facebook::jsi::Value* args, size_t count) {
+      return static_cast<ObjCTurboModule&>(turboModule).invokeObjCMethod(rt, PromiseKind, "cleanup", @selector(cleanup:reject:), args, count);
+    }
+
+    static facebook::jsi::Value __hostFunction_NativeRNMapsNavModuleSpecJSI_setDestinations(facebook::jsi::Runtime& rt, TurboModule &turboModule, const facebook::jsi::Value* args, size_t count) {
+      return static_cast<ObjCTurboModule&>(turboModule).invokeObjCMethod(rt, PromiseKind, "setDestinations", @selector(setDestinations:routingOptions:displayOptions:routeTokenOptions:resolve:reject:), args, count);
+    }
+
+    static facebook::jsi::Value __hostFunction_NativeRNMapsNavModuleSpecJSI_continueToNextDestination(facebook::jsi::Runtime& rt, TurboModule &turboModule, const facebook::jsi::Value* args, size_t count) {
+      return static_cast<ObjCTurboModule&>(turboModule).invokeObjCMethod(rt, PromiseKind, "continueToNextDestination", @selector(continueToNextDestination:reject:), args, count);
+    }
+
+    static facebook::jsi::Value __hostFunction_NativeRNMapsNavModuleSpecJSI_clearDestinations(facebook::jsi::Runtime& rt, TurboModule &turboModule, const facebook::jsi::Value* args, size_t count) {
+      return static_cast<ObjCTurboModule&>(turboModule).invokeObjCMethod(rt, PromiseKind, "clearDestinations", @selector(clearDestinations:reject:), args, count);
+    }
+
+    static facebook::jsi::Value __hostFunction_NativeRNMapsNavModuleSpecJSI_startGuidance(facebook::jsi::Runtime& rt, TurboModule &turboModule, const facebook::jsi::Value* args, size_t count) {
+      return static_cast<ObjCTurboModule&>(turboModule).invokeObjCMethod(rt, PromiseKind, "startGuidance", @selector(startGuidance:reject:), args, count);
+    }
+
+    static facebook::jsi::Value __hostFunction_NativeRNMapsNavModuleSpecJSI_stopGuidance(facebook::jsi::Runtime& rt, TurboModule &turboModule, const facebook::jsi::Value* args, size_t count) {
+      return static_cast<ObjCTurboModule&>(turboModule).invokeObjCMethod(rt, PromiseKind, "stopGuidance", @selector(stopGuidance:reject:), args, count);
+    }
+
+    static facebook::jsi::Value __hostFunction_NativeRNMapsNavModuleSpecJSI_setSpeedAlertOptions(facebook::jsi::Runtime& rt, TurboModule &turboModule, const facebook::jsi::Value* args, size_t count) {
+      return static_cast<ObjCTurboModule&>(turboModule).invokeObjCMethod(rt, PromiseKind, "setSpeedAlertOptions", @selector(setSpeedAlertOptions:resolve:reject:), args, count);
+    }
+
+    static facebook::jsi::Value __hostFunction_NativeRNMapsNavModuleSpecJSI_setAbnormalTerminatingReportingEnabled(facebook::jsi::Runtime& rt, TurboModule &turboModule, const facebook::jsi::Value* args, size_t count) {
+      return static_cast<ObjCTurboModule&>(turboModule).invokeObjCMethod(rt, VoidKind, "setAbnormalTerminatingReportingEnabled", @selector(setAbnormalTerminatingReportingEnabled:), args, count);
+    }
+
+    static facebook::jsi::Value __hostFunction_NativeRNMapsNavModuleSpecJSI_setAudioGuidanceType(facebook::jsi::Runtime& rt, TurboModule &turboModule, const facebook::jsi::Value* args, size_t count) {
+      return static_cast<ObjCTurboModule&>(turboModule).invokeObjCMethod(rt, PromiseKind, "setAudioGuidanceType", @selector(setAudioGuidanceType:resolve:reject:), args, count);
+    }
+
+    static facebook::jsi::Value __hostFunction_NativeRNMapsNavModuleSpecJSI_setAudioGuidanceSettings(facebook::jsi::Runtime& rt, TurboModule &turboModule, const facebook::jsi::Value* args, size_t count) {
+      return static_cast<ObjCTurboModule&>(turboModule).invokeObjCMethod(rt, PromiseKind, "setAudioGuidanceSettings", @selector(setAudioGuidanceSettings:resolve:reject:), args, count);
+    }
+
+    static facebook::jsi::Value __hostFunction_NativeRNMapsNavModuleSpecJSI_setBackgroundLocationUpdatesEnabled(facebook::jsi::Runtime& rt, TurboModule &turboModule, const facebook::jsi::Value* args, size_t count) {
+      return static_cast<ObjCTurboModule&>(turboModule).invokeObjCMethod(rt, VoidKind, "setBackgroundLocationUpdatesEnabled", @selector(setBackgroundLocationUpdatesEnabled:), args, count);
+    }
+
+    static facebook::jsi::Value __hostFunction_NativeRNMapsNavModuleSpecJSI_setTurnByTurnLoggingEnabled(facebook::jsi::Runtime& rt, TurboModule &turboModule, const facebook::jsi::Value* args, size_t count) {
+      return static_cast<ObjCTurboModule&>(turboModule).invokeObjCMethod(rt, VoidKind, "setTurnByTurnLoggingEnabled", @selector(setTurnByTurnLoggingEnabled:), args, count);
+    }
+
+    static facebook::jsi::Value __hostFunction_NativeRNMapsNavModuleSpecJSI_getCurrentRouteSegment(facebook::jsi::Runtime& rt, TurboModule &turboModule, const facebook::jsi::Value* args, size_t count) {
+      return static_cast<ObjCTurboModule&>(turboModule).invokeObjCMethod(rt, PromiseKind, "getCurrentRouteSegment", @selector(getCurrentRouteSegment:reject:), args, count);
+    }
+
+    static facebook::jsi::Value __hostFunction_NativeRNMapsNavModuleSpecJSI_getRouteSegments(facebook::jsi::Runtime& rt, TurboModule &turboModule, const facebook::jsi::Value* args, size_t count) {
+      return static_cast<ObjCTurboModule&>(turboModule).invokeObjCMethod(rt, PromiseKind, "getRouteSegments", @selector(getRouteSegments:reject:), args, count);
+    }
+
+    static facebook::jsi::Value __hostFunction_NativeRNMapsNavModuleSpecJSI_getCurrentTimeAndDistance(facebook::jsi::Runtime& rt, TurboModule &turboModule, const facebook::jsi::Value* args, size_t count) {
+      return static_cast<ObjCTurboModule&>(turboModule).invokeObjCMethod(rt, PromiseKind, "getCurrentTimeAndDistance", @selector(getCurrentTimeAndDistance:reject:), args, count);
+    }
+
+    static facebook::jsi::Value __hostFunction_NativeRNMapsNavModuleSpecJSI_getTraveledPath(facebook::jsi::Runtime& rt, TurboModule &turboModule, const facebook::jsi::Value* args, size_t count) {
+      return static_cast<ObjCTurboModule&>(turboModule).invokeObjCMethod(rt, PromiseKind, "getTraveledPath", @selector(getTraveledPath:reject:), args, count);
+    }
+
+    static facebook::jsi::Value __hostFunction_NativeRNMapsNavModuleSpecJSI_getNavSDKVersion(facebook::jsi::Runtime& rt, TurboModule &turboModule, const facebook::jsi::Value* args, size_t count) {
+      return static_cast<ObjCTurboModule&>(turboModule).invokeObjCMethod(rt, PromiseKind, "getNavSDKVersion", @selector(getNavSDKVersion:reject:), args, count);
+    }
+
+    static facebook::jsi::Value __hostFunction_NativeRNMapsNavModuleSpecJSI_stopUpdatingLocation(facebook::jsi::Runtime& rt, TurboModule &turboModule, const facebook::jsi::Value* args, size_t count) {
+      return static_cast<ObjCTurboModule&>(turboModule).invokeObjCMethod(rt, PromiseKind, "stopUpdatingLocation", @selector(stopUpdatingLocation:reject:), args, count);
+    }
+
+    static facebook::jsi::Value __hostFunction_NativeRNMapsNavModuleSpecJSI_startUpdatingLocation(facebook::jsi::Runtime& rt, TurboModule &turboModule, const facebook::jsi::Value* args, size_t count) {
+      return static_cast<ObjCTurboModule&>(turboModule).invokeObjCMethod(rt, PromiseKind, "startUpdatingLocation", @selector(startUpdatingLocation:reject:), args, count);
+    }
+
+    static facebook::jsi::Value __hostFunction_NativeRNMapsNavModuleSpecJSI_simulateLocation(facebook::jsi::Runtime& rt, TurboModule &turboModule, const facebook::jsi::Value* args, size_t count) {
+      return static_cast<ObjCTurboModule&>(turboModule).invokeObjCMethod(rt, PromiseKind, "simulateLocation", @selector(simulateLocation:resolve:reject:), args, count);
+    }
+
+    static facebook::jsi::Value __hostFunction_NativeRNMapsNavModuleSpecJSI_resumeLocationSimulation(facebook::jsi::Runtime& rt, TurboModule &turboModule, const facebook::jsi::Value* args, size_t count) {
+      return static_cast<ObjCTurboModule&>(turboModule).invokeObjCMethod(rt, PromiseKind, "resumeLocationSimulation", @selector(resumeLocationSimulation:reject:), args, count);
+    }
+
+    static facebook::jsi::Value __hostFunction_NativeRNMapsNavModuleSpecJSI_pauseLocationSimulation(facebook::jsi::Runtime& rt, TurboModule &turboModule, const facebook::jsi::Value* args, size_t count) {
+      return static_cast<ObjCTurboModule&>(turboModule).invokeObjCMethod(rt, PromiseKind, "pauseLocationSimulation", @selector(pauseLocationSimulation:reject:), args, count);
+    }
+
+    static facebook::jsi::Value __hostFunction_NativeRNMapsNavModuleSpecJSI_simulateLocationsAlongExistingRoute(facebook::jsi::Runtime& rt, TurboModule &turboModule, const facebook::jsi::Value* args, size_t count) {
+      return static_cast<ObjCTurboModule&>(turboModule).invokeObjCMethod(rt, PromiseKind, "simulateLocationsAlongExistingRoute", @selector(simulateLocationsAlongExistingRoute:resolve:reject:), args, count);
+    }
+
+    static facebook::jsi::Value __hostFunction_NativeRNMapsNavModuleSpecJSI_stopLocationSimulation(facebook::jsi::Runtime& rt, TurboModule &turboModule, const facebook::jsi::Value* args, size_t count) {
+      return static_cast<ObjCTurboModule&>(turboModule).invokeObjCMethod(rt, PromiseKind, "stopLocationSimulation", @selector(stopLocationSimulation:reject:), args, count);
+    }
+
+  NativeRNMapsNavModuleSpecJSI::NativeRNMapsNavModuleSpecJSI(const ObjCTurboModule::InitParams &params)
+    : ObjCTurboModule(params) {
+      
+        methodMap_["areTermsAccepted"] = MethodMetadata {0, __hostFunction_NativeRNMapsNavModuleSpecJSI_areTermsAccepted};
+        
+        
+        methodMap_["showTermsAndConditionsDialog"] = MethodMetadata {4, __hostFunction_NativeRNMapsNavModuleSpecJSI_showTermsAndConditionsDialog};
+        setMethodArgConversionSelector(@"showTermsAndConditionsDialog", 3, @"JS_NativeRNMapsNavModule_TermsAndConditionsUIParamsSpec:");
+        
+        methodMap_["resetTermsAccepted"] = MethodMetadata {0, __hostFunction_NativeRNMapsNavModuleSpecJSI_resetTermsAccepted};
+        
+        
+        methodMap_["initializeNavigationSession"] = MethodMetadata {2, __hostFunction_NativeRNMapsNavModuleSpecJSI_initializeNavigationSession};
+        
+        
+        methodMap_["cleanup"] = MethodMetadata {0, __hostFunction_NativeRNMapsNavModuleSpecJSI_cleanup};
+        
+        
+        methodMap_["setDestinations"] = MethodMetadata {4, __hostFunction_NativeRNMapsNavModuleSpecJSI_setDestinations};
+        setMethodArgConversionSelector(@"setDestinations", 1, @"JS_NativeRNMapsNavModule_RoutingOptionsSpec:");
+        setMethodArgConversionSelector(@"setDestinations", 2, @"JS_NativeRNMapsNavModule_DisplayOptionsSpec:");
+        setMethodArgConversionSelector(@"setDestinations", 3, @"JS_NativeRNMapsNavModule_RouteTokenOptionsSpec:");
+        
+        methodMap_["continueToNextDestination"] = MethodMetadata {0, __hostFunction_NativeRNMapsNavModuleSpecJSI_continueToNextDestination};
+        
+        
+        methodMap_["clearDestinations"] = MethodMetadata {0, __hostFunction_NativeRNMapsNavModuleSpecJSI_clearDestinations};
+        
+        
+        methodMap_["startGuidance"] = MethodMetadata {0, __hostFunction_NativeRNMapsNavModuleSpecJSI_startGuidance};
+        
+        
+        methodMap_["stopGuidance"] = MethodMetadata {0, __hostFunction_NativeRNMapsNavModuleSpecJSI_stopGuidance};
+        
+        
+        methodMap_["setSpeedAlertOptions"] = MethodMetadata {1, __hostFunction_NativeRNMapsNavModuleSpecJSI_setSpeedAlertOptions};
+        setMethodArgConversionSelector(@"setSpeedAlertOptions", 0, @"JS_NativeRNMapsNavModule_SpeedAlertOptionsSpec:");
+        
+        methodMap_["setAbnormalTerminatingReportingEnabled"] = MethodMetadata {1, __hostFunction_NativeRNMapsNavModuleSpecJSI_setAbnormalTerminatingReportingEnabled};
+        
+        
+        methodMap_["setAudioGuidanceType"] = MethodMetadata {1, __hostFunction_NativeRNMapsNavModuleSpecJSI_setAudioGuidanceType};
+        
+        
+        methodMap_["setAudioGuidanceSettings"] = MethodMetadata {1, __hostFunction_NativeRNMapsNavModuleSpecJSI_setAudioGuidanceSettings};
+        setMethodArgConversionSelector(@"setAudioGuidanceSettings", 0, @"JS_NativeRNMapsNavModule_AudioGuidanceSettingsSpec:");
+        
+        methodMap_["setBackgroundLocationUpdatesEnabled"] = MethodMetadata {1, __hostFunction_NativeRNMapsNavModuleSpecJSI_setBackgroundLocationUpdatesEnabled};
+        
+        
+        methodMap_["setTurnByTurnLoggingEnabled"] = MethodMetadata {1, __hostFunction_NativeRNMapsNavModuleSpecJSI_setTurnByTurnLoggingEnabled};
+        
+        
+        methodMap_["getCurrentRouteSegment"] = MethodMetadata {0, __hostFunction_NativeRNMapsNavModuleSpecJSI_getCurrentRouteSegment};
+        
+        
+        methodMap_["getRouteSegments"] = MethodMetadata {0, __hostFunction_NativeRNMapsNavModuleSpecJSI_getRouteSegments};
+        
+        
+        methodMap_["getCurrentTimeAndDistance"] = MethodMetadata {0, __hostFunction_NativeRNMapsNavModuleSpecJSI_getCurrentTimeAndDistance};
+        
+        
+        methodMap_["getTraveledPath"] = MethodMetadata {0, __hostFunction_NativeRNMapsNavModuleSpecJSI_getTraveledPath};
+        
+        
+        methodMap_["getNavSDKVersion"] = MethodMetadata {0, __hostFunction_NativeRNMapsNavModuleSpecJSI_getNavSDKVersion};
+        
+        
+        methodMap_["stopUpdatingLocation"] = MethodMetadata {0, __hostFunction_NativeRNMapsNavModuleSpecJSI_stopUpdatingLocation};
+        
+        
+        methodMap_["startUpdatingLocation"] = MethodMetadata {0, __hostFunction_NativeRNMapsNavModuleSpecJSI_startUpdatingLocation};
+        
+        
+        methodMap_["simulateLocation"] = MethodMetadata {1, __hostFunction_NativeRNMapsNavModuleSpecJSI_simulateLocation};
+        setMethodArgConversionSelector(@"simulateLocation", 0, @"JS_NativeRNMapsNavModule_LatLngSpec:");
+        
+        methodMap_["resumeLocationSimulation"] = MethodMetadata {0, __hostFunction_NativeRNMapsNavModuleSpecJSI_resumeLocationSimulation};
+        
+        
+        methodMap_["pauseLocationSimulation"] = MethodMetadata {0, __hostFunction_NativeRNMapsNavModuleSpecJSI_pauseLocationSimulation};
+        
+        
+        methodMap_["simulateLocationsAlongExistingRoute"] = MethodMetadata {1, __hostFunction_NativeRNMapsNavModuleSpecJSI_simulateLocationsAlongExistingRoute};
+        setMethodArgConversionSelector(@"simulateLocationsAlongExistingRoute", 0, @"JS_NativeRNMapsNavModule_LocationSimulationOptionsSpec:");
+        
+        methodMap_["stopLocationSimulation"] = MethodMetadata {0, __hostFunction_NativeRNMapsNavModuleSpecJSI_stopLocationSimulation};
+        
+        eventEmitterMap_["onLocationChanged"] = std::make_shared<AsyncEventEmitter<id>>();
+        eventEmitterMap_["onArrival"] = std::make_shared<AsyncEventEmitter<id>>();
+        eventEmitterMap_["onRemainingTimeOrDistanceChanged"] = std::make_shared<AsyncEventEmitter<id>>();
+        eventEmitterMap_["onRouteChanged"] = std::make_shared<AsyncEventEmitter<id>>();
+        eventEmitterMap_["onReroutingRequestedByOffRoute"] = std::make_shared<AsyncEventEmitter<id>>();
+        eventEmitterMap_["onStartGuidance"] = std::make_shared<AsyncEventEmitter<id>>();
+        eventEmitterMap_["onTurnByTurn"] = std::make_shared<AsyncEventEmitter<id>>();
+        eventEmitterMap_["onRawLocationChanged"] = std::make_shared<AsyncEventEmitter<id>>();
+        eventEmitterMap_["onTrafficUpdated"] = std::make_shared<AsyncEventEmitter<id>>();
+        eventEmitterMap_["logDebugInfo"] = std::make_shared<AsyncEventEmitter<id>>();
+        setEventEmitterCallback([&](const std::string &name, id value) {
+          static_cast<AsyncEventEmitter<id> &>(*eventEmitterMap_[name]).emit(value);
+        });
+  }
+} // namespace facebook::react

@@ -1,10 +1,7 @@
-import type {HostComponent, ViewProps} from 'react-native';
+import type { HostComponent, ViewProps } from 'react-native';
 
-import {codegenNativeComponent} from 'react-native';
-import type {
-  Int32,
-  WithDefault,
-} from 'react-native/Libraries/Types/CodegenTypes';
+import { codegenNativeComponent } from 'react-native';
+import type { Int32, WithDefault } from 'react-native/Libraries/Types/CodegenTypes';
 
 export interface UrlTileFabricNativeProps extends ViewProps {
   /**
@@ -123,9 +120,6 @@ export interface UrlTileFabricNativeProps extends ViewProps {
   urlTemplate: string;
 }
 
-export default codegenNativeComponent<UrlTileFabricNativeProps>(
-  'RNMapsUrlTile',
-  {
-    excludedPlatforms: ['iOS'],
-  },
-) as HostComponent<UrlTileFabricNativeProps>;
+export default codegenNativeComponent<UrlTileFabricNativeProps>('RNMapsUrlTile', {
+  excludedPlatforms: ['iOS']
+}) as HostComponent<UrlTileFabricNativeProps>;

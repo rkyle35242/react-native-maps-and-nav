@@ -3,6 +3,7 @@ package com.rnmaps.maps;
 import androidx.annotation.NonNull;
 
 import com.facebook.fbreact.specs.NativeAirMapsModuleSpec;
+import com.facebook.fbreact.specs.NativeRNMapsNavModuleSpec;
 import com.facebook.react.BaseReactPackage;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.bridge.NativeModule;
@@ -26,6 +27,8 @@ import java.util.List;
 import java.util.Map;
 
 public class MapsPackage extends BaseReactPackage implements ReactPackage {
+
+  private static final String NAV_MODULE_CLASS = "com.rnmaps.navigation.NavModule";
 
   @Override
   public List<ViewManager> createViewManagers(ReactApplicationContext reactContext) {
@@ -75,9 +78,17 @@ public class MapsPackage extends BaseReactPackage implements ReactPackage {
     }
     if (NativeAirMapsModuleSpec.NAME.equals(name)) {
       return new NativeAirMapsModule(reactContext);
-    } else {
-      return null;
     }
+    if (NativeRNMapsNavModuleSpec.NAME.equals(name) && NavigationHost.isAvailable()) {
+      try {
+        return (NativeModule) Class.forName(NAV_MODULE_CLASS)
+                .getMethod("getInstance", ReactApplicationContext.class)
+                .invoke(null, reactContext);
+      } catch (ReflectiveOperationException e) {
+        throw new RuntimeException("Failed to create " + NativeRNMapsNavModuleSpec.NAME, e);
+      }
+    }
+    return null;
   }
 
   @Override
@@ -95,6 +106,16 @@ public class MapsPackage extends BaseReactPackage implements ReactPackage {
                 false, // isCXXModule
                 true   // isTurboModule
         ));
+        if (NavigationHost.isAvailable()) {
+          map.put(NativeRNMapsNavModuleSpec.NAME, new ReactModuleInfo(
+                  NativeRNMapsNavModuleSpec.NAME,
+                  NAV_MODULE_CLASS,
+                  false, // canOverrideExistingModule
+                  false, // needsEagerInit
+                  false, // isCXXModule
+                  true   // isTurboModule
+          ));
+        }
         return map;
       }
     };

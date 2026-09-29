@@ -1,9 +1,9 @@
 import React from 'react';
-import {StyleSheet, View, Text, Dimensions} from 'react-native';
+import { StyleSheet, View, Text, Dimensions } from 'react-native';
 
-import MapView, {Circle, Polygon, Polyline} from 'react-native-maps';
+import MapView, { Circle, Polygon, Polyline } from 'react-native-maps';
 
-const {width, height} = Dimensions.get('window');
+const { width, height } = Dimensions.get('window');
 
 const ASPECT_RATIO = width / height;
 const LATITUDE = 37.78825;
@@ -21,58 +21,55 @@ class Overlays extends React.Component<any, any> {
         latitude: LATITUDE,
         longitude: LONGITUDE,
         latitudeDelta: LATITUDE_DELTA,
-        longitudeDelta: LONGITUDE_DELTA,
+        longitudeDelta: LONGITUDE_DELTA
       },
       circle: {
         center: {
           latitude: LATITUDE + SPACE,
-          longitude: LONGITUDE + SPACE,
+          longitude: LONGITUDE + SPACE
         },
-        radius: 700,
+        radius: 700
       },
       polygon: [
         {
           latitude: LATITUDE + SPACE,
-          longitude: LONGITUDE + SPACE,
+          longitude: LONGITUDE + SPACE
         },
         {
           latitude: LATITUDE - SPACE,
-          longitude: LONGITUDE - SPACE,
+          longitude: LONGITUDE - SPACE
         },
         {
           latitude: LATITUDE - SPACE,
-          longitude: LONGITUDE + SPACE,
-        },
+          longitude: LONGITUDE + SPACE
+        }
       ],
       polyline: [
         {
           latitude: LATITUDE + SPACE,
-          longitude: LONGITUDE - SPACE,
+          longitude: LONGITUDE - SPACE
         },
         {
           latitude: LATITUDE - 2 * SPACE,
-          longitude: LONGITUDE + 2 * SPACE,
+          longitude: LONGITUDE + 2 * SPACE
         },
         {
           latitude: LATITUDE - SPACE,
-          longitude: LONGITUDE - SPACE,
+          longitude: LONGITUDE - SPACE
         },
         {
           latitude: LATITUDE - 2 * SPACE,
-          longitude: LONGITUDE - SPACE,
-        },
-      ],
+          longitude: LONGITUDE - SPACE
+        }
+      ]
     };
   }
 
   render() {
-    const {region, circle, polygon, polyline} = this.state;
+    const { region, circle, polygon, polyline } = this.state;
     return (
       <View style={styles.container}>
-        <MapView
-          provider={this.props.provider}
-          style={styles.map}
-          initialRegion={region}>
+        <MapView provider={this.props.provider} style={styles.map} initialRegion={region}>
           <Circle
             center={circle.center}
             radius={circle.radius}
@@ -108,33 +105,33 @@ const styles = StyleSheet.create({
   container: {
     ...StyleSheet.absoluteFillObject,
     justifyContent: 'flex-end',
-    alignItems: 'center',
+    alignItems: 'center'
   },
   map: {
-    ...StyleSheet.absoluteFillObject,
+    ...StyleSheet.absoluteFillObject
   },
   bubble: {
     flex: 1,
     backgroundColor: 'rgba(255,255,255,0.7)',
     paddingHorizontal: 18,
     paddingVertical: 12,
-    borderRadius: 20,
+    borderRadius: 20
   },
   latlng: {
     width: 200,
-    alignItems: 'stretch',
+    alignItems: 'stretch'
   },
   button: {
     width: 80,
     paddingHorizontal: 12,
     alignItems: 'center',
-    marginHorizontal: 10,
+    marginHorizontal: 10
   },
   buttonContainer: {
     flexDirection: 'row',
     marginVertical: 20,
-    backgroundColor: 'transparent',
-  },
+    backgroundColor: 'transparent'
+  }
 });
 
 export default Overlays;

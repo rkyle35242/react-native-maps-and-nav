@@ -1,14 +1,14 @@
 // @ts-nocheck
-import type {HostComponent, ViewProps, ColorValue} from 'react-native';
+import type { HostComponent, ViewProps, ColorValue } from 'react-native';
 
-import {codegenNativeComponent, codegenNativeCommands} from 'react-native';
+import { codegenNativeComponent, codegenNativeCommands } from 'react-native';
 import type {
   Double,
   Int32,
   WithDefault,
   Float,
   DirectEventHandler,
-  BubblingEventHandler,
+  BubblingEventHandler
 } from 'react-native/Libraries/Types/CodegenTypes';
 import FabricMapView from './NativeComponentMapView';
 
@@ -331,8 +331,7 @@ export type UserLocationChangeEvent = Readonly<{
   }>;
 }>;
 
-export type UserLocationChangeEventHandler =
-  DirectEventHandler<UserLocationChangeEvent>;
+export type UserLocationChangeEventHandler = DirectEventHandler<UserLocationChangeEvent>;
 
 export type CameraZoomRange = Readonly<{
   minCenterCoordinateDistance?: Double; // Use Double for numeric values
@@ -541,14 +540,7 @@ export interface MapFabricNativeProps extends ViewProps {
    * @platform Android: hybrid | none | satellite | standard | terrain
    */
   mapType?: WithDefault<
-    | 'hybrid'
-    | 'mutedStandard'
-    | 'none'
-    | 'satellite'
-    | 'standard'
-    | 'terrain'
-    | 'satelliteFlyover'
-    | 'hybridFlyover',
+    'hybrid' | 'mutedStandard' | 'none' | 'satellite' | 'standard' | 'terrain' | 'satelliteFlyover' | 'hybridFlyover',
     'standard'
   >;
 
@@ -792,10 +784,7 @@ export interface MapFabricNativeProps extends ViewProps {
    * @platform iOS: Google Maps only
    * @platform Android: Not supported
    */
-  paddingAdjustmentBehavior?: WithDefault<
-    'always' | 'automatic' | 'never',
-    'never'
-  >;
+  paddingAdjustmentBehavior?: WithDefault<'always' | 'automatic' | 'never', 'never'>;
 
   /**
    * If `false` the user won't be able to adjust the camera’s pitch angle.
@@ -1002,10 +991,7 @@ export interface MapFabricNativeProps extends ViewProps {
    * @platform iOS: Not supported
    * @platform Android: Supported
    */
-  userLocationPriority?: WithDefault<
-    'balanced' | 'high' | 'low' | 'passive',
-    'high'
-  >;
+  userLocationPriority?: WithDefault<'balanced' | 'high' | 'low' | 'passive', 'high'>;
 
   /**
    * Interval of user location updates in milliseconds.
@@ -1066,50 +1052,62 @@ export interface MapFabricNativeProps extends ViewProps {
    * @platform Android: Not supported
    */
   cameraZoomRange?: CameraZoomRange;
+
+  /**
+   * Hosts the map in a Google Navigation SDK view. Only read when the view is created.
+   * Requires the navigation build of react-native-maps.
+   */
+  navigationEnabled?: boolean;
+  navigationUIEnabledPreference?: WithDefault<'automatic' | 'disabled', 'automatic'>;
+  navigationNightMode?: WithDefault<'auto' | 'forceDay' | 'forceNight', 'auto'>;
+  navigationStylingOptionsJSON?: string;
+  headerEnabled?: WithDefault<boolean, true>;
+  footerEnabled?: WithDefault<boolean, true>;
+  tripProgressBarEnabled?: WithDefault<boolean, true>;
+  speedometerEnabled?: WithDefault<boolean, false>;
+  speedLimitIconEnabled?: WithDefault<boolean, true>;
+  recenterButtonEnabled?: WithDefault<boolean, true>;
+  reportIncidentButtonEnabled?: WithDefault<boolean, true>;
+  trafficPromptsEnabled?: WithDefault<boolean, true>;
+  trafficIncidentCardsEnabled?: WithDefault<boolean, true>;
+  onRecenterButtonClick?: DirectEventHandler<null>;
+  onPromptVisibilityChanged?: DirectEventHandler<
+    Readonly<{
+      visible: boolean;
+    }>
+  >;
 }
 
 interface NativeCommands {
-  animateToRegion: (
-    viewRef: React.ElementRef<typeof FabricMapView>,
-    regionJSON: string,
-    duration: Int32,
-  ) => void;
+  animateToRegion: (viewRef: React.ElementRef<typeof FabricMapView>, regionJSON: string, duration: Int32) => void;
 
-  setCamera: (
-    viewRef: React.ElementRef<typeof FabricMapView>,
-    cameraJSON: string,
-  ) => void;
+  setCamera: (viewRef: React.ElementRef<typeof FabricMapView>, cameraJSON: string) => void;
 
-  animateCamera: (
-    viewRef: React.ElementRef<typeof FabricMapView>,
-    cameraJSON: string,
-    duration: Int32,
-  ) => void;
+  animateCamera: (viewRef: React.ElementRef<typeof FabricMapView>, cameraJSON: string, duration: Int32) => void;
 
-  fitToElements: (
-    viewRef: React.ElementRef<typeof FabricMapView>,
-    edgePaddingJSON: string,
-    animated: boolean,
-  ) => void;
+  fitToElements: (viewRef: React.ElementRef<typeof FabricMapView>, edgePaddingJSON: string, animated: boolean) => void;
 
   fitToSuppliedMarkers: (
     viewRef: React.ElementRef<typeof FabricMapView>,
     markersJSON: string,
     edgePaddingJSON: string,
-    animated: boolean,
+    animated: boolean
   ) => void;
 
   fitToCoordinates: (
     viewRef: React.ElementRef<typeof FabricMapView>,
     coordinatesJSON: string,
     edgePaddingJSON: string,
-    animated: boolean,
+    animated: boolean
   ) => void;
 
-  setIndoorActiveLevelIndex: (
-    viewRef: React.ElementRef<typeof FabricMapView>,
-    activeLevelIndex: Int32,
-  ) => void;
+  setIndoorActiveLevelIndex: (viewRef: React.ElementRef<typeof FabricMapView>, activeLevelIndex: Int32) => void;
+
+  showRouteOverview: (viewRef: React.ElementRef<typeof FabricMapView>) => void;
+
+  setNavigationUIEnabled: (viewRef: React.ElementRef<typeof FabricMapView>, enabled: boolean) => void;
+
+  followMyLocation: (viewRef: React.ElementRef<typeof FabricMapView>, perspective: string, zoomLevel: Double) => void;
 }
 
 export const Commands: NativeCommands = codegenNativeCommands<NativeCommands>({
@@ -1121,10 +1119,10 @@ export const Commands: NativeCommands = codegenNativeCommands<NativeCommands>({
     'fitToSuppliedMarkers',
     'fitToCoordinates',
     'setIndoorActiveLevelIndex',
-  ],
+    'showRouteOverview',
+    'setNavigationUIEnabled',
+    'followMyLocation'
+  ]
 });
 
-export default codegenNativeComponent<MapFabricNativeProps>(
-  'RNMapsMapView',
-  {},
-) as HostComponent<MapFabricNativeProps>;
+export default codegenNativeComponent<MapFabricNativeProps>('RNMapsMapView', {}) as HostComponent<MapFabricNativeProps>;

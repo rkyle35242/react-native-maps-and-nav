@@ -1,15 +1,6 @@
-import {codegenNativeComponent} from 'react-native';
-import type {
-  Double,
-  Float,
-  BubblingEventHandler,
-  WithDefault,
-} from 'react-native/Libraries/Types/CodegenTypes';
-import type {
-  ViewProps,
-  HostComponent,
-  ImageSourcePropType as ImageSource,
-} from 'react-native';
+import { codegenNativeComponent } from 'react-native';
+import type { Double, Float, BubblingEventHandler, WithDefault } from 'react-native/Libraries/Types/CodegenTypes';
+import type { ViewProps, HostComponent, ImageSourcePropType as ImageSource } from 'react-native';
 export type LatLng = Readonly<{
   latitude: Double; // Non-nullable Double for latitude
   longitude: Double; // Non-nullable Double for longitude
@@ -92,7 +83,6 @@ export interface OverlayFabricNativeProps extends ViewProps {
   tappable?: boolean;
 }
 
-export default codegenNativeComponent<OverlayFabricNativeProps>(
-  'RNMapsOverlay',
-  {excludedPlatforms: ['iOS']},
-) as HostComponent<OverlayFabricNativeProps>;
+export default codegenNativeComponent<OverlayFabricNativeProps>('RNMapsOverlay', {
+  excludedPlatforms: ['iOS']
+}) as HostComponent<OverlayFabricNativeProps>;

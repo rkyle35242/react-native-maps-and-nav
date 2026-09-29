@@ -234,4 +234,1394 @@ private:
   }
 };
 
+
+#pragma mark - NativeRNMapsNavModuleRouteStatusSpec
+
+enum class NativeRNMapsNavModuleRouteStatusSpec { OK, NO_ROUTE_FOUND, NETWORK_ERROR, QUOTA_CHECK_FAILED, ROUTE_CANCELED, LOCATION_DISABLED, LOCATION_UNKNOWN, WAYPOINT_ERROR, INVALID_PLACE_ID, DUPLICATE_WAYPOINTS_ERROR, UNKNOWN };
+
+template <>
+struct Bridging<NativeRNMapsNavModuleRouteStatusSpec> {
+  static NativeRNMapsNavModuleRouteStatusSpec fromJs(jsi::Runtime &rt, const jsi::String &rawValue) {
+    std::string value = rawValue.utf8(rt);
+    if (value == "OK") {
+      return NativeRNMapsNavModuleRouteStatusSpec::OK;
+    } else if (value == "NO_ROUTE_FOUND") {
+      return NativeRNMapsNavModuleRouteStatusSpec::NO_ROUTE_FOUND;
+    } else if (value == "NETWORK_ERROR") {
+      return NativeRNMapsNavModuleRouteStatusSpec::NETWORK_ERROR;
+    } else if (value == "QUOTA_CHECK_FAILED") {
+      return NativeRNMapsNavModuleRouteStatusSpec::QUOTA_CHECK_FAILED;
+    } else if (value == "ROUTE_CANCELED") {
+      return NativeRNMapsNavModuleRouteStatusSpec::ROUTE_CANCELED;
+    } else if (value == "LOCATION_DISABLED") {
+      return NativeRNMapsNavModuleRouteStatusSpec::LOCATION_DISABLED;
+    } else if (value == "LOCATION_UNKNOWN") {
+      return NativeRNMapsNavModuleRouteStatusSpec::LOCATION_UNKNOWN;
+    } else if (value == "WAYPOINT_ERROR") {
+      return NativeRNMapsNavModuleRouteStatusSpec::WAYPOINT_ERROR;
+    } else if (value == "INVALID_PLACE_ID") {
+      return NativeRNMapsNavModuleRouteStatusSpec::INVALID_PLACE_ID;
+    } else if (value == "DUPLICATE_WAYPOINTS_ERROR") {
+      return NativeRNMapsNavModuleRouteStatusSpec::DUPLICATE_WAYPOINTS_ERROR;
+    } else if (value == "UNKNOWN") {
+      return NativeRNMapsNavModuleRouteStatusSpec::UNKNOWN;
+    } else {
+      throw jsi::JSError(rt, "No appropriate enum member found for value in NativeRNMapsNavModuleRouteStatusSpec");
+    }
+  }
+
+  static jsi::String toJs(jsi::Runtime &rt, NativeRNMapsNavModuleRouteStatusSpec value) {
+    if (value == NativeRNMapsNavModuleRouteStatusSpec::OK) {
+      return bridging::toJs(rt, "OK");
+    } else if (value == NativeRNMapsNavModuleRouteStatusSpec::NO_ROUTE_FOUND) {
+      return bridging::toJs(rt, "NO_ROUTE_FOUND");
+    } else if (value == NativeRNMapsNavModuleRouteStatusSpec::NETWORK_ERROR) {
+      return bridging::toJs(rt, "NETWORK_ERROR");
+    } else if (value == NativeRNMapsNavModuleRouteStatusSpec::QUOTA_CHECK_FAILED) {
+      return bridging::toJs(rt, "QUOTA_CHECK_FAILED");
+    } else if (value == NativeRNMapsNavModuleRouteStatusSpec::ROUTE_CANCELED) {
+      return bridging::toJs(rt, "ROUTE_CANCELED");
+    } else if (value == NativeRNMapsNavModuleRouteStatusSpec::LOCATION_DISABLED) {
+      return bridging::toJs(rt, "LOCATION_DISABLED");
+    } else if (value == NativeRNMapsNavModuleRouteStatusSpec::LOCATION_UNKNOWN) {
+      return bridging::toJs(rt, "LOCATION_UNKNOWN");
+    } else if (value == NativeRNMapsNavModuleRouteStatusSpec::WAYPOINT_ERROR) {
+      return bridging::toJs(rt, "WAYPOINT_ERROR");
+    } else if (value == NativeRNMapsNavModuleRouteStatusSpec::INVALID_PLACE_ID) {
+      return bridging::toJs(rt, "INVALID_PLACE_ID");
+    } else if (value == NativeRNMapsNavModuleRouteStatusSpec::DUPLICATE_WAYPOINTS_ERROR) {
+      return bridging::toJs(rt, "DUPLICATE_WAYPOINTS_ERROR");
+    } else if (value == NativeRNMapsNavModuleRouteStatusSpec::UNKNOWN) {
+      return bridging::toJs(rt, "UNKNOWN");
+    } else {
+      throw jsi::JSError(rt, "No appropriate enum member found for enum value in NativeRNMapsNavModuleRouteStatusSpec");
+    }
+  }
+};
+#pragma mark - NativeRNMapsNavModuleArrivalEventSpec
+
+template <typename P0, typename P1>
+struct NativeRNMapsNavModuleArrivalEventSpec {
+  P0 waypoint;
+  P1 isFinalDestination;
+  bool operator==(const NativeRNMapsNavModuleArrivalEventSpec &other) const {
+    return waypoint == other.waypoint && isFinalDestination == other.isFinalDestination;
+  }
+};
+
+template <typename T>
+struct NativeRNMapsNavModuleArrivalEventSpecBridging {
+  static T types;
+
+  static T fromJs(
+      jsi::Runtime &rt,
+      const jsi::Object &value,
+      const std::shared_ptr<CallInvoker> &jsInvoker) {
+    T result{
+      bridging::fromJs<decltype(types.waypoint)>(rt, value.getProperty(rt, "waypoint"), jsInvoker),
+      bridging::fromJs<decltype(types.isFinalDestination)>(rt, value.getProperty(rt, "isFinalDestination"), jsInvoker)};
+    return result;
+  }
+
+#ifdef DEBUG
+  static jsi::Object waypointToJs(jsi::Runtime &rt, decltype(types.waypoint) value) {
+    return bridging::toJs(rt, value);
+  }
+  static bool isFinalDestinationToJs(jsi::Runtime &rt, decltype(types.isFinalDestination) value) {
+    return bridging::toJs(rt, value);
+  }
+#endif
+
+  static jsi::Object toJs(
+      jsi::Runtime &rt,
+      const T &value,
+      const std::shared_ptr<CallInvoker> &jsInvoker) {
+    auto result = facebook::jsi::Object(rt);
+    result.setProperty(rt, "waypoint", bridging::toJs(rt, value.waypoint, jsInvoker));
+    if (value.isFinalDestination) {
+      result.setProperty(rt, "isFinalDestination", bridging::toJs(rt, value.isFinalDestination.value(), jsInvoker));
+    }
+    return result;
+  }
+};
+
+
+
+#pragma mark - NativeRNMapsNavModuleAudioGuidanceSettingsSpec
+
+template <typename P0, typename P1, typename P2>
+struct NativeRNMapsNavModuleAudioGuidanceSettingsSpec {
+  P0 guidanceMode;
+  P1 vibrationEnabled;
+  P2 bluetoothAudioEnabled;
+  bool operator==(const NativeRNMapsNavModuleAudioGuidanceSettingsSpec &other) const {
+    return guidanceMode == other.guidanceMode && vibrationEnabled == other.vibrationEnabled && bluetoothAudioEnabled == other.bluetoothAudioEnabled;
+  }
+};
+
+template <typename T>
+struct NativeRNMapsNavModuleAudioGuidanceSettingsSpecBridging {
+  static T types;
+
+  static T fromJs(
+      jsi::Runtime &rt,
+      const jsi::Object &value,
+      const std::shared_ptr<CallInvoker> &jsInvoker) {
+    T result{
+      bridging::fromJs<decltype(types.guidanceMode)>(rt, value.getProperty(rt, "guidanceMode"), jsInvoker),
+      bridging::fromJs<decltype(types.vibrationEnabled)>(rt, value.getProperty(rt, "vibrationEnabled"), jsInvoker),
+      bridging::fromJs<decltype(types.bluetoothAudioEnabled)>(rt, value.getProperty(rt, "bluetoothAudioEnabled"), jsInvoker)};
+    return result;
+  }
+
+#ifdef DEBUG
+  static double guidanceModeToJs(jsi::Runtime &rt, decltype(types.guidanceMode) value) {
+    return bridging::toJs(rt, value);
+  }
+  static bool vibrationEnabledToJs(jsi::Runtime &rt, decltype(types.vibrationEnabled) value) {
+    return bridging::toJs(rt, value);
+  }
+  static bool bluetoothAudioEnabledToJs(jsi::Runtime &rt, decltype(types.bluetoothAudioEnabled) value) {
+    return bridging::toJs(rt, value);
+  }
+#endif
+
+  static jsi::Object toJs(
+      jsi::Runtime &rt,
+      const T &value,
+      const std::shared_ptr<CallInvoker> &jsInvoker) {
+    auto result = facebook::jsi::Object(rt);
+    result.setProperty(rt, "guidanceMode", bridging::toJs(rt, value.guidanceMode, jsInvoker));
+    result.setProperty(rt, "vibrationEnabled", bridging::toJs(rt, value.vibrationEnabled, jsInvoker));
+    result.setProperty(rt, "bluetoothAudioEnabled", bridging::toJs(rt, value.bluetoothAudioEnabled, jsInvoker));
+    return result;
+  }
+};
+
+
+
+#pragma mark - NativeRNMapsNavModuleContinueToNextDestinationResponseSpec
+
+template <typename P0, typename P1>
+struct NativeRNMapsNavModuleContinueToNextDestinationResponseSpec {
+  P0 waypoint;
+  P1 routeStatus;
+  bool operator==(const NativeRNMapsNavModuleContinueToNextDestinationResponseSpec &other) const {
+    return waypoint == other.waypoint && routeStatus == other.routeStatus;
+  }
+};
+
+template <typename T>
+struct NativeRNMapsNavModuleContinueToNextDestinationResponseSpecBridging {
+  static T types;
+
+  static T fromJs(
+      jsi::Runtime &rt,
+      const jsi::Object &value,
+      const std::shared_ptr<CallInvoker> &jsInvoker) {
+    T result{
+      bridging::fromJs<decltype(types.waypoint)>(rt, value.getProperty(rt, "waypoint"), jsInvoker),
+      bridging::fromJs<decltype(types.routeStatus)>(rt, value.getProperty(rt, "routeStatus"), jsInvoker)};
+    return result;
+  }
+
+#ifdef DEBUG
+  static std::optional<jsi::Object> waypointToJs(jsi::Runtime &rt, decltype(types.waypoint) value) {
+    return bridging::toJs(rt, value);
+  }
+  static jsi::String routeStatusToJs(jsi::Runtime &rt, decltype(types.routeStatus) value) {
+    return bridging::toJs(rt, value);
+  }
+#endif
+
+  static jsi::Object toJs(
+      jsi::Runtime &rt,
+      const T &value,
+      const std::shared_ptr<CallInvoker> &jsInvoker) {
+    auto result = facebook::jsi::Object(rt);
+    result.setProperty(rt, "waypoint", bridging::toJs(rt, value.waypoint, jsInvoker));
+    if (value.routeStatus) {
+      result.setProperty(rt, "routeStatus", bridging::toJs(rt, value.routeStatus.value(), jsInvoker));
+    }
+    return result;
+  }
+};
+
+
+
+#pragma mark - NativeRNMapsNavModuleDisplayOptionsSpec
+
+template <typename P0, typename P1, typename P2, typename P3>
+struct NativeRNMapsNavModuleDisplayOptionsSpec {
+  P0 valid;
+  P1 showDestinationMarkers;
+  P2 showStopSigns;
+  P3 showTrafficLights;
+  bool operator==(const NativeRNMapsNavModuleDisplayOptionsSpec &other) const {
+    return valid == other.valid && showDestinationMarkers == other.showDestinationMarkers && showStopSigns == other.showStopSigns && showTrafficLights == other.showTrafficLights;
+  }
+};
+
+template <typename T>
+struct NativeRNMapsNavModuleDisplayOptionsSpecBridging {
+  static T types;
+
+  static T fromJs(
+      jsi::Runtime &rt,
+      const jsi::Object &value,
+      const std::shared_ptr<CallInvoker> &jsInvoker) {
+    T result{
+      bridging::fromJs<decltype(types.valid)>(rt, value.getProperty(rt, "valid"), jsInvoker),
+      bridging::fromJs<decltype(types.showDestinationMarkers)>(rt, value.getProperty(rt, "showDestinationMarkers"), jsInvoker),
+      bridging::fromJs<decltype(types.showStopSigns)>(rt, value.getProperty(rt, "showStopSigns"), jsInvoker),
+      bridging::fromJs<decltype(types.showTrafficLights)>(rt, value.getProperty(rt, "showTrafficLights"), jsInvoker)};
+    return result;
+  }
+
+#ifdef DEBUG
+  static std::optional<bool> validToJs(jsi::Runtime &rt, decltype(types.valid) value) {
+    return bridging::toJs(rt, value);
+  }
+  static bool showDestinationMarkersToJs(jsi::Runtime &rt, decltype(types.showDestinationMarkers) value) {
+    return bridging::toJs(rt, value);
+  }
+  static bool showStopSignsToJs(jsi::Runtime &rt, decltype(types.showStopSigns) value) {
+    return bridging::toJs(rt, value);
+  }
+  static bool showTrafficLightsToJs(jsi::Runtime &rt, decltype(types.showTrafficLights) value) {
+    return bridging::toJs(rt, value);
+  }
+#endif
+
+  static jsi::Object toJs(
+      jsi::Runtime &rt,
+      const T &value,
+      const std::shared_ptr<CallInvoker> &jsInvoker) {
+    auto result = facebook::jsi::Object(rt);
+    if (value.valid) {
+      result.setProperty(rt, "valid", bridging::toJs(rt, value.valid.value(), jsInvoker));
+    }
+    if (value.showDestinationMarkers) {
+      result.setProperty(rt, "showDestinationMarkers", bridging::toJs(rt, value.showDestinationMarkers.value(), jsInvoker));
+    }
+    if (value.showStopSigns) {
+      result.setProperty(rt, "showStopSigns", bridging::toJs(rt, value.showStopSigns.value(), jsInvoker));
+    }
+    if (value.showTrafficLights) {
+      result.setProperty(rt, "showTrafficLights", bridging::toJs(rt, value.showTrafficLights.value(), jsInvoker));
+    }
+    return result;
+  }
+};
+
+
+
+#pragma mark - NativeRNMapsNavModuleLatLngSpec
+
+template <typename P0, typename P1>
+struct NativeRNMapsNavModuleLatLngSpec {
+  P0 lat;
+  P1 lng;
+  bool operator==(const NativeRNMapsNavModuleLatLngSpec &other) const {
+    return lat == other.lat && lng == other.lng;
+  }
+};
+
+template <typename T>
+struct NativeRNMapsNavModuleLatLngSpecBridging {
+  static T types;
+
+  static T fromJs(
+      jsi::Runtime &rt,
+      const jsi::Object &value,
+      const std::shared_ptr<CallInvoker> &jsInvoker) {
+    T result{
+      bridging::fromJs<decltype(types.lat)>(rt, value.getProperty(rt, "lat"), jsInvoker),
+      bridging::fromJs<decltype(types.lng)>(rt, value.getProperty(rt, "lng"), jsInvoker)};
+    return result;
+  }
+
+#ifdef DEBUG
+  static double latToJs(jsi::Runtime &rt, decltype(types.lat) value) {
+    return bridging::toJs(rt, value);
+  }
+  static double lngToJs(jsi::Runtime &rt, decltype(types.lng) value) {
+    return bridging::toJs(rt, value);
+  }
+#endif
+
+  static jsi::Object toJs(
+      jsi::Runtime &rt,
+      const T &value,
+      const std::shared_ptr<CallInvoker> &jsInvoker) {
+    auto result = facebook::jsi::Object(rt);
+    result.setProperty(rt, "lat", bridging::toJs(rt, value.lat, jsInvoker));
+    result.setProperty(rt, "lng", bridging::toJs(rt, value.lng, jsInvoker));
+    return result;
+  }
+};
+
+
+
+#pragma mark - NativeRNMapsNavModuleLocationSimulationOptionsSpec
+
+template <typename P0>
+struct NativeRNMapsNavModuleLocationSimulationOptionsSpec {
+  P0 speedMultiplier;
+  bool operator==(const NativeRNMapsNavModuleLocationSimulationOptionsSpec &other) const {
+    return speedMultiplier == other.speedMultiplier;
+  }
+};
+
+template <typename T>
+struct NativeRNMapsNavModuleLocationSimulationOptionsSpecBridging {
+  static T types;
+
+  static T fromJs(
+      jsi::Runtime &rt,
+      const jsi::Object &value,
+      const std::shared_ptr<CallInvoker> &jsInvoker) {
+    T result{
+      bridging::fromJs<decltype(types.speedMultiplier)>(rt, value.getProperty(rt, "speedMultiplier"), jsInvoker)};
+    return result;
+  }
+
+#ifdef DEBUG
+  static double speedMultiplierToJs(jsi::Runtime &rt, decltype(types.speedMultiplier) value) {
+    return bridging::toJs(rt, value);
+  }
+#endif
+
+  static jsi::Object toJs(
+      jsi::Runtime &rt,
+      const T &value,
+      const std::shared_ptr<CallInvoker> &jsInvoker) {
+    auto result = facebook::jsi::Object(rt);
+    result.setProperty(rt, "speedMultiplier", bridging::toJs(rt, value.speedMultiplier, jsInvoker));
+    return result;
+  }
+};
+
+
+
+#pragma mark - NativeRNMapsNavModuleLocationSpec
+
+template <typename P0, typename P1, typename P2, typename P3, typename P4, typename P5, typename P6, typename P7, typename P8>
+struct NativeRNMapsNavModuleLocationSpec {
+  P0 lat;
+  P1 lng;
+  P2 altitude;
+  P3 bearing;
+  P4 speed;
+  P5 accuracy;
+  P6 verticalAccuracy;
+  P7 provider;
+  P8 time;
+  bool operator==(const NativeRNMapsNavModuleLocationSpec &other) const {
+    return lat == other.lat && lng == other.lng && altitude == other.altitude && bearing == other.bearing && speed == other.speed && accuracy == other.accuracy && verticalAccuracy == other.verticalAccuracy && provider == other.provider && time == other.time;
+  }
+};
+
+template <typename T>
+struct NativeRNMapsNavModuleLocationSpecBridging {
+  static T types;
+
+  static T fromJs(
+      jsi::Runtime &rt,
+      const jsi::Object &value,
+      const std::shared_ptr<CallInvoker> &jsInvoker) {
+    T result{
+      bridging::fromJs<decltype(types.lat)>(rt, value.getProperty(rt, "lat"), jsInvoker),
+      bridging::fromJs<decltype(types.lng)>(rt, value.getProperty(rt, "lng"), jsInvoker),
+      bridging::fromJs<decltype(types.altitude)>(rt, value.getProperty(rt, "altitude"), jsInvoker),
+      bridging::fromJs<decltype(types.bearing)>(rt, value.getProperty(rt, "bearing"), jsInvoker),
+      bridging::fromJs<decltype(types.speed)>(rt, value.getProperty(rt, "speed"), jsInvoker),
+      bridging::fromJs<decltype(types.accuracy)>(rt, value.getProperty(rt, "accuracy"), jsInvoker),
+      bridging::fromJs<decltype(types.verticalAccuracy)>(rt, value.getProperty(rt, "verticalAccuracy"), jsInvoker),
+      bridging::fromJs<decltype(types.provider)>(rt, value.getProperty(rt, "provider"), jsInvoker),
+      bridging::fromJs<decltype(types.time)>(rt, value.getProperty(rt, "time"), jsInvoker)};
+    return result;
+  }
+
+#ifdef DEBUG
+  static double latToJs(jsi::Runtime &rt, decltype(types.lat) value) {
+    return bridging::toJs(rt, value);
+  }
+  static double lngToJs(jsi::Runtime &rt, decltype(types.lng) value) {
+    return bridging::toJs(rt, value);
+  }
+  static double altitudeToJs(jsi::Runtime &rt, decltype(types.altitude) value) {
+    return bridging::toJs(rt, value);
+  }
+  static double bearingToJs(jsi::Runtime &rt, decltype(types.bearing) value) {
+    return bridging::toJs(rt, value);
+  }
+  static double speedToJs(jsi::Runtime &rt, decltype(types.speed) value) {
+    return bridging::toJs(rt, value);
+  }
+  static double accuracyToJs(jsi::Runtime &rt, decltype(types.accuracy) value) {
+    return bridging::toJs(rt, value);
+  }
+  static double verticalAccuracyToJs(jsi::Runtime &rt, decltype(types.verticalAccuracy) value) {
+    return bridging::toJs(rt, value);
+  }
+  static jsi::String providerToJs(jsi::Runtime &rt, decltype(types.provider) value) {
+    return bridging::toJs(rt, value);
+  }
+  static double timeToJs(jsi::Runtime &rt, decltype(types.time) value) {
+    return bridging::toJs(rt, value);
+  }
+#endif
+
+  static jsi::Object toJs(
+      jsi::Runtime &rt,
+      const T &value,
+      const std::shared_ptr<CallInvoker> &jsInvoker) {
+    auto result = facebook::jsi::Object(rt);
+    result.setProperty(rt, "lat", bridging::toJs(rt, value.lat, jsInvoker));
+    result.setProperty(rt, "lng", bridging::toJs(rt, value.lng, jsInvoker));
+    if (value.altitude) {
+      result.setProperty(rt, "altitude", bridging::toJs(rt, value.altitude.value(), jsInvoker));
+    }
+    if (value.bearing) {
+      result.setProperty(rt, "bearing", bridging::toJs(rt, value.bearing.value(), jsInvoker));
+    }
+    result.setProperty(rt, "speed", bridging::toJs(rt, value.speed, jsInvoker));
+    if (value.accuracy) {
+      result.setProperty(rt, "accuracy", bridging::toJs(rt, value.accuracy.value(), jsInvoker));
+    }
+    if (value.verticalAccuracy) {
+      result.setProperty(rt, "verticalAccuracy", bridging::toJs(rt, value.verticalAccuracy.value(), jsInvoker));
+    }
+    if (value.provider) {
+      result.setProperty(rt, "provider", bridging::toJs(rt, value.provider.value(), jsInvoker));
+    }
+    result.setProperty(rt, "time", bridging::toJs(rt, value.time, jsInvoker));
+    return result;
+  }
+};
+
+
+
+#pragma mark - NativeRNMapsNavModuleRouteTokenOptionsSpec
+
+template <typename P0, typename P1, typename P2>
+struct NativeRNMapsNavModuleRouteTokenOptionsSpec {
+  P0 valid;
+  P1 routeToken;
+  P2 travelMode;
+  bool operator==(const NativeRNMapsNavModuleRouteTokenOptionsSpec &other) const {
+    return valid == other.valid && routeToken == other.routeToken && travelMode == other.travelMode;
+  }
+};
+
+template <typename T>
+struct NativeRNMapsNavModuleRouteTokenOptionsSpecBridging {
+  static T types;
+
+  static T fromJs(
+      jsi::Runtime &rt,
+      const jsi::Object &value,
+      const std::shared_ptr<CallInvoker> &jsInvoker) {
+    T result{
+      bridging::fromJs<decltype(types.valid)>(rt, value.getProperty(rt, "valid"), jsInvoker),
+      bridging::fromJs<decltype(types.routeToken)>(rt, value.getProperty(rt, "routeToken"), jsInvoker),
+      bridging::fromJs<decltype(types.travelMode)>(rt, value.getProperty(rt, "travelMode"), jsInvoker)};
+    return result;
+  }
+
+#ifdef DEBUG
+  static std::optional<bool> validToJs(jsi::Runtime &rt, decltype(types.valid) value) {
+    return bridging::toJs(rt, value);
+  }
+  static jsi::String routeTokenToJs(jsi::Runtime &rt, decltype(types.routeToken) value) {
+    return bridging::toJs(rt, value);
+  }
+  static double travelModeToJs(jsi::Runtime &rt, decltype(types.travelMode) value) {
+    return bridging::toJs(rt, value);
+  }
+#endif
+
+  static jsi::Object toJs(
+      jsi::Runtime &rt,
+      const T &value,
+      const std::shared_ptr<CallInvoker> &jsInvoker) {
+    auto result = facebook::jsi::Object(rt);
+    if (value.valid) {
+      result.setProperty(rt, "valid", bridging::toJs(rt, value.valid.value(), jsInvoker));
+    }
+    result.setProperty(rt, "routeToken", bridging::toJs(rt, value.routeToken, jsInvoker));
+    if (value.travelMode) {
+      result.setProperty(rt, "travelMode", bridging::toJs(rt, value.travelMode.value(), jsInvoker));
+    }
+    return result;
+  }
+};
+
+
+
+#pragma mark - NativeRNMapsNavModuleRoutingOptionsSpec
+
+template <typename P0, typename P1, typename P2, typename P3, typename P4, typename P5, typename P6>
+struct NativeRNMapsNavModuleRoutingOptionsSpec {
+  P0 valid;
+  P1 travelMode;
+  P2 routingStrategy;
+  P3 alternateRoutesStrategy;
+  P4 avoidFerries;
+  P5 avoidTolls;
+  P6 avoidHighways;
+  bool operator==(const NativeRNMapsNavModuleRoutingOptionsSpec &other) const {
+    return valid == other.valid && travelMode == other.travelMode && routingStrategy == other.routingStrategy && alternateRoutesStrategy == other.alternateRoutesStrategy && avoidFerries == other.avoidFerries && avoidTolls == other.avoidTolls && avoidHighways == other.avoidHighways;
+  }
+};
+
+template <typename T>
+struct NativeRNMapsNavModuleRoutingOptionsSpecBridging {
+  static T types;
+
+  static T fromJs(
+      jsi::Runtime &rt,
+      const jsi::Object &value,
+      const std::shared_ptr<CallInvoker> &jsInvoker) {
+    T result{
+      bridging::fromJs<decltype(types.valid)>(rt, value.getProperty(rt, "valid"), jsInvoker),
+      bridging::fromJs<decltype(types.travelMode)>(rt, value.getProperty(rt, "travelMode"), jsInvoker),
+      bridging::fromJs<decltype(types.routingStrategy)>(rt, value.getProperty(rt, "routingStrategy"), jsInvoker),
+      bridging::fromJs<decltype(types.alternateRoutesStrategy)>(rt, value.getProperty(rt, "alternateRoutesStrategy"), jsInvoker),
+      bridging::fromJs<decltype(types.avoidFerries)>(rt, value.getProperty(rt, "avoidFerries"), jsInvoker),
+      bridging::fromJs<decltype(types.avoidTolls)>(rt, value.getProperty(rt, "avoidTolls"), jsInvoker),
+      bridging::fromJs<decltype(types.avoidHighways)>(rt, value.getProperty(rt, "avoidHighways"), jsInvoker)};
+    return result;
+  }
+
+#ifdef DEBUG
+  static std::optional<bool> validToJs(jsi::Runtime &rt, decltype(types.valid) value) {
+    return bridging::toJs(rt, value);
+  }
+  static double travelModeToJs(jsi::Runtime &rt, decltype(types.travelMode) value) {
+    return bridging::toJs(rt, value);
+  }
+  static double routingStrategyToJs(jsi::Runtime &rt, decltype(types.routingStrategy) value) {
+    return bridging::toJs(rt, value);
+  }
+  static double alternateRoutesStrategyToJs(jsi::Runtime &rt, decltype(types.alternateRoutesStrategy) value) {
+    return bridging::toJs(rt, value);
+  }
+  static bool avoidFerriesToJs(jsi::Runtime &rt, decltype(types.avoidFerries) value) {
+    return bridging::toJs(rt, value);
+  }
+  static bool avoidTollsToJs(jsi::Runtime &rt, decltype(types.avoidTolls) value) {
+    return bridging::toJs(rt, value);
+  }
+  static bool avoidHighwaysToJs(jsi::Runtime &rt, decltype(types.avoidHighways) value) {
+    return bridging::toJs(rt, value);
+  }
+#endif
+
+  static jsi::Object toJs(
+      jsi::Runtime &rt,
+      const T &value,
+      const std::shared_ptr<CallInvoker> &jsInvoker) {
+    auto result = facebook::jsi::Object(rt);
+    if (value.valid) {
+      result.setProperty(rt, "valid", bridging::toJs(rt, value.valid.value(), jsInvoker));
+    }
+    if (value.travelMode) {
+      result.setProperty(rt, "travelMode", bridging::toJs(rt, value.travelMode.value(), jsInvoker));
+    }
+    if (value.routingStrategy) {
+      result.setProperty(rt, "routingStrategy", bridging::toJs(rt, value.routingStrategy.value(), jsInvoker));
+    }
+    if (value.alternateRoutesStrategy) {
+      result.setProperty(rt, "alternateRoutesStrategy", bridging::toJs(rt, value.alternateRoutesStrategy.value(), jsInvoker));
+    }
+    if (value.avoidFerries) {
+      result.setProperty(rt, "avoidFerries", bridging::toJs(rt, value.avoidFerries.value(), jsInvoker));
+    }
+    if (value.avoidTolls) {
+      result.setProperty(rt, "avoidTolls", bridging::toJs(rt, value.avoidTolls.value(), jsInvoker));
+    }
+    if (value.avoidHighways) {
+      result.setProperty(rt, "avoidHighways", bridging::toJs(rt, value.avoidHighways.value(), jsInvoker));
+    }
+    return result;
+  }
+};
+
+
+
+#pragma mark - NativeRNMapsNavModuleSpeedAlertOptionsSpec
+
+template <typename P0, typename P1, typename P2, typename P3>
+struct NativeRNMapsNavModuleSpeedAlertOptionsSpec {
+  P0 valid;
+  P1 majorSpeedAlertPercentThreshold;
+  P2 minorSpeedAlertPercentThreshold;
+  P3 severityUpgradeDurationSeconds;
+  bool operator==(const NativeRNMapsNavModuleSpeedAlertOptionsSpec &other) const {
+    return valid == other.valid && majorSpeedAlertPercentThreshold == other.majorSpeedAlertPercentThreshold && minorSpeedAlertPercentThreshold == other.minorSpeedAlertPercentThreshold && severityUpgradeDurationSeconds == other.severityUpgradeDurationSeconds;
+  }
+};
+
+template <typename T>
+struct NativeRNMapsNavModuleSpeedAlertOptionsSpecBridging {
+  static T types;
+
+  static T fromJs(
+      jsi::Runtime &rt,
+      const jsi::Object &value,
+      const std::shared_ptr<CallInvoker> &jsInvoker) {
+    T result{
+      bridging::fromJs<decltype(types.valid)>(rt, value.getProperty(rt, "valid"), jsInvoker),
+      bridging::fromJs<decltype(types.majorSpeedAlertPercentThreshold)>(rt, value.getProperty(rt, "majorSpeedAlertPercentThreshold"), jsInvoker),
+      bridging::fromJs<decltype(types.minorSpeedAlertPercentThreshold)>(rt, value.getProperty(rt, "minorSpeedAlertPercentThreshold"), jsInvoker),
+      bridging::fromJs<decltype(types.severityUpgradeDurationSeconds)>(rt, value.getProperty(rt, "severityUpgradeDurationSeconds"), jsInvoker)};
+    return result;
+  }
+
+#ifdef DEBUG
+  static std::optional<bool> validToJs(jsi::Runtime &rt, decltype(types.valid) value) {
+    return bridging::toJs(rt, value);
+  }
+  static double majorSpeedAlertPercentThresholdToJs(jsi::Runtime &rt, decltype(types.majorSpeedAlertPercentThreshold) value) {
+    return bridging::toJs(rt, value);
+  }
+  static double minorSpeedAlertPercentThresholdToJs(jsi::Runtime &rt, decltype(types.minorSpeedAlertPercentThreshold) value) {
+    return bridging::toJs(rt, value);
+  }
+  static double severityUpgradeDurationSecondsToJs(jsi::Runtime &rt, decltype(types.severityUpgradeDurationSeconds) value) {
+    return bridging::toJs(rt, value);
+  }
+#endif
+
+  static jsi::Object toJs(
+      jsi::Runtime &rt,
+      const T &value,
+      const std::shared_ptr<CallInvoker> &jsInvoker) {
+    auto result = facebook::jsi::Object(rt);
+    if (value.valid) {
+      result.setProperty(rt, "valid", bridging::toJs(rt, value.valid.value(), jsInvoker));
+    }
+    result.setProperty(rt, "majorSpeedAlertPercentThreshold", bridging::toJs(rt, value.majorSpeedAlertPercentThreshold, jsInvoker));
+    result.setProperty(rt, "minorSpeedAlertPercentThreshold", bridging::toJs(rt, value.minorSpeedAlertPercentThreshold, jsInvoker));
+    result.setProperty(rt, "severityUpgradeDurationSeconds", bridging::toJs(rt, value.severityUpgradeDurationSeconds, jsInvoker));
+    return result;
+  }
+};
+
+
+
+#pragma mark - NativeRNMapsNavModuleStepInfoSpec
+
+template <typename P0, typename P1, typename P2, typename P3, typename P4>
+struct NativeRNMapsNavModuleStepInfoSpec {
+  P0 instruction;
+  P1 distanceMeters;
+  P2 durationSeconds;
+  P3 maneuver;
+  P4 position;
+  bool operator==(const NativeRNMapsNavModuleStepInfoSpec &other) const {
+    return instruction == other.instruction && distanceMeters == other.distanceMeters && durationSeconds == other.durationSeconds && maneuver == other.maneuver && position == other.position;
+  }
+};
+
+template <typename T>
+struct NativeRNMapsNavModuleStepInfoSpecBridging {
+  static T types;
+
+  static T fromJs(
+      jsi::Runtime &rt,
+      const jsi::Object &value,
+      const std::shared_ptr<CallInvoker> &jsInvoker) {
+    T result{
+      bridging::fromJs<decltype(types.instruction)>(rt, value.getProperty(rt, "instruction"), jsInvoker),
+      bridging::fromJs<decltype(types.distanceMeters)>(rt, value.getProperty(rt, "distanceMeters"), jsInvoker),
+      bridging::fromJs<decltype(types.durationSeconds)>(rt, value.getProperty(rt, "durationSeconds"), jsInvoker),
+      bridging::fromJs<decltype(types.maneuver)>(rt, value.getProperty(rt, "maneuver"), jsInvoker),
+      bridging::fromJs<decltype(types.position)>(rt, value.getProperty(rt, "position"), jsInvoker)};
+    return result;
+  }
+
+#ifdef DEBUG
+  static jsi::String instructionToJs(jsi::Runtime &rt, decltype(types.instruction) value) {
+    return bridging::toJs(rt, value);
+  }
+  static double distanceMetersToJs(jsi::Runtime &rt, decltype(types.distanceMeters) value) {
+    return bridging::toJs(rt, value);
+  }
+  static double durationSecondsToJs(jsi::Runtime &rt, decltype(types.durationSeconds) value) {
+    return bridging::toJs(rt, value);
+  }
+  static jsi::String maneuverToJs(jsi::Runtime &rt, decltype(types.maneuver) value) {
+    return bridging::toJs(rt, value);
+  }
+  static jsi::Object positionToJs(jsi::Runtime &rt, decltype(types.position) value) {
+    return bridging::toJs(rt, value);
+  }
+#endif
+
+  static jsi::Object toJs(
+      jsi::Runtime &rt,
+      const T &value,
+      const std::shared_ptr<CallInvoker> &jsInvoker) {
+    auto result = facebook::jsi::Object(rt);
+    result.setProperty(rt, "instruction", bridging::toJs(rt, value.instruction, jsInvoker));
+    result.setProperty(rt, "distanceMeters", bridging::toJs(rt, value.distanceMeters, jsInvoker));
+    result.setProperty(rt, "durationSeconds", bridging::toJs(rt, value.durationSeconds, jsInvoker));
+    result.setProperty(rt, "maneuver", bridging::toJs(rt, value.maneuver, jsInvoker));
+    result.setProperty(rt, "position", bridging::toJs(rt, value.position, jsInvoker));
+    return result;
+  }
+};
+
+
+
+#pragma mark - NativeRNMapsNavModuleTermsAndConditionsUIParamsSpec
+
+template <typename P0, typename P1, typename P2, typename P3, typename P4, typename P5>
+struct NativeRNMapsNavModuleTermsAndConditionsUIParamsSpec {
+  P0 valid;
+  P1 backgroundColor;
+  P2 titleColor;
+  P3 mainTextColor;
+  P4 acceptButtonTextColor;
+  P5 cancelButtonTextColor;
+  bool operator==(const NativeRNMapsNavModuleTermsAndConditionsUIParamsSpec &other) const {
+    return valid == other.valid && backgroundColor == other.backgroundColor && titleColor == other.titleColor && mainTextColor == other.mainTextColor && acceptButtonTextColor == other.acceptButtonTextColor && cancelButtonTextColor == other.cancelButtonTextColor;
+  }
+};
+
+template <typename T>
+struct NativeRNMapsNavModuleTermsAndConditionsUIParamsSpecBridging {
+  static T types;
+
+  static T fromJs(
+      jsi::Runtime &rt,
+      const jsi::Object &value,
+      const std::shared_ptr<CallInvoker> &jsInvoker) {
+    T result{
+      bridging::fromJs<decltype(types.valid)>(rt, value.getProperty(rt, "valid"), jsInvoker),
+      bridging::fromJs<decltype(types.backgroundColor)>(rt, value.getProperty(rt, "backgroundColor"), jsInvoker),
+      bridging::fromJs<decltype(types.titleColor)>(rt, value.getProperty(rt, "titleColor"), jsInvoker),
+      bridging::fromJs<decltype(types.mainTextColor)>(rt, value.getProperty(rt, "mainTextColor"), jsInvoker),
+      bridging::fromJs<decltype(types.acceptButtonTextColor)>(rt, value.getProperty(rt, "acceptButtonTextColor"), jsInvoker),
+      bridging::fromJs<decltype(types.cancelButtonTextColor)>(rt, value.getProperty(rt, "cancelButtonTextColor"), jsInvoker)};
+    return result;
+  }
+
+#ifdef DEBUG
+  static std::optional<bool> validToJs(jsi::Runtime &rt, decltype(types.valid) value) {
+    return bridging::toJs(rt, value);
+  }
+  static double backgroundColorToJs(jsi::Runtime &rt, decltype(types.backgroundColor) value) {
+    return bridging::toJs(rt, value);
+  }
+  static double titleColorToJs(jsi::Runtime &rt, decltype(types.titleColor) value) {
+    return bridging::toJs(rt, value);
+  }
+  static double mainTextColorToJs(jsi::Runtime &rt, decltype(types.mainTextColor) value) {
+    return bridging::toJs(rt, value);
+  }
+  static double acceptButtonTextColorToJs(jsi::Runtime &rt, decltype(types.acceptButtonTextColor) value) {
+    return bridging::toJs(rt, value);
+  }
+  static double cancelButtonTextColorToJs(jsi::Runtime &rt, decltype(types.cancelButtonTextColor) value) {
+    return bridging::toJs(rt, value);
+  }
+#endif
+
+  static jsi::Object toJs(
+      jsi::Runtime &rt,
+      const T &value,
+      const std::shared_ptr<CallInvoker> &jsInvoker) {
+    auto result = facebook::jsi::Object(rt);
+    if (value.valid) {
+      result.setProperty(rt, "valid", bridging::toJs(rt, value.valid.value(), jsInvoker));
+    }
+    if (value.backgroundColor) {
+      result.setProperty(rt, "backgroundColor", bridging::toJs(rt, value.backgroundColor.value(), jsInvoker));
+    }
+    if (value.titleColor) {
+      result.setProperty(rt, "titleColor", bridging::toJs(rt, value.titleColor.value(), jsInvoker));
+    }
+    if (value.mainTextColor) {
+      result.setProperty(rt, "mainTextColor", bridging::toJs(rt, value.mainTextColor.value(), jsInvoker));
+    }
+    if (value.acceptButtonTextColor) {
+      result.setProperty(rt, "acceptButtonTextColor", bridging::toJs(rt, value.acceptButtonTextColor.value(), jsInvoker));
+    }
+    if (value.cancelButtonTextColor) {
+      result.setProperty(rt, "cancelButtonTextColor", bridging::toJs(rt, value.cancelButtonTextColor.value(), jsInvoker));
+    }
+    return result;
+  }
+};
+
+
+
+#pragma mark - NativeRNMapsNavModuleTimeAndDistanceSpec
+
+template <typename P0, typename P1, typename P2>
+struct NativeRNMapsNavModuleTimeAndDistanceSpec {
+  P0 delaySeverity;
+  P1 meters;
+  P2 seconds;
+  bool operator==(const NativeRNMapsNavModuleTimeAndDistanceSpec &other) const {
+    return delaySeverity == other.delaySeverity && meters == other.meters && seconds == other.seconds;
+  }
+};
+
+template <typename T>
+struct NativeRNMapsNavModuleTimeAndDistanceSpecBridging {
+  static T types;
+
+  static T fromJs(
+      jsi::Runtime &rt,
+      const jsi::Object &value,
+      const std::shared_ptr<CallInvoker> &jsInvoker) {
+    T result{
+      bridging::fromJs<decltype(types.delaySeverity)>(rt, value.getProperty(rt, "delaySeverity"), jsInvoker),
+      bridging::fromJs<decltype(types.meters)>(rt, value.getProperty(rt, "meters"), jsInvoker),
+      bridging::fromJs<decltype(types.seconds)>(rt, value.getProperty(rt, "seconds"), jsInvoker)};
+    return result;
+  }
+
+#ifdef DEBUG
+  static double delaySeverityToJs(jsi::Runtime &rt, decltype(types.delaySeverity) value) {
+    return bridging::toJs(rt, value);
+  }
+  static double metersToJs(jsi::Runtime &rt, decltype(types.meters) value) {
+    return bridging::toJs(rt, value);
+  }
+  static double secondsToJs(jsi::Runtime &rt, decltype(types.seconds) value) {
+    return bridging::toJs(rt, value);
+  }
+#endif
+
+  static jsi::Object toJs(
+      jsi::Runtime &rt,
+      const T &value,
+      const std::shared_ptr<CallInvoker> &jsInvoker) {
+    auto result = facebook::jsi::Object(rt);
+    result.setProperty(rt, "delaySeverity", bridging::toJs(rt, value.delaySeverity, jsInvoker));
+    result.setProperty(rt, "meters", bridging::toJs(rt, value.meters, jsInvoker));
+    result.setProperty(rt, "seconds", bridging::toJs(rt, value.seconds, jsInvoker));
+    return result;
+  }
+};
+
+
+
+#pragma mark - NativeRNMapsNavModuleTurnByTurnEventSpec
+
+template <typename P0, typename P1, typename P2, typename P3, typename P4, typename P5, typename P6, typename P7, typename P8, typename P9>
+struct NativeRNMapsNavModuleTurnByTurnEventSpec {
+  P0 navState;
+  P1 routeChanged;
+  P2 distanceToCurrentStepMeters;
+  P3 distanceToFinalDestinationMeters;
+  P4 timeToCurrentStepSeconds;
+  P5 distanceToNextDestinationMeters;
+  P6 timeToNextDestinationSeconds;
+  P7 timeToFinalDestinationSeconds;
+  P8 currentStep;
+  P9 getRemainingSteps;
+  bool operator==(const NativeRNMapsNavModuleTurnByTurnEventSpec &other) const {
+    return navState == other.navState && routeChanged == other.routeChanged && distanceToCurrentStepMeters == other.distanceToCurrentStepMeters && distanceToFinalDestinationMeters == other.distanceToFinalDestinationMeters && timeToCurrentStepSeconds == other.timeToCurrentStepSeconds && distanceToNextDestinationMeters == other.distanceToNextDestinationMeters && timeToNextDestinationSeconds == other.timeToNextDestinationSeconds && timeToFinalDestinationSeconds == other.timeToFinalDestinationSeconds && currentStep == other.currentStep && getRemainingSteps == other.getRemainingSteps;
+  }
+};
+
+template <typename T>
+struct NativeRNMapsNavModuleTurnByTurnEventSpecBridging {
+  static T types;
+
+  static T fromJs(
+      jsi::Runtime &rt,
+      const jsi::Object &value,
+      const std::shared_ptr<CallInvoker> &jsInvoker) {
+    T result{
+      bridging::fromJs<decltype(types.navState)>(rt, value.getProperty(rt, "navState"), jsInvoker),
+      bridging::fromJs<decltype(types.routeChanged)>(rt, value.getProperty(rt, "routeChanged"), jsInvoker),
+      bridging::fromJs<decltype(types.distanceToCurrentStepMeters)>(rt, value.getProperty(rt, "distanceToCurrentStepMeters"), jsInvoker),
+      bridging::fromJs<decltype(types.distanceToFinalDestinationMeters)>(rt, value.getProperty(rt, "distanceToFinalDestinationMeters"), jsInvoker),
+      bridging::fromJs<decltype(types.timeToCurrentStepSeconds)>(rt, value.getProperty(rt, "timeToCurrentStepSeconds"), jsInvoker),
+      bridging::fromJs<decltype(types.distanceToNextDestinationMeters)>(rt, value.getProperty(rt, "distanceToNextDestinationMeters"), jsInvoker),
+      bridging::fromJs<decltype(types.timeToNextDestinationSeconds)>(rt, value.getProperty(rt, "timeToNextDestinationSeconds"), jsInvoker),
+      bridging::fromJs<decltype(types.timeToFinalDestinationSeconds)>(rt, value.getProperty(rt, "timeToFinalDestinationSeconds"), jsInvoker),
+      bridging::fromJs<decltype(types.currentStep)>(rt, value.getProperty(rt, "currentStep"), jsInvoker),
+      bridging::fromJs<decltype(types.getRemainingSteps)>(rt, value.getProperty(rt, "getRemainingSteps"), jsInvoker)};
+    return result;
+  }
+
+#ifdef DEBUG
+  static double navStateToJs(jsi::Runtime &rt, decltype(types.navState) value) {
+    return bridging::toJs(rt, value);
+  }
+  static bool routeChangedToJs(jsi::Runtime &rt, decltype(types.routeChanged) value) {
+    return bridging::toJs(rt, value);
+  }
+  static double distanceToCurrentStepMetersToJs(jsi::Runtime &rt, decltype(types.distanceToCurrentStepMeters) value) {
+    return bridging::toJs(rt, value);
+  }
+  static double distanceToFinalDestinationMetersToJs(jsi::Runtime &rt, decltype(types.distanceToFinalDestinationMeters) value) {
+    return bridging::toJs(rt, value);
+  }
+  static double timeToCurrentStepSecondsToJs(jsi::Runtime &rt, decltype(types.timeToCurrentStepSeconds) value) {
+    return bridging::toJs(rt, value);
+  }
+  static double distanceToNextDestinationMetersToJs(jsi::Runtime &rt, decltype(types.distanceToNextDestinationMeters) value) {
+    return bridging::toJs(rt, value);
+  }
+  static double timeToNextDestinationSecondsToJs(jsi::Runtime &rt, decltype(types.timeToNextDestinationSeconds) value) {
+    return bridging::toJs(rt, value);
+  }
+  static double timeToFinalDestinationSecondsToJs(jsi::Runtime &rt, decltype(types.timeToFinalDestinationSeconds) value) {
+    return bridging::toJs(rt, value);
+  }
+  static jsi::Object currentStepToJs(jsi::Runtime &rt, decltype(types.currentStep) value) {
+    return bridging::toJs(rt, value);
+  }
+  static jsi::Array getRemainingStepsToJs(jsi::Runtime &rt, decltype(types.getRemainingSteps) value) {
+    return bridging::toJs(rt, value);
+  }
+#endif
+
+  static jsi::Object toJs(
+      jsi::Runtime &rt,
+      const T &value,
+      const std::shared_ptr<CallInvoker> &jsInvoker) {
+    auto result = facebook::jsi::Object(rt);
+    result.setProperty(rt, "navState", bridging::toJs(rt, value.navState, jsInvoker));
+    result.setProperty(rt, "routeChanged", bridging::toJs(rt, value.routeChanged, jsInvoker));
+    if (value.distanceToCurrentStepMeters) {
+      result.setProperty(rt, "distanceToCurrentStepMeters", bridging::toJs(rt, value.distanceToCurrentStepMeters.value(), jsInvoker));
+    }
+    if (value.distanceToFinalDestinationMeters) {
+      result.setProperty(rt, "distanceToFinalDestinationMeters", bridging::toJs(rt, value.distanceToFinalDestinationMeters.value(), jsInvoker));
+    }
+    if (value.timeToCurrentStepSeconds) {
+      result.setProperty(rt, "timeToCurrentStepSeconds", bridging::toJs(rt, value.timeToCurrentStepSeconds.value(), jsInvoker));
+    }
+    if (value.distanceToNextDestinationMeters) {
+      result.setProperty(rt, "distanceToNextDestinationMeters", bridging::toJs(rt, value.distanceToNextDestinationMeters.value(), jsInvoker));
+    }
+    if (value.timeToNextDestinationSeconds) {
+      result.setProperty(rt, "timeToNextDestinationSeconds", bridging::toJs(rt, value.timeToNextDestinationSeconds.value(), jsInvoker));
+    }
+    if (value.timeToFinalDestinationSeconds) {
+      result.setProperty(rt, "timeToFinalDestinationSeconds", bridging::toJs(rt, value.timeToFinalDestinationSeconds.value(), jsInvoker));
+    }
+    if (value.currentStep) {
+      result.setProperty(rt, "currentStep", bridging::toJs(rt, value.currentStep.value(), jsInvoker));
+    }
+    result.setProperty(rt, "getRemainingSteps", bridging::toJs(rt, value.getRemainingSteps, jsInvoker));
+    return result;
+  }
+};
+
+
+
+#pragma mark - NativeRNMapsNavModuleWaypointSpec
+
+template <typename P0, typename P1, typename P2, typename P3, typename P4, typename P5>
+struct NativeRNMapsNavModuleWaypointSpec {
+  P0 placeId;
+  P1 title;
+  P2 vehicleStopover;
+  P3 preferSameSideOfRoad;
+  P4 position;
+  P5 preferredHeading;
+  bool operator==(const NativeRNMapsNavModuleWaypointSpec &other) const {
+    return placeId == other.placeId && title == other.title && vehicleStopover == other.vehicleStopover && preferSameSideOfRoad == other.preferSameSideOfRoad && position == other.position && preferredHeading == other.preferredHeading;
+  }
+};
+
+template <typename T>
+struct NativeRNMapsNavModuleWaypointSpecBridging {
+  static T types;
+
+  static T fromJs(
+      jsi::Runtime &rt,
+      const jsi::Object &value,
+      const std::shared_ptr<CallInvoker> &jsInvoker) {
+    T result{
+      bridging::fromJs<decltype(types.placeId)>(rt, value.getProperty(rt, "placeId"), jsInvoker),
+      bridging::fromJs<decltype(types.title)>(rt, value.getProperty(rt, "title"), jsInvoker),
+      bridging::fromJs<decltype(types.vehicleStopover)>(rt, value.getProperty(rt, "vehicleStopover"), jsInvoker),
+      bridging::fromJs<decltype(types.preferSameSideOfRoad)>(rt, value.getProperty(rt, "preferSameSideOfRoad"), jsInvoker),
+      bridging::fromJs<decltype(types.position)>(rt, value.getProperty(rt, "position"), jsInvoker),
+      bridging::fromJs<decltype(types.preferredHeading)>(rt, value.getProperty(rt, "preferredHeading"), jsInvoker)};
+    return result;
+  }
+
+#ifdef DEBUG
+  static jsi::String placeIdToJs(jsi::Runtime &rt, decltype(types.placeId) value) {
+    return bridging::toJs(rt, value);
+  }
+  static jsi::String titleToJs(jsi::Runtime &rt, decltype(types.title) value) {
+    return bridging::toJs(rt, value);
+  }
+  static bool vehicleStopoverToJs(jsi::Runtime &rt, decltype(types.vehicleStopover) value) {
+    return bridging::toJs(rt, value);
+  }
+  static bool preferSameSideOfRoadToJs(jsi::Runtime &rt, decltype(types.preferSameSideOfRoad) value) {
+    return bridging::toJs(rt, value);
+  }
+  static jsi::Object positionToJs(jsi::Runtime &rt, decltype(types.position) value) {
+    return bridging::toJs(rt, value);
+  }
+  static double preferredHeadingToJs(jsi::Runtime &rt, decltype(types.preferredHeading) value) {
+    return bridging::toJs(rt, value);
+  }
+#endif
+
+  static jsi::Object toJs(
+      jsi::Runtime &rt,
+      const T &value,
+      const std::shared_ptr<CallInvoker> &jsInvoker) {
+    auto result = facebook::jsi::Object(rt);
+    if (value.placeId) {
+      result.setProperty(rt, "placeId", bridging::toJs(rt, value.placeId.value(), jsInvoker));
+    }
+    if (value.title) {
+      result.setProperty(rt, "title", bridging::toJs(rt, value.title.value(), jsInvoker));
+    }
+    if (value.vehicleStopover) {
+      result.setProperty(rt, "vehicleStopover", bridging::toJs(rt, value.vehicleStopover.value(), jsInvoker));
+    }
+    if (value.preferSameSideOfRoad) {
+      result.setProperty(rt, "preferSameSideOfRoad", bridging::toJs(rt, value.preferSameSideOfRoad.value(), jsInvoker));
+    }
+    if (value.position) {
+      result.setProperty(rt, "position", bridging::toJs(rt, value.position.value(), jsInvoker));
+    }
+    if (value.preferredHeading) {
+      result.setProperty(rt, "preferredHeading", bridging::toJs(rt, value.preferredHeading.value(), jsInvoker));
+    }
+    return result;
+  }
+};
+
+
+template <typename T>
+class JSI_EXPORT NativeRNMapsNavModuleCxxSpec : public TurboModule {
+public:
+  static constexpr std::string_view kModuleName = "RNMapsNavModule";
+
+protected:
+  NativeRNMapsNavModuleCxxSpec(std::shared_ptr<CallInvoker> jsInvoker) : TurboModule(std::string{NativeRNMapsNavModuleCxxSpec::kModuleName}, jsInvoker) {
+    methodMap_["areTermsAccepted"] = MethodMetadata {.argCount = 0, .invoker = __areTermsAccepted};
+    methodMap_["showTermsAndConditionsDialog"] = MethodMetadata {.argCount = 4, .invoker = __showTermsAndConditionsDialog};
+    methodMap_["resetTermsAccepted"] = MethodMetadata {.argCount = 0, .invoker = __resetTermsAccepted};
+    methodMap_["initializeNavigationSession"] = MethodMetadata {.argCount = 2, .invoker = __initializeNavigationSession};
+    methodMap_["cleanup"] = MethodMetadata {.argCount = 0, .invoker = __cleanup};
+    methodMap_["setDestinations"] = MethodMetadata {.argCount = 4, .invoker = __setDestinations};
+    methodMap_["continueToNextDestination"] = MethodMetadata {.argCount = 0, .invoker = __continueToNextDestination};
+    methodMap_["clearDestinations"] = MethodMetadata {.argCount = 0, .invoker = __clearDestinations};
+    methodMap_["startGuidance"] = MethodMetadata {.argCount = 0, .invoker = __startGuidance};
+    methodMap_["stopGuidance"] = MethodMetadata {.argCount = 0, .invoker = __stopGuidance};
+    methodMap_["setSpeedAlertOptions"] = MethodMetadata {.argCount = 1, .invoker = __setSpeedAlertOptions};
+    methodMap_["setAbnormalTerminatingReportingEnabled"] = MethodMetadata {.argCount = 1, .invoker = __setAbnormalTerminatingReportingEnabled};
+    methodMap_["setAudioGuidanceType"] = MethodMetadata {.argCount = 1, .invoker = __setAudioGuidanceType};
+    methodMap_["setAudioGuidanceSettings"] = MethodMetadata {.argCount = 1, .invoker = __setAudioGuidanceSettings};
+    methodMap_["setBackgroundLocationUpdatesEnabled"] = MethodMetadata {.argCount = 1, .invoker = __setBackgroundLocationUpdatesEnabled};
+    methodMap_["setTurnByTurnLoggingEnabled"] = MethodMetadata {.argCount = 1, .invoker = __setTurnByTurnLoggingEnabled};
+    methodMap_["getCurrentRouteSegment"] = MethodMetadata {.argCount = 0, .invoker = __getCurrentRouteSegment};
+    methodMap_["getRouteSegments"] = MethodMetadata {.argCount = 0, .invoker = __getRouteSegments};
+    methodMap_["getCurrentTimeAndDistance"] = MethodMetadata {.argCount = 0, .invoker = __getCurrentTimeAndDistance};
+    methodMap_["getTraveledPath"] = MethodMetadata {.argCount = 0, .invoker = __getTraveledPath};
+    methodMap_["getNavSDKVersion"] = MethodMetadata {.argCount = 0, .invoker = __getNavSDKVersion};
+    methodMap_["stopUpdatingLocation"] = MethodMetadata {.argCount = 0, .invoker = __stopUpdatingLocation};
+    methodMap_["startUpdatingLocation"] = MethodMetadata {.argCount = 0, .invoker = __startUpdatingLocation};
+    methodMap_["simulateLocation"] = MethodMetadata {.argCount = 1, .invoker = __simulateLocation};
+    methodMap_["resumeLocationSimulation"] = MethodMetadata {.argCount = 0, .invoker = __resumeLocationSimulation};
+    methodMap_["pauseLocationSimulation"] = MethodMetadata {.argCount = 0, .invoker = __pauseLocationSimulation};
+    methodMap_["simulateLocationsAlongExistingRoute"] = MethodMetadata {.argCount = 1, .invoker = __simulateLocationsAlongExistingRoute};
+    methodMap_["stopLocationSimulation"] = MethodMetadata {.argCount = 0, .invoker = __stopLocationSimulation};
+    eventEmitterMap_["onLocationChanged"] = std::make_shared<AsyncEventEmitter<jsi::Value>>();
+    eventEmitterMap_["onArrival"] = std::make_shared<AsyncEventEmitter<jsi::Value>>();
+    eventEmitterMap_["onRemainingTimeOrDistanceChanged"] = std::make_shared<AsyncEventEmitter<jsi::Value>>();
+    eventEmitterMap_["onRouteChanged"] = std::make_shared<AsyncEventEmitter<>>();
+    eventEmitterMap_["onReroutingRequestedByOffRoute"] = std::make_shared<AsyncEventEmitter<>>();
+    eventEmitterMap_["onStartGuidance"] = std::make_shared<AsyncEventEmitter<>>();
+    eventEmitterMap_["onTurnByTurn"] = std::make_shared<AsyncEventEmitter<jsi::Value>>();
+    eventEmitterMap_["onRawLocationChanged"] = std::make_shared<AsyncEventEmitter<jsi::Value>>();
+    eventEmitterMap_["onTrafficUpdated"] = std::make_shared<AsyncEventEmitter<>>();
+    eventEmitterMap_["logDebugInfo"] = std::make_shared<AsyncEventEmitter<jsi::Value>>();
+  }
+  
+  template <typename OnLocationChangedType> void emitOnLocationChanged(OnLocationChangedType value) {
+    static_assert(bridging::supportsFromJs<OnLocationChangedType, jsi::Object>, "value cannnot be converted to jsi::Object");
+    static_cast<AsyncEventEmitter<jsi::Value>&>(*eventEmitterMap_["onLocationChanged"]).emit([jsInvoker = jsInvoker_, eventValue = value](jsi::Runtime& rt) -> jsi::Value {
+      return bridging::toJs(rt, eventValue, jsInvoker);
+    });
+  }
+
+  template <typename OnArrivalType> void emitOnArrival(OnArrivalType value) {
+    static_assert(bridging::supportsFromJs<OnArrivalType, jsi::Object>, "value cannnot be converted to jsi::Object");
+    static_cast<AsyncEventEmitter<jsi::Value>&>(*eventEmitterMap_["onArrival"]).emit([jsInvoker = jsInvoker_, eventValue = value](jsi::Runtime& rt) -> jsi::Value {
+      return bridging::toJs(rt, eventValue, jsInvoker);
+    });
+  }
+
+  template <typename OnRemainingTimeOrDistanceChangedType> void emitOnRemainingTimeOrDistanceChanged(OnRemainingTimeOrDistanceChangedType value) {
+    static_assert(bridging::supportsFromJs<OnRemainingTimeOrDistanceChangedType, jsi::Object>, "value cannnot be converted to jsi::Object");
+    static_cast<AsyncEventEmitter<jsi::Value>&>(*eventEmitterMap_["onRemainingTimeOrDistanceChanged"]).emit([jsInvoker = jsInvoker_, eventValue = value](jsi::Runtime& rt) -> jsi::Value {
+      return bridging::toJs(rt, eventValue, jsInvoker);
+    });
+  }
+
+  void emitOnRouteChanged() {
+    static_cast<AsyncEventEmitter<>&>(*eventEmitterMap_["onRouteChanged"]).emit();
+  }
+
+  void emitOnReroutingRequestedByOffRoute() {
+    static_cast<AsyncEventEmitter<>&>(*eventEmitterMap_["onReroutingRequestedByOffRoute"]).emit();
+  }
+
+  void emitOnStartGuidance() {
+    static_cast<AsyncEventEmitter<>&>(*eventEmitterMap_["onStartGuidance"]).emit();
+  }
+
+  template <typename OnTurnByTurnType> void emitOnTurnByTurn(OnTurnByTurnType value) {
+    static_assert(bridging::supportsFromJs<OnTurnByTurnType, jsi::Object>, "value cannnot be converted to jsi::Object");
+    static_cast<AsyncEventEmitter<jsi::Value>&>(*eventEmitterMap_["onTurnByTurn"]).emit([jsInvoker = jsInvoker_, eventValue = value](jsi::Runtime& rt) -> jsi::Value {
+      return bridging::toJs(rt, eventValue, jsInvoker);
+    });
+  }
+
+  template <typename OnRawLocationChangedType> void emitOnRawLocationChanged(OnRawLocationChangedType value) {
+    static_assert(bridging::supportsFromJs<OnRawLocationChangedType, jsi::Object>, "value cannnot be converted to jsi::Object");
+    static_cast<AsyncEventEmitter<jsi::Value>&>(*eventEmitterMap_["onRawLocationChanged"]).emit([jsInvoker = jsInvoker_, eventValue = value](jsi::Runtime& rt) -> jsi::Value {
+      return bridging::toJs(rt, eventValue, jsInvoker);
+    });
+  }
+
+  void emitOnTrafficUpdated() {
+    static_cast<AsyncEventEmitter<>&>(*eventEmitterMap_["onTrafficUpdated"]).emit();
+  }
+
+  template <typename LogDebugInfoType> void emitLogDebugInfo(LogDebugInfoType value) {
+    static_assert(bridging::supportsFromJs<LogDebugInfoType, jsi::Object>, "value cannnot be converted to jsi::Object");
+    static_cast<AsyncEventEmitter<jsi::Value>&>(*eventEmitterMap_["logDebugInfo"]).emit([jsInvoker = jsInvoker_, eventValue = value](jsi::Runtime& rt) -> jsi::Value {
+      return bridging::toJs(rt, eventValue, jsInvoker);
+    });
+  }
+private:
+  static jsi::Value __areTermsAccepted(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* /*args*/, size_t /*count*/) {
+    static_assert(
+      bridging::getParameterCount(&T::areTermsAccepted) == 1,
+      "Expected areTermsAccepted(...) to have 1 parameters");
+    return bridging::callFromJs<jsi::Value>(rt, &T::areTermsAccepted,  static_cast<NativeRNMapsNavModuleCxxSpec*>(&turboModule)->jsInvoker_, static_cast<T*>(&turboModule));
+  }
+
+  static jsi::Value __showTermsAndConditionsDialog(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+    static_assert(
+      bridging::getParameterCount(&T::showTermsAndConditionsDialog) == 5,
+      "Expected showTermsAndConditionsDialog(...) to have 5 parameters");
+    return bridging::callFromJs<jsi::Value>(rt, &T::showTermsAndConditionsDialog,  static_cast<NativeRNMapsNavModuleCxxSpec*>(&turboModule)->jsInvoker_, static_cast<T*>(&turboModule),
+      count <= 0 ? throw jsi::JSError(rt, "Expected argument in position 0 to be passed") : args[0].asString(rt),
+      count <= 1 ? throw jsi::JSError(rt, "Expected argument in position 1 to be passed") : args[1].asString(rt),
+      count <= 2 ? throw jsi::JSError(rt, "Expected argument in position 2 to be passed") : args[2].asBool(),
+      count <= 3 ? throw jsi::JSError(rt, "Expected argument in position 3 to be passed") : args[3].asObject(rt));
+  }
+
+  static jsi::Value __resetTermsAccepted(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* /*args*/, size_t /*count*/) {
+    static_assert(
+      bridging::getParameterCount(&T::resetTermsAccepted) == 1,
+      "Expected resetTermsAccepted(...) to have 1 parameters");
+    return bridging::callFromJs<jsi::Value>(rt, &T::resetTermsAccepted,  static_cast<NativeRNMapsNavModuleCxxSpec*>(&turboModule)->jsInvoker_, static_cast<T*>(&turboModule));
+  }
+
+  static jsi::Value __initializeNavigationSession(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+    static_assert(
+      bridging::getParameterCount(&T::initializeNavigationSession) == 3,
+      "Expected initializeNavigationSession(...) to have 3 parameters");
+    return bridging::callFromJs<jsi::Value>(rt, &T::initializeNavigationSession,  static_cast<NativeRNMapsNavModuleCxxSpec*>(&turboModule)->jsInvoker_, static_cast<T*>(&turboModule),
+      count <= 0 ? throw jsi::JSError(rt, "Expected argument in position 0 to be passed") : args[0].asBool(),
+      count <= 1 ? throw jsi::JSError(rt, "Expected argument in position 1 to be passed") : args[1].asNumber());
+  }
+
+  static jsi::Value __cleanup(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* /*args*/, size_t /*count*/) {
+    static_assert(
+      bridging::getParameterCount(&T::cleanup) == 1,
+      "Expected cleanup(...) to have 1 parameters");
+    return bridging::callFromJs<jsi::Value>(rt, &T::cleanup,  static_cast<NativeRNMapsNavModuleCxxSpec*>(&turboModule)->jsInvoker_, static_cast<T*>(&turboModule));
+  }
+
+  static jsi::Value __setDestinations(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+    static_assert(
+      bridging::getParameterCount(&T::setDestinations) == 5,
+      "Expected setDestinations(...) to have 5 parameters");
+    return bridging::callFromJs<jsi::Value>(rt, &T::setDestinations,  static_cast<NativeRNMapsNavModuleCxxSpec*>(&turboModule)->jsInvoker_, static_cast<T*>(&turboModule),
+      count <= 0 ? throw jsi::JSError(rt, "Expected argument in position 0 to be passed") : args[0].asObject(rt).asArray(rt),
+      count <= 1 ? throw jsi::JSError(rt, "Expected argument in position 1 to be passed") : args[1].asObject(rt),
+      count <= 2 ? throw jsi::JSError(rt, "Expected argument in position 2 to be passed") : args[2].asObject(rt),
+      count <= 3 ? throw jsi::JSError(rt, "Expected argument in position 3 to be passed") : args[3].asObject(rt));
+  }
+
+  static jsi::Value __continueToNextDestination(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* /*args*/, size_t /*count*/) {
+    static_assert(
+      bridging::getParameterCount(&T::continueToNextDestination) == 1,
+      "Expected continueToNextDestination(...) to have 1 parameters");
+    return bridging::callFromJs<jsi::Value>(rt, &T::continueToNextDestination,  static_cast<NativeRNMapsNavModuleCxxSpec*>(&turboModule)->jsInvoker_, static_cast<T*>(&turboModule));
+  }
+
+  static jsi::Value __clearDestinations(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* /*args*/, size_t /*count*/) {
+    static_assert(
+      bridging::getParameterCount(&T::clearDestinations) == 1,
+      "Expected clearDestinations(...) to have 1 parameters");
+    return bridging::callFromJs<jsi::Value>(rt, &T::clearDestinations,  static_cast<NativeRNMapsNavModuleCxxSpec*>(&turboModule)->jsInvoker_, static_cast<T*>(&turboModule));
+  }
+
+  static jsi::Value __startGuidance(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* /*args*/, size_t /*count*/) {
+    static_assert(
+      bridging::getParameterCount(&T::startGuidance) == 1,
+      "Expected startGuidance(...) to have 1 parameters");
+    return bridging::callFromJs<jsi::Value>(rt, &T::startGuidance,  static_cast<NativeRNMapsNavModuleCxxSpec*>(&turboModule)->jsInvoker_, static_cast<T*>(&turboModule));
+  }
+
+  static jsi::Value __stopGuidance(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* /*args*/, size_t /*count*/) {
+    static_assert(
+      bridging::getParameterCount(&T::stopGuidance) == 1,
+      "Expected stopGuidance(...) to have 1 parameters");
+    return bridging::callFromJs<jsi::Value>(rt, &T::stopGuidance,  static_cast<NativeRNMapsNavModuleCxxSpec*>(&turboModule)->jsInvoker_, static_cast<T*>(&turboModule));
+  }
+
+  static jsi::Value __setSpeedAlertOptions(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+    static_assert(
+      bridging::getParameterCount(&T::setSpeedAlertOptions) == 2,
+      "Expected setSpeedAlertOptions(...) to have 2 parameters");
+    return bridging::callFromJs<jsi::Value>(rt, &T::setSpeedAlertOptions,  static_cast<NativeRNMapsNavModuleCxxSpec*>(&turboModule)->jsInvoker_, static_cast<T*>(&turboModule),
+      count <= 0 ? throw jsi::JSError(rt, "Expected argument in position 0 to be passed") : args[0].asObject(rt));
+  }
+
+  static jsi::Value __setAbnormalTerminatingReportingEnabled(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+    static_assert(
+      bridging::getParameterCount(&T::setAbnormalTerminatingReportingEnabled) == 2,
+      "Expected setAbnormalTerminatingReportingEnabled(...) to have 2 parameters");
+    bridging::callFromJs<void>(rt, &T::setAbnormalTerminatingReportingEnabled,  static_cast<NativeRNMapsNavModuleCxxSpec*>(&turboModule)->jsInvoker_, static_cast<T*>(&turboModule),
+      count <= 0 ? throw jsi::JSError(rt, "Expected argument in position 0 to be passed") : args[0].asBool());return jsi::Value::undefined();
+  }
+
+  static jsi::Value __setAudioGuidanceType(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+    static_assert(
+      bridging::getParameterCount(&T::setAudioGuidanceType) == 2,
+      "Expected setAudioGuidanceType(...) to have 2 parameters");
+    return bridging::callFromJs<jsi::Value>(rt, &T::setAudioGuidanceType,  static_cast<NativeRNMapsNavModuleCxxSpec*>(&turboModule)->jsInvoker_, static_cast<T*>(&turboModule),
+      count <= 0 ? throw jsi::JSError(rt, "Expected argument in position 0 to be passed") : args[0].asNumber());
+  }
+
+  static jsi::Value __setAudioGuidanceSettings(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+    static_assert(
+      bridging::getParameterCount(&T::setAudioGuidanceSettings) == 2,
+      "Expected setAudioGuidanceSettings(...) to have 2 parameters");
+    return bridging::callFromJs<jsi::Value>(rt, &T::setAudioGuidanceSettings,  static_cast<NativeRNMapsNavModuleCxxSpec*>(&turboModule)->jsInvoker_, static_cast<T*>(&turboModule),
+      count <= 0 ? throw jsi::JSError(rt, "Expected argument in position 0 to be passed") : args[0].asObject(rt));
+  }
+
+  static jsi::Value __setBackgroundLocationUpdatesEnabled(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+    static_assert(
+      bridging::getParameterCount(&T::setBackgroundLocationUpdatesEnabled) == 2,
+      "Expected setBackgroundLocationUpdatesEnabled(...) to have 2 parameters");
+    bridging::callFromJs<void>(rt, &T::setBackgroundLocationUpdatesEnabled,  static_cast<NativeRNMapsNavModuleCxxSpec*>(&turboModule)->jsInvoker_, static_cast<T*>(&turboModule),
+      count <= 0 ? throw jsi::JSError(rt, "Expected argument in position 0 to be passed") : args[0].asBool());return jsi::Value::undefined();
+  }
+
+  static jsi::Value __setTurnByTurnLoggingEnabled(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+    static_assert(
+      bridging::getParameterCount(&T::setTurnByTurnLoggingEnabled) == 2,
+      "Expected setTurnByTurnLoggingEnabled(...) to have 2 parameters");
+    bridging::callFromJs<void>(rt, &T::setTurnByTurnLoggingEnabled,  static_cast<NativeRNMapsNavModuleCxxSpec*>(&turboModule)->jsInvoker_, static_cast<T*>(&turboModule),
+      count <= 0 ? throw jsi::JSError(rt, "Expected argument in position 0 to be passed") : args[0].asBool());return jsi::Value::undefined();
+  }
+
+  static jsi::Value __getCurrentRouteSegment(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* /*args*/, size_t /*count*/) {
+    static_assert(
+      bridging::getParameterCount(&T::getCurrentRouteSegment) == 1,
+      "Expected getCurrentRouteSegment(...) to have 1 parameters");
+    return bridging::callFromJs<jsi::Value>(rt, &T::getCurrentRouteSegment,  static_cast<NativeRNMapsNavModuleCxxSpec*>(&turboModule)->jsInvoker_, static_cast<T*>(&turboModule));
+  }
+
+  static jsi::Value __getRouteSegments(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* /*args*/, size_t /*count*/) {
+    static_assert(
+      bridging::getParameterCount(&T::getRouteSegments) == 1,
+      "Expected getRouteSegments(...) to have 1 parameters");
+    return bridging::callFromJs<jsi::Value>(rt, &T::getRouteSegments,  static_cast<NativeRNMapsNavModuleCxxSpec*>(&turboModule)->jsInvoker_, static_cast<T*>(&turboModule));
+  }
+
+  static jsi::Value __getCurrentTimeAndDistance(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* /*args*/, size_t /*count*/) {
+    static_assert(
+      bridging::getParameterCount(&T::getCurrentTimeAndDistance) == 1,
+      "Expected getCurrentTimeAndDistance(...) to have 1 parameters");
+    return bridging::callFromJs<jsi::Value>(rt, &T::getCurrentTimeAndDistance,  static_cast<NativeRNMapsNavModuleCxxSpec*>(&turboModule)->jsInvoker_, static_cast<T*>(&turboModule));
+  }
+
+  static jsi::Value __getTraveledPath(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* /*args*/, size_t /*count*/) {
+    static_assert(
+      bridging::getParameterCount(&T::getTraveledPath) == 1,
+      "Expected getTraveledPath(...) to have 1 parameters");
+    return bridging::callFromJs<jsi::Value>(rt, &T::getTraveledPath,  static_cast<NativeRNMapsNavModuleCxxSpec*>(&turboModule)->jsInvoker_, static_cast<T*>(&turboModule));
+  }
+
+  static jsi::Value __getNavSDKVersion(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* /*args*/, size_t /*count*/) {
+    static_assert(
+      bridging::getParameterCount(&T::getNavSDKVersion) == 1,
+      "Expected getNavSDKVersion(...) to have 1 parameters");
+    return bridging::callFromJs<jsi::Value>(rt, &T::getNavSDKVersion,  static_cast<NativeRNMapsNavModuleCxxSpec*>(&turboModule)->jsInvoker_, static_cast<T*>(&turboModule));
+  }
+
+  static jsi::Value __stopUpdatingLocation(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* /*args*/, size_t /*count*/) {
+    static_assert(
+      bridging::getParameterCount(&T::stopUpdatingLocation) == 1,
+      "Expected stopUpdatingLocation(...) to have 1 parameters");
+    return bridging::callFromJs<jsi::Value>(rt, &T::stopUpdatingLocation,  static_cast<NativeRNMapsNavModuleCxxSpec*>(&turboModule)->jsInvoker_, static_cast<T*>(&turboModule));
+  }
+
+  static jsi::Value __startUpdatingLocation(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* /*args*/, size_t /*count*/) {
+    static_assert(
+      bridging::getParameterCount(&T::startUpdatingLocation) == 1,
+      "Expected startUpdatingLocation(...) to have 1 parameters");
+    return bridging::callFromJs<jsi::Value>(rt, &T::startUpdatingLocation,  static_cast<NativeRNMapsNavModuleCxxSpec*>(&turboModule)->jsInvoker_, static_cast<T*>(&turboModule));
+  }
+
+  static jsi::Value __simulateLocation(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+    static_assert(
+      bridging::getParameterCount(&T::simulateLocation) == 2,
+      "Expected simulateLocation(...) to have 2 parameters");
+    return bridging::callFromJs<jsi::Value>(rt, &T::simulateLocation,  static_cast<NativeRNMapsNavModuleCxxSpec*>(&turboModule)->jsInvoker_, static_cast<T*>(&turboModule),
+      count <= 0 ? throw jsi::JSError(rt, "Expected argument in position 0 to be passed") : args[0].asObject(rt));
+  }
+
+  static jsi::Value __resumeLocationSimulation(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* /*args*/, size_t /*count*/) {
+    static_assert(
+      bridging::getParameterCount(&T::resumeLocationSimulation) == 1,
+      "Expected resumeLocationSimulation(...) to have 1 parameters");
+    return bridging::callFromJs<jsi::Value>(rt, &T::resumeLocationSimulation,  static_cast<NativeRNMapsNavModuleCxxSpec*>(&turboModule)->jsInvoker_, static_cast<T*>(&turboModule));
+  }
+
+  static jsi::Value __pauseLocationSimulation(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* /*args*/, size_t /*count*/) {
+    static_assert(
+      bridging::getParameterCount(&T::pauseLocationSimulation) == 1,
+      "Expected pauseLocationSimulation(...) to have 1 parameters");
+    return bridging::callFromJs<jsi::Value>(rt, &T::pauseLocationSimulation,  static_cast<NativeRNMapsNavModuleCxxSpec*>(&turboModule)->jsInvoker_, static_cast<T*>(&turboModule));
+  }
+
+  static jsi::Value __simulateLocationsAlongExistingRoute(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+    static_assert(
+      bridging::getParameterCount(&T::simulateLocationsAlongExistingRoute) == 2,
+      "Expected simulateLocationsAlongExistingRoute(...) to have 2 parameters");
+    return bridging::callFromJs<jsi::Value>(rt, &T::simulateLocationsAlongExistingRoute,  static_cast<NativeRNMapsNavModuleCxxSpec*>(&turboModule)->jsInvoker_, static_cast<T*>(&turboModule),
+      count <= 0 ? throw jsi::JSError(rt, "Expected argument in position 0 to be passed") : args[0].asObject(rt));
+  }
+
+  static jsi::Value __stopLocationSimulation(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* /*args*/, size_t /*count*/) {
+    static_assert(
+      bridging::getParameterCount(&T::stopLocationSimulation) == 1,
+      "Expected stopLocationSimulation(...) to have 1 parameters");
+    return bridging::callFromJs<jsi::Value>(rt, &T::stopLocationSimulation,  static_cast<NativeRNMapsNavModuleCxxSpec*>(&turboModule)->jsInvoker_, static_cast<T*>(&turboModule));
+  }
+};
+
 } // namespace facebook::react

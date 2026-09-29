@@ -185,6 +185,45 @@ public class RNMapsMapViewManagerDelegate<T extends View, U extends BaseViewMana
       case "cameraZoomRange":
         mViewManager.setCameraZoomRange(view, (ReadableMap) value);
         break;
+      case "navigationEnabled":
+        mViewManager.setNavigationEnabled(view, value == null ? false : (boolean) value);
+        break;
+      case "navigationUIEnabledPreference":
+        mViewManager.setNavigationUIEnabledPreference(view, (String) value);
+        break;
+      case "navigationNightMode":
+        mViewManager.setNavigationNightMode(view, (String) value);
+        break;
+      case "navigationStylingOptionsJSON":
+        mViewManager.setNavigationStylingOptionsJSON(view, value == null ? null : (String) value);
+        break;
+      case "headerEnabled":
+        mViewManager.setHeaderEnabled(view, value == null ? true : (boolean) value);
+        break;
+      case "footerEnabled":
+        mViewManager.setFooterEnabled(view, value == null ? true : (boolean) value);
+        break;
+      case "tripProgressBarEnabled":
+        mViewManager.setTripProgressBarEnabled(view, value == null ? true : (boolean) value);
+        break;
+      case "speedometerEnabled":
+        mViewManager.setSpeedometerEnabled(view, value == null ? false : (boolean) value);
+        break;
+      case "speedLimitIconEnabled":
+        mViewManager.setSpeedLimitIconEnabled(view, value == null ? true : (boolean) value);
+        break;
+      case "recenterButtonEnabled":
+        mViewManager.setRecenterButtonEnabled(view, value == null ? true : (boolean) value);
+        break;
+      case "reportIncidentButtonEnabled":
+        mViewManager.setReportIncidentButtonEnabled(view, value == null ? true : (boolean) value);
+        break;
+      case "trafficPromptsEnabled":
+        mViewManager.setTrafficPromptsEnabled(view, value == null ? true : (boolean) value);
+        break;
+      case "trafficIncidentCardsEnabled":
+        mViewManager.setTrafficIncidentCardsEnabled(view, value == null ? true : (boolean) value);
+        break;
       default:
         super.setProperty(view, propName, value);
     }
@@ -213,6 +252,15 @@ public class RNMapsMapViewManagerDelegate<T extends View, U extends BaseViewMana
         break;
       case "setIndoorActiveLevelIndex":
         mViewManager.setIndoorActiveLevelIndex(view, args.getInt(0));
+        break;
+      case "showRouteOverview":
+        mViewManager.showRouteOverview(view);
+        break;
+      case "setNavigationUIEnabled":
+        mViewManager.setNavigationUIEnabled(view, args.getBoolean(0));
+        break;
+      case "followMyLocation":
+        mViewManager.followMyLocation(view, args.getString(0), args.getDouble(1));
         break;
     }
   }

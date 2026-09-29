@@ -140,7 +140,20 @@ RNMapsGoogleMapViewProps::RNMapsGoogleMapViewProps(
     userLocationUpdateInterval(convertRawProp(context, rawProps, "userLocationUpdateInterval", sourceProps.userLocationUpdateInterval, {0})),
     zoomControlEnabled(convertRawProp(context, rawProps, "zoomControlEnabled", sourceProps.zoomControlEnabled, {false})),
     zoomEnabled(convertRawProp(context, rawProps, "zoomEnabled", sourceProps.zoomEnabled, {true})),
-    zoomTapEnabled(convertRawProp(context, rawProps, "zoomTapEnabled", sourceProps.zoomTapEnabled, {true})) {}
+    zoomTapEnabled(convertRawProp(context, rawProps, "zoomTapEnabled", sourceProps.zoomTapEnabled, {true})),
+    navigationEnabled(convertRawProp(context, rawProps, "navigationEnabled", sourceProps.navigationEnabled, {false})),
+    navigationUIEnabledPreference(convertRawProp(context, rawProps, "navigationUIEnabledPreference", sourceProps.navigationUIEnabledPreference, {RNMapsGoogleMapViewNavigationUIEnabledPreference::Automatic})),
+    navigationNightMode(convertRawProp(context, rawProps, "navigationNightMode", sourceProps.navigationNightMode, {RNMapsGoogleMapViewNavigationNightMode::Auto})),
+    navigationStylingOptionsJSON(convertRawProp(context, rawProps, "navigationStylingOptionsJSON", sourceProps.navigationStylingOptionsJSON, {})),
+    headerEnabled(convertRawProp(context, rawProps, "headerEnabled", sourceProps.headerEnabled, {true})),
+    footerEnabled(convertRawProp(context, rawProps, "footerEnabled", sourceProps.footerEnabled, {true})),
+    tripProgressBarEnabled(convertRawProp(context, rawProps, "tripProgressBarEnabled", sourceProps.tripProgressBarEnabled, {true})),
+    speedometerEnabled(convertRawProp(context, rawProps, "speedometerEnabled", sourceProps.speedometerEnabled, {false})),
+    speedLimitIconEnabled(convertRawProp(context, rawProps, "speedLimitIconEnabled", sourceProps.speedLimitIconEnabled, {true})),
+    recenterButtonEnabled(convertRawProp(context, rawProps, "recenterButtonEnabled", sourceProps.recenterButtonEnabled, {true})),
+    reportIncidentButtonEnabled(convertRawProp(context, rawProps, "reportIncidentButtonEnabled", sourceProps.reportIncidentButtonEnabled, {true})),
+    trafficPromptsEnabled(convertRawProp(context, rawProps, "trafficPromptsEnabled", sourceProps.trafficPromptsEnabled, {true})),
+    trafficIncidentCardsEnabled(convertRawProp(context, rawProps, "trafficIncidentCardsEnabled", sourceProps.trafficIncidentCardsEnabled, {true})) {}
     
 #ifdef RN_SERIALIZABLE_STATE
 ComponentName RNMapsGoogleMapViewProps::getDiffPropsImplementationTarget() const {
@@ -288,6 +301,58 @@ folly::dynamic RNMapsGoogleMapViewProps::getDiffProps(
     
   if (zoomTapEnabled != oldProps->zoomTapEnabled) {
     result["zoomTapEnabled"] = zoomTapEnabled;
+  }
+    
+  if (navigationEnabled != oldProps->navigationEnabled) {
+    result["navigationEnabled"] = navigationEnabled;
+  }
+    
+  if (navigationUIEnabledPreference != oldProps->navigationUIEnabledPreference) {
+    result["navigationUIEnabledPreference"] = toDynamic(navigationUIEnabledPreference);
+  }
+    
+  if (navigationNightMode != oldProps->navigationNightMode) {
+    result["navigationNightMode"] = toDynamic(navigationNightMode);
+  }
+    
+  if (navigationStylingOptionsJSON != oldProps->navigationStylingOptionsJSON) {
+    result["navigationStylingOptionsJSON"] = navigationStylingOptionsJSON;
+  }
+    
+  if (headerEnabled != oldProps->headerEnabled) {
+    result["headerEnabled"] = headerEnabled;
+  }
+    
+  if (footerEnabled != oldProps->footerEnabled) {
+    result["footerEnabled"] = footerEnabled;
+  }
+    
+  if (tripProgressBarEnabled != oldProps->tripProgressBarEnabled) {
+    result["tripProgressBarEnabled"] = tripProgressBarEnabled;
+  }
+    
+  if (speedometerEnabled != oldProps->speedometerEnabled) {
+    result["speedometerEnabled"] = speedometerEnabled;
+  }
+    
+  if (speedLimitIconEnabled != oldProps->speedLimitIconEnabled) {
+    result["speedLimitIconEnabled"] = speedLimitIconEnabled;
+  }
+    
+  if (recenterButtonEnabled != oldProps->recenterButtonEnabled) {
+    result["recenterButtonEnabled"] = recenterButtonEnabled;
+  }
+    
+  if (reportIncidentButtonEnabled != oldProps->reportIncidentButtonEnabled) {
+    result["reportIncidentButtonEnabled"] = reportIncidentButtonEnabled;
+  }
+    
+  if (trafficPromptsEnabled != oldProps->trafficPromptsEnabled) {
+    result["trafficPromptsEnabled"] = trafficPromptsEnabled;
+  }
+    
+  if (trafficIncidentCardsEnabled != oldProps->trafficIncidentCardsEnabled) {
+    result["trafficIncidentCardsEnabled"] = trafficIncidentCardsEnabled;
   }
   return result;
 }
@@ -512,7 +577,20 @@ RNMapsMapViewProps::RNMapsMapViewProps(
     zoomEnabled(convertRawProp(context, rawProps, "zoomEnabled", sourceProps.zoomEnabled, {true})),
     showsTraffic(convertRawProp(context, rawProps, "showsTraffic", sourceProps.showsTraffic, {false})),
     zoomTapEnabled(convertRawProp(context, rawProps, "zoomTapEnabled", sourceProps.zoomTapEnabled, {true})),
-    cameraZoomRange(convertRawProp(context, rawProps, "cameraZoomRange", sourceProps.cameraZoomRange, {})) {}
+    cameraZoomRange(convertRawProp(context, rawProps, "cameraZoomRange", sourceProps.cameraZoomRange, {})),
+    navigationEnabled(convertRawProp(context, rawProps, "navigationEnabled", sourceProps.navigationEnabled, {false})),
+    navigationUIEnabledPreference(convertRawProp(context, rawProps, "navigationUIEnabledPreference", sourceProps.navigationUIEnabledPreference, {RNMapsMapViewNavigationUIEnabledPreference::Automatic})),
+    navigationNightMode(convertRawProp(context, rawProps, "navigationNightMode", sourceProps.navigationNightMode, {RNMapsMapViewNavigationNightMode::Auto})),
+    navigationStylingOptionsJSON(convertRawProp(context, rawProps, "navigationStylingOptionsJSON", sourceProps.navigationStylingOptionsJSON, {})),
+    headerEnabled(convertRawProp(context, rawProps, "headerEnabled", sourceProps.headerEnabled, {true})),
+    footerEnabled(convertRawProp(context, rawProps, "footerEnabled", sourceProps.footerEnabled, {true})),
+    tripProgressBarEnabled(convertRawProp(context, rawProps, "tripProgressBarEnabled", sourceProps.tripProgressBarEnabled, {true})),
+    speedometerEnabled(convertRawProp(context, rawProps, "speedometerEnabled", sourceProps.speedometerEnabled, {false})),
+    speedLimitIconEnabled(convertRawProp(context, rawProps, "speedLimitIconEnabled", sourceProps.speedLimitIconEnabled, {true})),
+    recenterButtonEnabled(convertRawProp(context, rawProps, "recenterButtonEnabled", sourceProps.recenterButtonEnabled, {true})),
+    reportIncidentButtonEnabled(convertRawProp(context, rawProps, "reportIncidentButtonEnabled", sourceProps.reportIncidentButtonEnabled, {true})),
+    trafficPromptsEnabled(convertRawProp(context, rawProps, "trafficPromptsEnabled", sourceProps.trafficPromptsEnabled, {true})),
+    trafficIncidentCardsEnabled(convertRawProp(context, rawProps, "trafficIncidentCardsEnabled", sourceProps.trafficIncidentCardsEnabled, {true})) {}
     
 #ifdef RN_SERIALIZABLE_STATE
 ComponentName RNMapsMapViewProps::getDiffPropsImplementationTarget() const {
@@ -740,6 +818,58 @@ folly::dynamic RNMapsMapViewProps::getDiffProps(
     
   if (cameraZoomRange != oldProps->cameraZoomRange) {
     result["cameraZoomRange"] = toDynamic(cameraZoomRange);
+  }
+    
+  if (navigationEnabled != oldProps->navigationEnabled) {
+    result["navigationEnabled"] = navigationEnabled;
+  }
+    
+  if (navigationUIEnabledPreference != oldProps->navigationUIEnabledPreference) {
+    result["navigationUIEnabledPreference"] = toDynamic(navigationUIEnabledPreference);
+  }
+    
+  if (navigationNightMode != oldProps->navigationNightMode) {
+    result["navigationNightMode"] = toDynamic(navigationNightMode);
+  }
+    
+  if (navigationStylingOptionsJSON != oldProps->navigationStylingOptionsJSON) {
+    result["navigationStylingOptionsJSON"] = navigationStylingOptionsJSON;
+  }
+    
+  if (headerEnabled != oldProps->headerEnabled) {
+    result["headerEnabled"] = headerEnabled;
+  }
+    
+  if (footerEnabled != oldProps->footerEnabled) {
+    result["footerEnabled"] = footerEnabled;
+  }
+    
+  if (tripProgressBarEnabled != oldProps->tripProgressBarEnabled) {
+    result["tripProgressBarEnabled"] = tripProgressBarEnabled;
+  }
+    
+  if (speedometerEnabled != oldProps->speedometerEnabled) {
+    result["speedometerEnabled"] = speedometerEnabled;
+  }
+    
+  if (speedLimitIconEnabled != oldProps->speedLimitIconEnabled) {
+    result["speedLimitIconEnabled"] = speedLimitIconEnabled;
+  }
+    
+  if (recenterButtonEnabled != oldProps->recenterButtonEnabled) {
+    result["recenterButtonEnabled"] = recenterButtonEnabled;
+  }
+    
+  if (reportIncidentButtonEnabled != oldProps->reportIncidentButtonEnabled) {
+    result["reportIncidentButtonEnabled"] = reportIncidentButtonEnabled;
+  }
+    
+  if (trafficPromptsEnabled != oldProps->trafficPromptsEnabled) {
+    result["trafficPromptsEnabled"] = trafficPromptsEnabled;
+  }
+    
+  if (trafficIncidentCardsEnabled != oldProps->trafficIncidentCardsEnabled) {
+    result["trafficIncidentCardsEnabled"] = trafficIncidentCardsEnabled;
   }
   return result;
 }

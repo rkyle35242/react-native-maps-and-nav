@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {StyleSheet, View} from 'react-native';
+import { StyleSheet, View } from 'react-native';
 
 class CustomCallout extends React.Component<any, any> {
   render() {
@@ -19,7 +19,7 @@ class CustomCallout extends React.Component<any, any> {
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'column',
-    alignSelf: 'flex-start',
+    alignSelf: 'flex-start'
   },
   bubble: {
     width: 140,
@@ -30,10 +30,10 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
     borderRadius: 6,
     borderColor: '#007a87',
-    borderWidth: 0.5,
+    borderWidth: 0.5
   },
   amount: {
-    flex: 1,
+    flex: 1
   },
   arrow: {
     backgroundColor: 'transparent',
@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
     borderColor: 'transparent',
     borderTopColor: '#4da2ab',
     alignSelf: 'center',
-    marginTop: -32,
+    marginTop: -32
   },
   arrowBorder: {
     backgroundColor: 'transparent',
@@ -49,8 +49,8 @@ const styles = StyleSheet.create({
     borderColor: 'transparent',
     borderTopColor: '#007a87',
     alignSelf: 'center',
-    marginTop: -0.5,
-  },
+    marginTop: -0.5
+  }
 });
 
 export default CustomCallout;

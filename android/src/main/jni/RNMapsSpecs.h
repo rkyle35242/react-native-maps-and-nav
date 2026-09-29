@@ -24,6 +24,14 @@ public:
   NativeAirMapsModuleSpecJSI(const JavaTurboModule::InitParams &params);
 };
 
+/**
+ * JNI C++ class for module 'NativeRNMapsNavModule'
+ */
+class JSI_EXPORT NativeRNMapsNavModuleSpecJSI : public JavaTurboModule {
+public:
+  NativeRNMapsNavModuleSpecJSI(const JavaTurboModule::InitParams &params);
+};
+
 
 JSI_EXPORT
 std::shared_ptr<TurboModule> RNMapsSpecs_ModuleProvider(const std::string &moduleName, const JavaTurboModule::InitParams &params);

@@ -36,6 +36,7 @@ import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MapColorScheme;
 import com.rnmaps.maps.MapMarker;
 import com.rnmaps.maps.MapView;
+import com.rnmaps.maps.NavigationHost;
 import com.rnmaps.maps.SizeReportingShadowNode;
 
 import java.util.Map;
@@ -161,7 +162,8 @@ public class MapViewManager extends ViewGroupManager<MapView> implements RNMapsM
     @Override
     protected MapView createViewInstance(int reactTag, @NonNull ThemedReactContext reactContext, @Nullable ReactStylesDiffMap initialProps, @Nullable StateWrapper stateWrapper) {
         MapView view = null;
-        view = new MapView(reactContext, optionsForInitialProps(initialProps));
+        boolean navigationEnabled = initialProps != null && initialProps.getBoolean("navigationEnabled", false);
+        view = new MapView(reactContext, optionsForInitialProps(initialProps), navigationEnabled);
         view.setId(reactTag);
         this.addEventEmitters(reactContext, view);
         if (initialProps != null) {
@@ -637,6 +639,101 @@ public class MapViewManager extends ViewGroupManager<MapView> implements RNMapsM
     @Override
     public void setIndoorActiveLevelIndex(MapView view, int activeLevelIndex) {
         view.setIndoorActiveLevelIndex(activeLevelIndex);
+    }
+
+    @Override
+    public void setNavigationEnabled(MapView view, boolean value) {
+        // Read once from the initial props in createViewInstance.
+    }
+
+    @Override
+    public void setNavigationUIEnabledPreference(MapView view, @Nullable String value) {
+        NavigationHost host = view.getNavigationHost();
+        if (host != null) host.setNavigationUIEnabledPreference(value);
+    }
+
+    @Override
+    public void setNavigationNightMode(MapView view, @Nullable String value) {
+        NavigationHost host = view.getNavigationHost();
+        if (host != null) host.setNavigationNightMode(value);
+    }
+
+    @Override
+    public void setNavigationStylingOptionsJSON(MapView view, @Nullable String value) {
+        NavigationHost host = view.getNavigationHost();
+        if (host != null) host.setStylingOptionsJSON(value);
+    }
+
+    @Override
+    public void setHeaderEnabled(MapView view, boolean value) {
+        NavigationHost host = view.getNavigationHost();
+        if (host != null) host.setHeaderEnabled(value);
+    }
+
+    @Override
+    public void setFooterEnabled(MapView view, boolean value) {
+        NavigationHost host = view.getNavigationHost();
+        if (host != null) host.setFooterEnabled(value);
+    }
+
+    @Override
+    public void setTripProgressBarEnabled(MapView view, boolean value) {
+        NavigationHost host = view.getNavigationHost();
+        if (host != null) host.setTripProgressBarEnabled(value);
+    }
+
+    @Override
+    public void setSpeedometerEnabled(MapView view, boolean value) {
+        NavigationHost host = view.getNavigationHost();
+        if (host != null) host.setSpeedometerEnabled(value);
+    }
+
+    @Override
+    public void setSpeedLimitIconEnabled(MapView view, boolean value) {
+        NavigationHost host = view.getNavigationHost();
+        if (host != null) host.setSpeedLimitIconEnabled(value);
+    }
+
+    @Override
+    public void setRecenterButtonEnabled(MapView view, boolean value) {
+        NavigationHost host = view.getNavigationHost();
+        if (host != null) host.setRecenterButtonEnabled(value);
+    }
+
+    @Override
+    public void setReportIncidentButtonEnabled(MapView view, boolean value) {
+        NavigationHost host = view.getNavigationHost();
+        if (host != null) host.setReportIncidentButtonEnabled(value);
+    }
+
+    @Override
+    public void setTrafficPromptsEnabled(MapView view, boolean value) {
+        NavigationHost host = view.getNavigationHost();
+        if (host != null) host.setTrafficPromptsEnabled(value);
+    }
+
+    @Override
+    public void setTrafficIncidentCardsEnabled(MapView view, boolean value) {
+        NavigationHost host = view.getNavigationHost();
+        if (host != null) host.setTrafficIncidentCardsEnabled(value);
+    }
+
+    @Override
+    public void showRouteOverview(MapView view) {
+        NavigationHost host = view.getNavigationHost();
+        if (host != null) host.showRouteOverview();
+    }
+
+    @Override
+    public void setNavigationUIEnabled(MapView view, boolean enabled) {
+        NavigationHost host = view.getNavigationHost();
+        if (host != null) host.setNavigationUIEnabled(enabled);
+    }
+
+    @Override
+    public void followMyLocation(MapView view, String perspective, double zoomLevel) {
+        NavigationHost host = view.getNavigationHost();
+        if (host != null) host.followMyLocation(perspective, zoomLevel);
     }
 
     @Override

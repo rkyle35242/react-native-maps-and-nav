@@ -60,7 +60,7 @@ Pod::Spec.new do |s|
 
            mkdir -p "$DEFINES_DIR"
 
-           if [ -d "$PODS_ROOT/GoogleMaps" ] && [ -d "$PODS_ROOT/Google-Maps-iOS-Utils" ]; then
+           if [ "$RNMAPS_GOOGLE_NAVIGATION" = "YES" ] || { [ -d "$PODS_ROOT/GoogleMaps" ] && [ -d "$PODS_ROOT/Google-Maps-iOS-Utils" ]; }; then
              echo "#define HAVE_GOOGLE_MAPS 1" > "$DEFINES_FILE"
              echo "✅ Google Maps libraries detected. HAVE_GOOGLE_MAPS defined."
            else
@@ -131,6 +131,45 @@ Pod::Spec.new do |s|
     ss.dependency 'react-native-maps/Generated'
     ss.dependency 'react-native-maps/Maps'
     install_modules_dependencies(ss)
+  end
+
+  # Google Navigation SDK subspec, used instead of 'Google'. Opt in from the Podfile with
+  # `$RNMapsEnableGoogleNavigation = true`. GoogleNavigation is only distributed through Swift
+  # Package Manager and bundles its own GoogleMaps, so it cannot be combined with the 'Google'
+  # subspec. Google-Maps-iOS-Utils (Heatmap, KML) is unavailable: its SPM package pins GoogleMaps 10.x.
+  if defined?($RNMapsEnableGoogleNavigation) && $RNMapsEnableGoogleNavigation
+    unless defined?(spm_dependency)
+      raise Pod::Informative, "react-native-maps/GoogleNavigation requires a React Native version that provides spm_dependency."
+    end
+
+    google_navigation_version = '11.1.0'
+    if defined?($RNMapsGoogleNavigationVersion)
+      Pod::UI.puts "#{s.name}: Using user specified GoogleNavigation version '#{$RNMapsGoogleNavigationVersion}'"
+      google_navigation_version = $RNMapsGoogleNavigationVersion
+    end
+
+    s.subspec 'GoogleNavigation' do |ss|
+      ss.ios.deployment_target = '16.0'
+      ss.source_files = "ios/AirGoogleMaps/**/*.{h,m,mm,swift}", "ios/AirGoogleNavigation/**/*.{h,m,mm}"
+      ss.exclude_files = "ios/AirGoogleMaps/AIRGoogleMapHeatmap*.{h,m}"
+      ss.resource_bundles = {
+        'GoogleMapsPrivacy' => ['ios/AirGoogleMaps/Resources/GoogleMapsPrivacy.bundle']
+      }
+      ss.compiler_flags = folly_compiler_flags + ' -DHAVE_GOOGLE_MAPS=1 -DHAVE_GOOGLE_NAVIGATION=1'
+      # Read by the Google Maps detection script, since GoogleMaps is not in $PODS_ROOT.
+      ss.pod_target_xcconfig = { 'RNMAPS_GOOGLE_NAVIGATION' => 'YES' }
+      ss.dependency 'react-native-maps/Generated'
+      ss.dependency 'react-native-maps/Maps'
+      install_modules_dependencies(ss)
+    end
+
+    # SPM dependencies are attached to the pod target, so they must be declared on the root spec.
+    spm_dependency(
+      s,
+      url: "https://github.com/googlemaps/ios-navigation-sdk.git",
+      requirement: { kind: "exactVersion", version: google_navigation_version },
+      products: ["GoogleNavigation"]
+    )
   end
 
   # By default, use the Maps subspec

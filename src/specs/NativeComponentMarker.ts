@@ -1,18 +1,14 @@
 // @ts-nocheck
-import type {HostComponent} from 'react-native';
-import type {
-  ViewProps,
-  ColorValue,
-  ImageSourcePropType as ImageSource,
-} from 'react-native';
+import type { HostComponent } from 'react-native';
+import type { ViewProps, ColorValue, ImageSourcePropType as ImageSource } from 'react-native';
 
-import {codegenNativeComponent, codegenNativeCommands} from 'react-native';
+import { codegenNativeComponent, codegenNativeCommands } from 'react-native';
 import type {
   Int32,
   Double,
   BubblingEventHandler,
   DirectEventHandler,
-  WithDefault,
+  WithDefault
 } from 'react-native/Libraries/Types/CodegenTypes';
 
 export type LatLng = Readonly<{
@@ -328,13 +324,9 @@ export interface NativeCommands {
     viewRef: React.ElementRef<React.ComponentType>,
     latitude: Double,
     longitude: Double,
-    duration: Int32,
+    duration: Int32
   ) => void;
-  setCoordinates: (
-    viewRef: React.ElementRef<React.ComponentType>,
-    latitude: Double,
-    longitude: Double,
-  ) => void;
+  setCoordinates: (viewRef: React.ElementRef<React.ComponentType>, latitude: Double, longitude: Double) => void;
   showCallout: (viewRef: React.ElementRef<React.ComponentType>) => void;
   hideCallout: (viewRef: React.ElementRef<React.ComponentType>) => void;
   redrawCallout: (viewRef: React.ElementRef<React.ComponentType>) => void;
@@ -342,17 +334,10 @@ export interface NativeCommands {
 }
 
 export const Commands: NativeCommands = codegenNativeCommands<NativeCommands>({
-  supportedCommands: [
-    'setCoordinates',
-    'animateToCoordinates',
-    'showCallout',
-    'hideCallout',
-    'redrawCallout',
-    'redraw',
-  ],
+  supportedCommands: ['setCoordinates', 'animateToCoordinates', 'showCallout', 'hideCallout', 'redrawCallout', 'redraw']
 });
 
 export default codegenNativeComponent<MarkerFabricNativeProps>(
   'RNMapsMarker',
-  {},
+  {}
 ) as HostComponent<MarkerFabricNativeProps>;

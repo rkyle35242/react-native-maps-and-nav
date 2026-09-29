@@ -1,14 +1,14 @@
 import React from 'react';
-import {StyleSheet, View, Text} from 'react-native';
+import { StyleSheet, View, Text } from 'react-native';
 
 class PriceMarker extends React.Component<any, any> {
   render() {
-    const {fontSize, amount} = this.props;
+    const { fontSize, amount } = this.props;
     return (
       <View style={styles.container}>
         <View style={styles.bubble}>
           <Text style={styles.dollar}>$</Text>
-          <Text style={[styles.amount, {fontSize}]}>{amount}</Text>
+          <Text style={[styles.amount, { fontSize }]}>{amount}</Text>
         </View>
         <View style={styles.arrowBorder} />
         <View style={styles.arrow} />
@@ -20,7 +20,7 @@ class PriceMarker extends React.Component<any, any> {
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'column',
-    alignSelf: 'flex-start',
+    alignSelf: 'flex-start'
   },
   bubble: {
     flex: 0,
@@ -30,15 +30,15 @@ const styles = StyleSheet.create({
     padding: 2,
     borderRadius: 3,
     borderColor: '#D23F44',
-    borderWidth: 0.5,
+    borderWidth: 0.5
   },
   dollar: {
     color: '#FFFFFF',
-    fontSize: 10,
+    fontSize: 10
   },
   amount: {
     color: '#FFFFFF',
-    fontSize: 13,
+    fontSize: 13
   },
   arrow: {
     backgroundColor: 'transparent',
@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
     borderColor: 'transparent',
     borderTopColor: '#FF5A5F',
     alignSelf: 'center',
-    marginTop: -9,
+    marginTop: -9
   },
   arrowBorder: {
     backgroundColor: 'transparent',
@@ -54,8 +54,8 @@ const styles = StyleSheet.create({
     borderColor: 'transparent',
     borderTopColor: '#D23F44',
     alignSelf: 'center',
-    marginTop: -0.5,
-  },
+    marginTop: -0.5
+  }
 });
 
 export default PriceMarker;

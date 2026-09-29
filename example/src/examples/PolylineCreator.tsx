@@ -1,15 +1,9 @@
 import React from 'react';
-import {
-  StyleSheet,
-  View,
-  Text,
-  Dimensions,
-  TouchableOpacity,
-} from 'react-native';
+import { StyleSheet, View, Text, Dimensions, TouchableOpacity } from 'react-native';
 
-import MapView, {Polyline} from 'react-native-maps';
+import MapView, { Polyline } from 'react-native-maps';
 
-const {width, height} = Dimensions.get('window');
+const { width, height } = Dimensions.get('window');
 
 const ASPECT_RATIO = width / height;
 const LATITUDE = 37.78825;
@@ -27,37 +21,37 @@ class PolylineCreator extends React.Component<any, any> {
         latitude: LATITUDE,
         longitude: LONGITUDE,
         latitudeDelta: LATITUDE_DELTA,
-        longitudeDelta: LONGITUDE_DELTA,
+        longitudeDelta: LONGITUDE_DELTA
       },
       polylines: [],
-      editing: null,
+      editing: null
     };
   }
 
   finish() {
-    const {polylines, editing} = this.state;
+    const { polylines, editing } = this.state;
     this.setState({
       polylines: [...polylines, editing],
-      editing: null,
+      editing: null
     });
   }
 
   onPanDrag(e: any) {
     console.log('onPanDrag: ' + JSON.stringify(e.nativeEvent));
-    const {editing} = this.state;
+    const { editing } = this.state;
     if (!editing) {
       this.setState({
         editing: {
           id: id++,
-          coordinates: [e.nativeEvent.coordinate],
-        },
+          coordinates: [e.nativeEvent.coordinate]
+        }
       });
     } else {
       this.setState({
         editing: {
           ...editing,
-          coordinates: [...editing.coordinates, e.nativeEvent.coordinate],
-        },
+          coordinates: [...editing.coordinates, e.nativeEvent.coordinate]
+        }
       });
     }
   }
@@ -70,7 +64,8 @@ class PolylineCreator extends React.Component<any, any> {
           style={styles.map}
           initialRegion={this.state.region}
           scrollEnabled={false}
-          onPanDrag={e => this.onPanDrag(e)}>
+          onPanDrag={e => this.onPanDrag(e)}
+        >
           {this.state.polylines.map((polyline: any) => (
             <Polyline
               key={polyline.id}
@@ -92,9 +87,7 @@ class PolylineCreator extends React.Component<any, any> {
         </MapView>
         <View style={styles.buttonContainer}>
           {this.state.editing && (
-            <TouchableOpacity
-              onPress={() => this.finish()}
-              style={[styles.bubble, styles.button]}>
+            <TouchableOpacity onPress={() => this.finish()} style={[styles.bubble, styles.button]}>
               <Text>Finish</Text>
             </TouchableOpacity>
           )}
@@ -108,32 +101,32 @@ const styles = StyleSheet.create({
   container: {
     ...StyleSheet.absoluteFillObject,
     justifyContent: 'flex-end',
-    alignItems: 'center',
+    alignItems: 'center'
   },
   map: {
-    ...StyleSheet.absoluteFillObject,
+    ...StyleSheet.absoluteFillObject
   },
   bubble: {
     backgroundColor: 'rgba(255,255,255,0.7)',
     paddingHorizontal: 18,
     paddingVertical: 12,
-    borderRadius: 20,
+    borderRadius: 20
   },
   latlng: {
     width: 200,
-    alignItems: 'stretch',
+    alignItems: 'stretch'
   },
   button: {
     width: 80,
     paddingHorizontal: 12,
     alignItems: 'center',
-    marginHorizontal: 10,
+    marginHorizontal: 10
   },
   buttonContainer: {
     flexDirection: 'row',
     marginVertical: 20,
-    backgroundColor: 'transparent',
-  },
+    backgroundColor: 'transparent'
+  }
 });
 
 export default PolylineCreator;

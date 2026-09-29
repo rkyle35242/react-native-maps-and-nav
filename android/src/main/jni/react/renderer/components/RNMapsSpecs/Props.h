@@ -204,6 +204,50 @@ static inline folly::dynamic toDynamic(const RNMapsGoogleMapViewUserLocationPrio
   return toString(value);
 }
 #endif
+enum class RNMapsGoogleMapViewNavigationUIEnabledPreference { Automatic, Disabled };
+
+static inline void fromRawValue(const PropsParserContext& context, const RawValue &value, RNMapsGoogleMapViewNavigationUIEnabledPreference &result) {
+  auto string = (std::string)value;
+  if (string == "automatic") { result = RNMapsGoogleMapViewNavigationUIEnabledPreference::Automatic; return; }
+  if (string == "disabled") { result = RNMapsGoogleMapViewNavigationUIEnabledPreference::Disabled; return; }
+  abort();
+}
+
+static inline std::string toString(const RNMapsGoogleMapViewNavigationUIEnabledPreference &value) {
+  switch (value) {
+    case RNMapsGoogleMapViewNavigationUIEnabledPreference::Automatic: return "automatic";
+    case RNMapsGoogleMapViewNavigationUIEnabledPreference::Disabled: return "disabled";
+  }
+}
+
+#ifdef RN_SERIALIZABLE_STATE
+static inline folly::dynamic toDynamic(const RNMapsGoogleMapViewNavigationUIEnabledPreference &value) {
+  return toString(value);
+}
+#endif
+enum class RNMapsGoogleMapViewNavigationNightMode { Auto, ForceDay, ForceNight };
+
+static inline void fromRawValue(const PropsParserContext& context, const RawValue &value, RNMapsGoogleMapViewNavigationNightMode &result) {
+  auto string = (std::string)value;
+  if (string == "auto") { result = RNMapsGoogleMapViewNavigationNightMode::Auto; return; }
+  if (string == "forceDay") { result = RNMapsGoogleMapViewNavigationNightMode::ForceDay; return; }
+  if (string == "forceNight") { result = RNMapsGoogleMapViewNavigationNightMode::ForceNight; return; }
+  abort();
+}
+
+static inline std::string toString(const RNMapsGoogleMapViewNavigationNightMode &value) {
+  switch (value) {
+    case RNMapsGoogleMapViewNavigationNightMode::Auto: return "auto";
+    case RNMapsGoogleMapViewNavigationNightMode::ForceDay: return "forceDay";
+    case RNMapsGoogleMapViewNavigationNightMode::ForceNight: return "forceNight";
+  }
+}
+
+#ifdef RN_SERIALIZABLE_STATE
+static inline folly::dynamic toDynamic(const RNMapsGoogleMapViewNavigationNightMode &value) {
+  return toString(value);
+}
+#endif
 struct RNMapsGoogleMapViewCameraCenterStruct {
   double latitude{0.0};
   double longitude{0.0};
@@ -595,6 +639,19 @@ class RNMapsGoogleMapViewProps final : public ViewProps {
   bool zoomControlEnabled{false};
   bool zoomEnabled{true};
   bool zoomTapEnabled{true};
+  bool navigationEnabled{false};
+  RNMapsGoogleMapViewNavigationUIEnabledPreference navigationUIEnabledPreference{RNMapsGoogleMapViewNavigationUIEnabledPreference::Automatic};
+  RNMapsGoogleMapViewNavigationNightMode navigationNightMode{RNMapsGoogleMapViewNavigationNightMode::Auto};
+  std::string navigationStylingOptionsJSON{};
+  bool headerEnabled{true};
+  bool footerEnabled{true};
+  bool tripProgressBarEnabled{true};
+  bool speedometerEnabled{false};
+  bool speedLimitIconEnabled{true};
+  bool recenterButtonEnabled{true};
+  bool reportIncidentButtonEnabled{true};
+  bool trafficPromptsEnabled{true};
+  bool trafficIncidentCardsEnabled{true};
 
   #ifdef RN_SERIALIZABLE_STATE
   ComponentName getDiffPropsImplementationTarget() const override;
@@ -1006,6 +1063,50 @@ static inline std::string toString(const RNMapsMapViewUserLocationPriority &valu
 
 #ifdef RN_SERIALIZABLE_STATE
 static inline folly::dynamic toDynamic(const RNMapsMapViewUserLocationPriority &value) {
+  return toString(value);
+}
+#endif
+enum class RNMapsMapViewNavigationUIEnabledPreference { Automatic, Disabled };
+
+static inline void fromRawValue(const PropsParserContext& context, const RawValue &value, RNMapsMapViewNavigationUIEnabledPreference &result) {
+  auto string = (std::string)value;
+  if (string == "automatic") { result = RNMapsMapViewNavigationUIEnabledPreference::Automatic; return; }
+  if (string == "disabled") { result = RNMapsMapViewNavigationUIEnabledPreference::Disabled; return; }
+  abort();
+}
+
+static inline std::string toString(const RNMapsMapViewNavigationUIEnabledPreference &value) {
+  switch (value) {
+    case RNMapsMapViewNavigationUIEnabledPreference::Automatic: return "automatic";
+    case RNMapsMapViewNavigationUIEnabledPreference::Disabled: return "disabled";
+  }
+}
+
+#ifdef RN_SERIALIZABLE_STATE
+static inline folly::dynamic toDynamic(const RNMapsMapViewNavigationUIEnabledPreference &value) {
+  return toString(value);
+}
+#endif
+enum class RNMapsMapViewNavigationNightMode { Auto, ForceDay, ForceNight };
+
+static inline void fromRawValue(const PropsParserContext& context, const RawValue &value, RNMapsMapViewNavigationNightMode &result) {
+  auto string = (std::string)value;
+  if (string == "auto") { result = RNMapsMapViewNavigationNightMode::Auto; return; }
+  if (string == "forceDay") { result = RNMapsMapViewNavigationNightMode::ForceDay; return; }
+  if (string == "forceNight") { result = RNMapsMapViewNavigationNightMode::ForceNight; return; }
+  abort();
+}
+
+static inline std::string toString(const RNMapsMapViewNavigationNightMode &value) {
+  switch (value) {
+    case RNMapsMapViewNavigationNightMode::Auto: return "auto";
+    case RNMapsMapViewNavigationNightMode::ForceDay: return "forceDay";
+    case RNMapsMapViewNavigationNightMode::ForceNight: return "forceNight";
+  }
+}
+
+#ifdef RN_SERIALIZABLE_STATE
+static inline folly::dynamic toDynamic(const RNMapsMapViewNavigationNightMode &value) {
   return toString(value);
 }
 #endif
@@ -1610,6 +1711,19 @@ class RNMapsMapViewProps final : public ViewProps {
   bool showsTraffic{false};
   bool zoomTapEnabled{true};
   RNMapsMapViewCameraZoomRangeStruct cameraZoomRange{};
+  bool navigationEnabled{false};
+  RNMapsMapViewNavigationUIEnabledPreference navigationUIEnabledPreference{RNMapsMapViewNavigationUIEnabledPreference::Automatic};
+  RNMapsMapViewNavigationNightMode navigationNightMode{RNMapsMapViewNavigationNightMode::Auto};
+  std::string navigationStylingOptionsJSON{};
+  bool headerEnabled{true};
+  bool footerEnabled{true};
+  bool tripProgressBarEnabled{true};
+  bool speedometerEnabled{false};
+  bool speedLimitIconEnabled{true};
+  bool recenterButtonEnabled{true};
+  bool reportIncidentButtonEnabled{true};
+  bool trafficPromptsEnabled{true};
+  bool trafficIncidentCardsEnabled{true};
 
   #ifdef RN_SERIALIZABLE_STATE
   ComponentName getDiffPropsImplementationTarget() const override;

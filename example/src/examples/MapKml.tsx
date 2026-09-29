@@ -1,8 +1,8 @@
 import React from 'react';
-import {StyleSheet, View, Dimensions} from 'react-native';
-import MapView, {Marker} from 'react-native-maps';
+import { StyleSheet, View, Dimensions } from 'react-native';
+import MapView, { Marker } from 'react-native-maps';
 
-const {width, height} = Dimensions.get('window');
+const { width, height } = Dimensions.get('window');
 
 const ASPECT_RATIO = width / height;
 const LATITUDE = -18.9193508;
@@ -21,15 +21,15 @@ export default class MapKml extends React.Component<any, any> {
         latitude: LATITUDE,
         longitude: LONGITUDE,
         latitudeDelta: LATITUDE_DELTA,
-        longitudeDelta: LONGITUDE_DELTA,
-      },
+        longitudeDelta: LONGITUDE_DELTA
+      }
     };
 
     this.onKmlReady = this.onKmlReady.bind(this);
   }
 
   onKmlReady() {
-    this.map.fitToElements({animated: true});
+    this.map.fitToElements({ animated: true });
   }
 
   render() {
@@ -43,12 +43,9 @@ export default class MapKml extends React.Component<any, any> {
           style={styles.map}
           initialRegion={this.state.region}
           kmlSrc={KML_FILE}
-          onKmlReady={this.onKmlReady}>
-          <Marker
-            coordinate={this.state.region}
-            title="Test"
-            description="Test"
-          />
+          onKmlReady={this.onKmlReady}
+        >
+          <Marker coordinate={this.state.region} title="Test" description="Test" />
         </MapView>
       </View>
     );
@@ -59,14 +56,14 @@ const styles = StyleSheet.create({
   container: {
     ...StyleSheet.absoluteFillObject,
     justifyContent: 'flex-end',
-    alignItems: 'center',
+    alignItems: 'center'
   },
   scrollview: {
     alignItems: 'center',
-    paddingVertical: 40,
+    paddingVertical: 40
   },
   map: {
     width,
-    height,
-  },
+    height
+  }
 });

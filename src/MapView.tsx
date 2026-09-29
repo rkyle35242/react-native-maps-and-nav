@@ -7,13 +7,9 @@ import {
   requireNativeComponent,
   type HostComponent,
   type NativeSyntheticEvent,
-  type ViewProps,
+  type ViewProps
 } from 'react-native';
-import {
-  createNotSupportedComponent,
-  ProviderContext,
-  type NativeComponent,
-} from './decorateMapComponent';
+import { createNotSupportedComponent, ProviderContext, type NativeComponent } from './decorateMapComponent';
 import type {
   CalloutPressEvent,
   ClickEvent,
@@ -27,7 +23,7 @@ import type {
   Point,
   Provider,
   Region,
-  MKPointOfInterestCategoryType,
+  MKPointOfInterestCategoryType
 } from './sharedTypes';
 import type {
   ActiveIndoorLevel,
@@ -49,22 +45,14 @@ import type {
   PanDragEvent,
   PoiClickEvent,
   SnapshotOptions,
-  UserLocationChangeEvent,
+  UserLocationChangeEvent
 } from './MapView.types';
-import type {Modify} from './sharedTypesInternal';
-import {
-  Commands,
-  type MapViewNativeComponentType,
-} from './MapViewNativeComponent';
+import type { Modify } from './sharedTypesInternal';
+import { Commands, type MapViewNativeComponentType } from './MapViewNativeComponent';
 
-import FabricMapView, {
-  Commands as FabricCommands,
-  type MapFabricNativeProps,
-} from './specs/NativeComponentMapView';
-import GoogleMapView, {
-  Commands as GoogleCommands,
-} from './specs/NativeComponentGoogleMapView';
-import createFabricMap, {type FabricMapHandle} from './createFabricMap';
+import FabricMapView, { Commands as FabricCommands, type MapFabricNativeProps } from './specs/NativeComponentMapView';
+import GoogleMapView, { Commands as GoogleCommands } from './specs/NativeComponentGoogleMapView';
+import createFabricMap, { type FabricMapHandle } from './createFabricMap';
 
 const FabricMap = createFabricMap(FabricMapView, FabricCommands);
 var FabricGoogleMap: any = null;
@@ -81,7 +69,7 @@ export const MAP_TYPES: MapTypes = {
   NONE: 'none',
   MUTEDSTANDARD: 'mutedStandard',
   SATELLITE_FLYOVER: 'satelliteFlyover',
-  HYBRID_FLYOVER: 'hybridFlyover',
+  HYBRID_FLYOVER: 'hybridFlyover'
 };
 
 export type MapViewProps = ViewProps & {
@@ -778,10 +766,7 @@ type ModifiedProps = Modify<
   }
 >;
 
-export type NativeProps = Omit<
-  ModifiedProps,
-  'customMapStyle' | 'onRegionChange' | 'onRegionChangeComplete'
-> & {
+export type NativeProps = Omit<ModifiedProps, 'customMapStyle' | 'onRegionChange' | 'onRegionChangeComplete'> & {
   ref: React.RefObject<MapViewNativeComponentType | null>;
   customMapStyleString?: string;
   handlePanDrag?: boolean;
@@ -803,7 +788,7 @@ class MapView extends React.Component<MapViewProps, State> {
 
     this.map = React.createRef<MapViewNativeComponentType>();
     this.state = {
-      isReady: false,
+      isReady: false
     };
 
     this._onMapReady = this._onMapReady.bind(this);
@@ -815,8 +800,8 @@ class MapView extends React.Component<MapViewProps, State> {
   }
 
   private _onMapReady() {
-    const {onMapReady} = this.props;
-    this.setState({isReady: true}, () => {
+    const { onMapReady } = this.props;
+    this.setState({ isReady: true }, () => {
       if (onMapReady) {
         onMapReady();
       }
@@ -838,18 +823,11 @@ class MapView extends React.Component<MapViewProps, State> {
     }
   }
 
-  animateCamera(camera: Partial<Camera>, opts?: {duration?: number}) {
+  animateCamera(camera: Partial<Camera>, opts?: { duration?: number }) {
     if (this.fabricMap.current) {
-      this.fabricMap.current.animateCamera(
-        camera,
-        opts?.duration ? opts.duration : 500,
-      );
+      this.fabricMap.current.animateCamera(camera, opts?.duration ? opts.duration : 500);
     } else if (this.map.current) {
-      Commands.animateCamera(
-        this.map.current,
-        camera,
-        opts?.duration ? opts.duration : 500,
-      );
+      Commands.animateCamera(this.map.current, camera, opts?.duration ? opts.duration : 500);
     }
   }
 
@@ -868,10 +846,7 @@ class MapView extends React.Component<MapViewProps, State> {
   }
 
   fitToElements(options: FitToOptions = {}) {
-    const {
-      edgePadding = {top: 0, right: 0, bottom: 0, left: 0},
-      animated = true,
-    } = options;
+    const { edgePadding = { top: 0, right: 0, bottom: 0, left: 0 }, animated = true } = options;
     if (this.fabricMap.current) {
       this.fabricMap.current.fitToElements(edgePadding, animated);
     } else if (this.map.current) {
@@ -880,44 +855,20 @@ class MapView extends React.Component<MapViewProps, State> {
   }
 
   fitToSuppliedMarkers(markers: string[], options: FitToOptions = {}) {
-    const {
-      edgePadding = {top: 0, right: 0, bottom: 0, left: 0},
-      animated = true,
-    } = options;
+    const { edgePadding = { top: 0, right: 0, bottom: 0, left: 0 }, animated = true } = options;
     if (this.fabricMap.current) {
-      this.fabricMap.current.fitToSuppliedMarkers(
-        markers,
-        edgePadding,
-        animated,
-      );
+      this.fabricMap.current.fitToSuppliedMarkers(markers, edgePadding, animated);
     } else if (this.map.current) {
-      Commands.fitToSuppliedMarkers(
-        this.map.current,
-        markers,
-        edgePadding,
-        animated,
-      );
+      Commands.fitToSuppliedMarkers(this.map.current, markers, edgePadding, animated);
     }
   }
 
   fitToCoordinates(coordinates: LatLng[] = [], options: FitToOptions = {}) {
-    const {
-      edgePadding = {top: 0, right: 0, bottom: 0, left: 0},
-      animated = true,
-    } = options;
+    const { edgePadding = { top: 0, right: 0, bottom: 0, left: 0 }, animated = true } = options;
     if (this.fabricMap.current) {
-      this.fabricMap.current.fitToCoordinates(
-        coordinates,
-        edgePadding,
-        animated,
-      );
+      this.fabricMap.current.fitToCoordinates(coordinates, edgePadding, animated);
     } else if (this.map.current) {
-      Commands.fitToCoordinates(
-        this.map.current,
-        coordinates,
-        edgePadding,
-        animated,
-      );
+      Commands.fitToCoordinates(this.map.current, coordinates, edgePadding, animated);
     }
   }
 
@@ -946,6 +897,21 @@ class MapView extends React.Component<MapViewProps, State> {
     return Promise.reject('getMapBoundaries not supported on this platform');
   }
 
+  /** Navigation maps only: pans and zooms to show the remaining route. */
+  showRouteOverview() {
+    this.fabricMap.current?.showRouteOverview();
+  }
+
+  /** Navigation maps only: overrides `navigationUIEnabledPreference`. */
+  setNavigationUIEnabled(enabled: boolean) {
+    this.fabricMap.current?.setNavigationUIEnabled(enabled);
+  }
+
+  /** Navigation maps only: makes the camera follow the user's location. */
+  followMyLocation(perspective: 'tilted' | 'topDownNorthUp' | 'topDownHeadingUp' = 'tilted', zoomLevel?: number) {
+    this.fabricMap.current?.followMyLocation(perspective, zoomLevel);
+  }
+
   /**
    * Takes a snapshot of the map and saves it to a picture
    * file or returns the image as a base64 encoded string.
@@ -968,7 +934,7 @@ class MapView extends React.Component<MapViewProps, State> {
       region: args.region || {},
       format: args.format || 'png',
       quality: args.quality || 1.0,
-      result: args.result || 'file',
+      result: args.result || 'file'
     };
     if (config.format !== 'png' && config.format !== 'jpg') {
       throw new Error('Invalid format specified');
@@ -1040,7 +1006,7 @@ class MapView extends React.Component<MapViewProps, State> {
    * @return Promise Promise with { <identifier>: { point: Point, frame: Frame } }
    */
   getMarkersFrames(onlyVisible: boolean = false): Promise<{
-    [key: string]: {point: Point; frame: Frame};
+    [key: string]: { point: Point; frame: Frame };
   }> {
     if (this.fabricMap.current) {
       // @ts-ignore
@@ -1060,12 +1026,12 @@ class MapView extends React.Component<MapViewProps, State> {
     return {
       northEast: {
         latitude: region.latitude + region.latitudeDelta / 2,
-        longitude: region.longitude + region.longitudeDelta / 2,
+        longitude: region.longitude + region.longitudeDelta / 2
       },
       southWest: {
         latitude: region.latitude - region.latitudeDelta / 2,
-        longitude: region.longitude - region.longitudeDelta / 2,
-      },
+        longitude: region.longitude - region.longitudeDelta / 2
+      }
     };
   }
 
@@ -1106,14 +1072,14 @@ class MapView extends React.Component<MapViewProps, State> {
   private handleRegionChange = (event: NativeSyntheticEvent<any>) => {
     if (this.props.onRegionChange) {
       this.props.onRegionChange(event.nativeEvent.region, {
-        isGesture: event.nativeEvent.isGesture,
+        isGesture: event.nativeEvent.isGesture
       });
     }
   };
   private handleRegionChangeStarted = (event: NativeSyntheticEvent<any>) => {
     if (this.props.onRegionChangeStart) {
       this.props.onRegionChangeStart(event.nativeEvent.region, {
-        isGesture: event.nativeEvent.isGesture,
+        isGesture: event.nativeEvent.isGesture
       });
     }
   };
@@ -1136,7 +1102,7 @@ class MapView extends React.Component<MapViewProps, State> {
   private handleRegionChangeComplete = (event: NativeSyntheticEvent<any>) => {
     if (this.props.onRegionChangeComplete) {
       this.props.onRegionChangeComplete(event.nativeEvent.region, {
-        isGesture: event.nativeEvent.isGesture,
+        isGesture: event.nativeEvent.isGesture
       });
     }
   };
@@ -1174,9 +1140,7 @@ class MapView extends React.Component<MapViewProps, State> {
 
     /* eslint-enable @typescript-eslint/no-unused-vars */
     const userInterfaceStyle = this.props.userInterfaceStyle || 'system';
-    const customMapStyleString = customMapStyle
-      ? JSON.stringify(this.props.customMapStyle)
-      : undefined;
+    const customMapStyleString = customMapStyle ? JSON.stringify(this.props.customMapStyle) : undefined;
 
     const props: MapFabricNativeProps = {
       onMapReady: this._onMapReady,
@@ -1201,14 +1165,14 @@ class MapView extends React.Component<MapViewProps, State> {
       onLongPress: this.handleLongPress,
       showsPointsOfInterests: this.props.showsPointsOfInterests,
       pointsOfInterestFilter: this.props.pointsOfInterestFilter,
-      ...restProps,
+      ...restProps
     };
     if (this.props.region) {
       props.region = {
         latitude: this.props.region.latitude,
         longitude: this.props.region.longitude,
         latitudeDelta: this.props.region.latitudeDelta,
-        longitudeDelta: this.props.region.longitudeDelta,
+        longitudeDelta: this.props.region.longitudeDelta
       };
     }
 
@@ -1249,14 +1213,14 @@ const airMaps: {
   google: NativeComponent<NativeProps>;
 } = {
   default: requireNativeComponent<NativeProps>('AIRMap'),
-  google: () => null,
+  google: () => null
 };
 
 if (Platform.OS === 'android') {
   airMaps.google = airMaps.default;
 } else {
   airMaps.google = createNotSupportedComponent(
-    'react-native-maps: AirGoogleMaps dir must be added to your xCode project to support GoogleMaps on iOS.',
+    'react-native-maps: AirGoogleMaps dir must be added to your xCode project to support GoogleMaps on iOS.'
   );
 }
 

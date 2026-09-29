@@ -113,6 +113,248 @@ namespace facebook::react {
     NativeAirMapsModuleSpecJSI(const ObjCTurboModule::InitParams &params);
   };
 } // namespace facebook::react
+namespace JS {
+  namespace NativeRNMapsNavModule {
+    struct TermsAndConditionsUIParamsSpec {
+      std::optional<bool> valid() const;
+      std::optional<double> backgroundColor() const;
+      std::optional<double> titleColor() const;
+      std::optional<double> mainTextColor() const;
+      std::optional<double> acceptButtonTextColor() const;
+      std::optional<double> cancelButtonTextColor() const;
+
+      TermsAndConditionsUIParamsSpec(NSDictionary *const v) : _v(v) {}
+    private:
+      NSDictionary *_v;
+    };
+  }
+}
+
+@interface RCTCxxConvert (NativeRNMapsNavModule_TermsAndConditionsUIParamsSpec)
++ (RCTManagedPointer *)JS_NativeRNMapsNavModule_TermsAndConditionsUIParamsSpec:(id)json;
+@end
+namespace JS {
+  namespace NativeRNMapsNavModule {
+    struct RoutingOptionsSpec {
+      std::optional<bool> valid() const;
+      std::optional<double> travelMode() const;
+      std::optional<double> routingStrategy() const;
+      std::optional<double> alternateRoutesStrategy() const;
+      std::optional<bool> avoidFerries() const;
+      std::optional<bool> avoidTolls() const;
+      std::optional<bool> avoidHighways() const;
+
+      RoutingOptionsSpec(NSDictionary *const v) : _v(v) {}
+    private:
+      NSDictionary *_v;
+    };
+  }
+}
+
+@interface RCTCxxConvert (NativeRNMapsNavModule_RoutingOptionsSpec)
++ (RCTManagedPointer *)JS_NativeRNMapsNavModule_RoutingOptionsSpec:(id)json;
+@end
+namespace JS {
+  namespace NativeRNMapsNavModule {
+    struct DisplayOptionsSpec {
+      std::optional<bool> valid() const;
+      std::optional<bool> showDestinationMarkers() const;
+      std::optional<bool> showStopSigns() const;
+      std::optional<bool> showTrafficLights() const;
+
+      DisplayOptionsSpec(NSDictionary *const v) : _v(v) {}
+    private:
+      NSDictionary *_v;
+    };
+  }
+}
+
+@interface RCTCxxConvert (NativeRNMapsNavModule_DisplayOptionsSpec)
++ (RCTManagedPointer *)JS_NativeRNMapsNavModule_DisplayOptionsSpec:(id)json;
+@end
+namespace JS {
+  namespace NativeRNMapsNavModule {
+    struct RouteTokenOptionsSpec {
+      std::optional<bool> valid() const;
+      NSString *routeToken() const;
+      std::optional<double> travelMode() const;
+
+      RouteTokenOptionsSpec(NSDictionary *const v) : _v(v) {}
+    private:
+      NSDictionary *_v;
+    };
+  }
+}
+
+@interface RCTCxxConvert (NativeRNMapsNavModule_RouteTokenOptionsSpec)
++ (RCTManagedPointer *)JS_NativeRNMapsNavModule_RouteTokenOptionsSpec:(id)json;
+@end
+namespace JS {
+  namespace NativeRNMapsNavModule {
+    struct SpeedAlertOptionsSpec {
+      std::optional<bool> valid() const;
+      double majorSpeedAlertPercentThreshold() const;
+      double minorSpeedAlertPercentThreshold() const;
+      double severityUpgradeDurationSeconds() const;
+
+      SpeedAlertOptionsSpec(NSDictionary *const v) : _v(v) {}
+    private:
+      NSDictionary *_v;
+    };
+  }
+}
+
+@interface RCTCxxConvert (NativeRNMapsNavModule_SpeedAlertOptionsSpec)
++ (RCTManagedPointer *)JS_NativeRNMapsNavModule_SpeedAlertOptionsSpec:(id)json;
+@end
+namespace JS {
+  namespace NativeRNMapsNavModule {
+    struct AudioGuidanceSettingsSpec {
+      double guidanceMode() const;
+      bool vibrationEnabled() const;
+      bool bluetoothAudioEnabled() const;
+
+      AudioGuidanceSettingsSpec(NSDictionary *const v) : _v(v) {}
+    private:
+      NSDictionary *_v;
+    };
+  }
+}
+
+@interface RCTCxxConvert (NativeRNMapsNavModule_AudioGuidanceSettingsSpec)
++ (RCTManagedPointer *)JS_NativeRNMapsNavModule_AudioGuidanceSettingsSpec:(id)json;
+@end
+namespace JS {
+  namespace NativeRNMapsNavModule {
+    struct LatLngSpec {
+      double lat() const;
+      double lng() const;
+
+      LatLngSpec(NSDictionary *const v) : _v(v) {}
+    private:
+      NSDictionary *_v;
+    };
+  }
+}
+
+@interface RCTCxxConvert (NativeRNMapsNavModule_LatLngSpec)
++ (RCTManagedPointer *)JS_NativeRNMapsNavModule_LatLngSpec:(id)json;
+@end
+namespace JS {
+  namespace NativeRNMapsNavModule {
+    struct LocationSimulationOptionsSpec {
+      double speedMultiplier() const;
+
+      LocationSimulationOptionsSpec(NSDictionary *const v) : _v(v) {}
+    private:
+      NSDictionary *_v;
+    };
+  }
+}
+
+@interface RCTCxxConvert (NativeRNMapsNavModule_LocationSimulationOptionsSpec)
++ (RCTManagedPointer *)JS_NativeRNMapsNavModule_LocationSimulationOptionsSpec:(id)json;
+@end
+@protocol NativeRNMapsNavModuleSpec <RCTBridgeModule, RCTTurboModule>
+
+- (void)areTermsAccepted:(RCTPromiseResolveBlock)resolve
+                  reject:(RCTPromiseRejectBlock)reject;
+- (void)showTermsAndConditionsDialog:(NSString *)title
+                         companyName:(NSString *)companyName
+                  showOnlyDisclaimer:(BOOL)showOnlyDisclaimer
+                            uiParams:(JS::NativeRNMapsNavModule::TermsAndConditionsUIParamsSpec &)uiParams
+                             resolve:(RCTPromiseResolveBlock)resolve
+                              reject:(RCTPromiseRejectBlock)reject;
+- (void)resetTermsAccepted:(RCTPromiseResolveBlock)resolve
+                    reject:(RCTPromiseRejectBlock)reject;
+- (void)initializeNavigationSession:(BOOL)abnormalTerminationReportingEnabled
+                taskRemovedBehavior:(double)taskRemovedBehavior
+                            resolve:(RCTPromiseResolveBlock)resolve
+                             reject:(RCTPromiseRejectBlock)reject;
+- (void)cleanup:(RCTPromiseResolveBlock)resolve
+         reject:(RCTPromiseRejectBlock)reject;
+- (void)setDestinations:(NSArray *)waypoints
+         routingOptions:(JS::NativeRNMapsNavModule::RoutingOptionsSpec &)routingOptions
+         displayOptions:(JS::NativeRNMapsNavModule::DisplayOptionsSpec &)displayOptions
+      routeTokenOptions:(JS::NativeRNMapsNavModule::RouteTokenOptionsSpec &)routeTokenOptions
+                resolve:(RCTPromiseResolveBlock)resolve
+                 reject:(RCTPromiseRejectBlock)reject;
+- (void)continueToNextDestination:(RCTPromiseResolveBlock)resolve
+                           reject:(RCTPromiseRejectBlock)reject;
+- (void)clearDestinations:(RCTPromiseResolveBlock)resolve
+                   reject:(RCTPromiseRejectBlock)reject;
+- (void)startGuidance:(RCTPromiseResolveBlock)resolve
+               reject:(RCTPromiseRejectBlock)reject;
+- (void)stopGuidance:(RCTPromiseResolveBlock)resolve
+              reject:(RCTPromiseRejectBlock)reject;
+- (void)setSpeedAlertOptions:(JS::NativeRNMapsNavModule::SpeedAlertOptionsSpec &)alertOptions
+                     resolve:(RCTPromiseResolveBlock)resolve
+                      reject:(RCTPromiseRejectBlock)reject;
+- (void)setAbnormalTerminatingReportingEnabled:(BOOL)enabled;
+- (void)setAudioGuidanceType:(double)index
+                     resolve:(RCTPromiseResolveBlock)resolve
+                      reject:(RCTPromiseRejectBlock)reject;
+- (void)setAudioGuidanceSettings:(JS::NativeRNMapsNavModule::AudioGuidanceSettingsSpec &)settings
+                         resolve:(RCTPromiseResolveBlock)resolve
+                          reject:(RCTPromiseRejectBlock)reject;
+- (void)setBackgroundLocationUpdatesEnabled:(BOOL)isEnabled;
+- (void)setTurnByTurnLoggingEnabled:(BOOL)isEnabled;
+- (void)getCurrentRouteSegment:(RCTPromiseResolveBlock)resolve
+                        reject:(RCTPromiseRejectBlock)reject;
+- (void)getRouteSegments:(RCTPromiseResolveBlock)resolve
+                  reject:(RCTPromiseRejectBlock)reject;
+- (void)getCurrentTimeAndDistance:(RCTPromiseResolveBlock)resolve
+                           reject:(RCTPromiseRejectBlock)reject;
+- (void)getTraveledPath:(RCTPromiseResolveBlock)resolve
+                 reject:(RCTPromiseRejectBlock)reject;
+- (void)getNavSDKVersion:(RCTPromiseResolveBlock)resolve
+                  reject:(RCTPromiseRejectBlock)reject;
+- (void)stopUpdatingLocation:(RCTPromiseResolveBlock)resolve
+                      reject:(RCTPromiseRejectBlock)reject;
+- (void)startUpdatingLocation:(RCTPromiseResolveBlock)resolve
+                       reject:(RCTPromiseRejectBlock)reject;
+- (void)simulateLocation:(JS::NativeRNMapsNavModule::LatLngSpec &)location
+                 resolve:(RCTPromiseResolveBlock)resolve
+                  reject:(RCTPromiseRejectBlock)reject;
+- (void)resumeLocationSimulation:(RCTPromiseResolveBlock)resolve
+                          reject:(RCTPromiseRejectBlock)reject;
+- (void)pauseLocationSimulation:(RCTPromiseResolveBlock)resolve
+                         reject:(RCTPromiseRejectBlock)reject;
+- (void)simulateLocationsAlongExistingRoute:(JS::NativeRNMapsNavModule::LocationSimulationOptionsSpec &)options
+                                    resolve:(RCTPromiseResolveBlock)resolve
+                                     reject:(RCTPromiseRejectBlock)reject;
+- (void)stopLocationSimulation:(RCTPromiseResolveBlock)resolve
+                        reject:(RCTPromiseRejectBlock)reject;
+
+@end
+
+@interface NativeRNMapsNavModuleSpecBase : NSObject {
+@protected
+facebook::react::EventEmitterCallback _eventEmitterCallback;
+}
+- (void)setEventEmitterCallback:(EventEmitterCallbackWrapper *)eventEmitterCallbackWrapper;
+
+- (void)emitOnLocationChanged:(NSDictionary *)value;
+- (void)emitOnArrival:(NSDictionary *)value;
+- (void)emitOnRemainingTimeOrDistanceChanged:(NSDictionary *)value;
+- (void)emitOnRouteChanged;
+- (void)emitOnReroutingRequestedByOffRoute;
+- (void)emitOnStartGuidance;
+- (void)emitOnTurnByTurn:(NSDictionary *)value;
+- (void)emitOnRawLocationChanged:(NSDictionary *)value;
+- (void)emitOnTrafficUpdated;
+- (void)emitLogDebugInfo:(NSDictionary *)value;
+@end
+
+namespace facebook::react {
+  /**
+   * ObjC++ class for module 'NativeRNMapsNavModule'
+   */
+  class JSI_EXPORT NativeRNMapsNavModuleSpecJSI : public ObjCTurboModule {
+  public:
+    NativeRNMapsNavModuleSpecJSI(const ObjCTurboModule::InitParams &params);
+  };
+} // namespace facebook::react
 inline double JS::NativeAirMapsModule::LatLng::latitude() const
 {
   id const p = _v[@"latitude"];
@@ -131,6 +373,156 @@ inline double JS::NativeAirMapsModule::Point::x() const
 inline double JS::NativeAirMapsModule::Point::y() const
 {
   id const p = _v[@"y"];
+  return RCTBridgingToDouble(p);
+}
+inline std::optional<bool> JS::NativeRNMapsNavModule::TermsAndConditionsUIParamsSpec::valid() const
+{
+  id const p = _v[@"valid"];
+  return RCTBridgingToOptionalBool(p);
+}
+inline std::optional<double> JS::NativeRNMapsNavModule::TermsAndConditionsUIParamsSpec::backgroundColor() const
+{
+  id const p = _v[@"backgroundColor"];
+  return RCTBridgingToOptionalDouble(p);
+}
+inline std::optional<double> JS::NativeRNMapsNavModule::TermsAndConditionsUIParamsSpec::titleColor() const
+{
+  id const p = _v[@"titleColor"];
+  return RCTBridgingToOptionalDouble(p);
+}
+inline std::optional<double> JS::NativeRNMapsNavModule::TermsAndConditionsUIParamsSpec::mainTextColor() const
+{
+  id const p = _v[@"mainTextColor"];
+  return RCTBridgingToOptionalDouble(p);
+}
+inline std::optional<double> JS::NativeRNMapsNavModule::TermsAndConditionsUIParamsSpec::acceptButtonTextColor() const
+{
+  id const p = _v[@"acceptButtonTextColor"];
+  return RCTBridgingToOptionalDouble(p);
+}
+inline std::optional<double> JS::NativeRNMapsNavModule::TermsAndConditionsUIParamsSpec::cancelButtonTextColor() const
+{
+  id const p = _v[@"cancelButtonTextColor"];
+  return RCTBridgingToOptionalDouble(p);
+}
+inline std::optional<bool> JS::NativeRNMapsNavModule::RoutingOptionsSpec::valid() const
+{
+  id const p = _v[@"valid"];
+  return RCTBridgingToOptionalBool(p);
+}
+inline std::optional<double> JS::NativeRNMapsNavModule::RoutingOptionsSpec::travelMode() const
+{
+  id const p = _v[@"travelMode"];
+  return RCTBridgingToOptionalDouble(p);
+}
+inline std::optional<double> JS::NativeRNMapsNavModule::RoutingOptionsSpec::routingStrategy() const
+{
+  id const p = _v[@"routingStrategy"];
+  return RCTBridgingToOptionalDouble(p);
+}
+inline std::optional<double> JS::NativeRNMapsNavModule::RoutingOptionsSpec::alternateRoutesStrategy() const
+{
+  id const p = _v[@"alternateRoutesStrategy"];
+  return RCTBridgingToOptionalDouble(p);
+}
+inline std::optional<bool> JS::NativeRNMapsNavModule::RoutingOptionsSpec::avoidFerries() const
+{
+  id const p = _v[@"avoidFerries"];
+  return RCTBridgingToOptionalBool(p);
+}
+inline std::optional<bool> JS::NativeRNMapsNavModule::RoutingOptionsSpec::avoidTolls() const
+{
+  id const p = _v[@"avoidTolls"];
+  return RCTBridgingToOptionalBool(p);
+}
+inline std::optional<bool> JS::NativeRNMapsNavModule::RoutingOptionsSpec::avoidHighways() const
+{
+  id const p = _v[@"avoidHighways"];
+  return RCTBridgingToOptionalBool(p);
+}
+inline std::optional<bool> JS::NativeRNMapsNavModule::DisplayOptionsSpec::valid() const
+{
+  id const p = _v[@"valid"];
+  return RCTBridgingToOptionalBool(p);
+}
+inline std::optional<bool> JS::NativeRNMapsNavModule::DisplayOptionsSpec::showDestinationMarkers() const
+{
+  id const p = _v[@"showDestinationMarkers"];
+  return RCTBridgingToOptionalBool(p);
+}
+inline std::optional<bool> JS::NativeRNMapsNavModule::DisplayOptionsSpec::showStopSigns() const
+{
+  id const p = _v[@"showStopSigns"];
+  return RCTBridgingToOptionalBool(p);
+}
+inline std::optional<bool> JS::NativeRNMapsNavModule::DisplayOptionsSpec::showTrafficLights() const
+{
+  id const p = _v[@"showTrafficLights"];
+  return RCTBridgingToOptionalBool(p);
+}
+inline std::optional<bool> JS::NativeRNMapsNavModule::RouteTokenOptionsSpec::valid() const
+{
+  id const p = _v[@"valid"];
+  return RCTBridgingToOptionalBool(p);
+}
+inline NSString *JS::NativeRNMapsNavModule::RouteTokenOptionsSpec::routeToken() const
+{
+  id const p = _v[@"routeToken"];
+  return RCTBridgingToString(p);
+}
+inline std::optional<double> JS::NativeRNMapsNavModule::RouteTokenOptionsSpec::travelMode() const
+{
+  id const p = _v[@"travelMode"];
+  return RCTBridgingToOptionalDouble(p);
+}
+inline std::optional<bool> JS::NativeRNMapsNavModule::SpeedAlertOptionsSpec::valid() const
+{
+  id const p = _v[@"valid"];
+  return RCTBridgingToOptionalBool(p);
+}
+inline double JS::NativeRNMapsNavModule::SpeedAlertOptionsSpec::majorSpeedAlertPercentThreshold() const
+{
+  id const p = _v[@"majorSpeedAlertPercentThreshold"];
+  return RCTBridgingToDouble(p);
+}
+inline double JS::NativeRNMapsNavModule::SpeedAlertOptionsSpec::minorSpeedAlertPercentThreshold() const
+{
+  id const p = _v[@"minorSpeedAlertPercentThreshold"];
+  return RCTBridgingToDouble(p);
+}
+inline double JS::NativeRNMapsNavModule::SpeedAlertOptionsSpec::severityUpgradeDurationSeconds() const
+{
+  id const p = _v[@"severityUpgradeDurationSeconds"];
+  return RCTBridgingToDouble(p);
+}
+inline double JS::NativeRNMapsNavModule::AudioGuidanceSettingsSpec::guidanceMode() const
+{
+  id const p = _v[@"guidanceMode"];
+  return RCTBridgingToDouble(p);
+}
+inline bool JS::NativeRNMapsNavModule::AudioGuidanceSettingsSpec::vibrationEnabled() const
+{
+  id const p = _v[@"vibrationEnabled"];
+  return RCTBridgingToBool(p);
+}
+inline bool JS::NativeRNMapsNavModule::AudioGuidanceSettingsSpec::bluetoothAudioEnabled() const
+{
+  id const p = _v[@"bluetoothAudioEnabled"];
+  return RCTBridgingToBool(p);
+}
+inline double JS::NativeRNMapsNavModule::LatLngSpec::lat() const
+{
+  id const p = _v[@"lat"];
+  return RCTBridgingToDouble(p);
+}
+inline double JS::NativeRNMapsNavModule::LatLngSpec::lng() const
+{
+  id const p = _v[@"lng"];
+  return RCTBridgingToDouble(p);
+}
+inline double JS::NativeRNMapsNavModule::LocationSimulationOptionsSpec::speedMultiplier() const
+{
+  id const p = _v[@"speedMultiplier"];
   return RCTBridgingToDouble(p);
 }
 NS_ASSUME_NONNULL_END

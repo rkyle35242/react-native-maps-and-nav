@@ -1,12 +1,7 @@
-import type {HostComponent, ViewProps, ColorValue} from 'react-native';
+import type { HostComponent, ViewProps, ColorValue } from 'react-native';
 
-import {codegenNativeComponent} from 'react-native';
-import type {
-  Double,
-  BubblingEventHandler,
-  Float,
-  WithDefault,
-} from 'react-native/Libraries/Types/CodegenTypes';
+import { codegenNativeComponent } from 'react-native';
+import type { Double, BubblingEventHandler, Float, WithDefault } from 'react-native/Libraries/Types/CodegenTypes';
 
 export type LatLng = Readonly<{
   latitude: Double; // Non-nullable Double for latitude
@@ -101,5 +96,5 @@ export interface PolygonFabricNativeProps extends ViewProps {
 
 export default codegenNativeComponent<PolygonFabricNativeProps>(
   'RNMapsGooglePolygon',
-  {},
+  {}
 ) as HostComponent<PolygonFabricNativeProps>;

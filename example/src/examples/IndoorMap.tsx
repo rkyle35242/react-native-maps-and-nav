@@ -1,8 +1,8 @@
 import React from 'react';
-import {StyleSheet, View, Dimensions, Button, Alert} from 'react-native';
+import { StyleSheet, View, Dimensions, Button, Alert } from 'react-native';
 import MapView from 'react-native-maps';
 
-const {width, height} = Dimensions.get('window');
+const { width, height } = Dimensions.get('window');
 const ASPECT_RATIO = width / height;
 const LATITUDE = 1.3039991;
 const LONGITUDE = 103.8316911;
@@ -17,11 +17,9 @@ export default class IndoorMap extends React.Component<any, any> {
   }
 
   handleIndoorFocus(event: any) {
-    const {activeLevelIndex, levels} = event.nativeEvent;
+    const { activeLevelIndex, levels } = event.nativeEvent;
     const levelNames = levels.map((lv: any) => lv.name || '');
-    const msg = `Default Level: ${
-      levels[activeLevelIndex].name
-    }\nLevels: ${levelNames.toString()}`;
+    const msg = `Default Level: ${levels[activeLevelIndex].name}\nLevels: ${levelNames.toString()}`;
     Alert.alert('Indoor building focused', msg);
   }
 
@@ -39,7 +37,7 @@ export default class IndoorMap extends React.Component<any, any> {
             latitude: LATITUDE,
             longitude: LONGITUDE,
             latitudeDelta: LATITUDE_DELTA,
-            longitudeDelta: LONGITUDE_DELTA,
+            longitudeDelta: LONGITUDE_DELTA
           }}
           showsIndoors
           showsIndoorLevelPicker
@@ -69,9 +67,9 @@ const styles = StyleSheet.create({
   container: {
     ...StyleSheet.absoluteFillObject,
     justifyContent: 'flex-end',
-    alignItems: 'center',
+    alignItems: 'center'
   },
   map: {
-    ...StyleSheet.absoluteFillObject,
-  },
+    ...StyleSheet.absoluteFillObject
+  }
 });

@@ -1,15 +1,9 @@
 import React from 'react';
-import {
-  StyleSheet,
-  View,
-  Text,
-  TouchableOpacity,
-  Dimensions,
-} from 'react-native';
+import { StyleSheet, View, Text, TouchableOpacity, Dimensions } from 'react-native';
 
-import MapView, {Circle, Polygon, Polyline} from 'react-native-maps';
+import MapView, { Circle, Polygon, Polyline } from 'react-native-maps';
 
-const {width, height} = Dimensions.get('window');
+const { width, height } = Dimensions.get('window');
 
 const ASPECT_RATIO = width / height;
 const LATITUDE = 37.78825;
@@ -30,65 +24,62 @@ class SetNativePropsOverlays extends React.Component<any, any> {
         latitude: LATITUDE,
         longitude: LONGITUDE,
         latitudeDelta: LATITUDE_DELTA,
-        longitudeDelta: LONGITUDE_DELTA,
+        longitudeDelta: LONGITUDE_DELTA
       },
       circle: {
         center: {
           latitude: LATITUDE + SPACE,
-          longitude: LONGITUDE + SPACE,
+          longitude: LONGITUDE + SPACE
         },
-        radius: 700,
+        radius: 700
       },
       polygon: [
         {
           latitude: LATITUDE + SPACE,
-          longitude: LONGITUDE + SPACE,
+          longitude: LONGITUDE + SPACE
         },
         {
           latitude: LATITUDE - SPACE,
-          longitude: LONGITUDE - SPACE,
+          longitude: LONGITUDE - SPACE
         },
         {
           latitude: LATITUDE - SPACE,
-          longitude: LONGITUDE + SPACE,
-        },
+          longitude: LONGITUDE + SPACE
+        }
       ],
       polyline: [
         {
           latitude: LATITUDE + SPACE,
-          longitude: LONGITUDE - SPACE,
+          longitude: LONGITUDE - SPACE
         },
         {
           latitude: LATITUDE - 2 * SPACE,
-          longitude: LONGITUDE + 2 * SPACE,
+          longitude: LONGITUDE + 2 * SPACE
         },
         {
           latitude: LATITUDE - SPACE,
-          longitude: LONGITUDE - SPACE,
+          longitude: LONGITUDE - SPACE
         },
         {
           latitude: LATITUDE - 2 * SPACE,
-          longitude: LONGITUDE - SPACE,
-        },
-      ],
+          longitude: LONGITUDE - SPACE
+        }
+      ]
     };
   }
 
   handleColorChange(color: any) {
-    const props = {strokeColor: color};
+    const props = { strokeColor: color };
     this.circle.setNativeProps(props);
     this.polygon.setNativeProps(props);
     this.polyline.setNativeProps(props);
   }
 
   render() {
-    const {region, circle, polygon, polyline} = this.state;
+    const { region, circle, polygon, polyline } = this.state;
     return (
       <View style={styles.container}>
-        <MapView
-          provider={this.props.provider}
-          style={styles.map}
-          initialRegion={region}>
+        <MapView provider={this.props.provider} style={styles.map} initialRegion={region}>
           <Circle
             ref={ref => {
               this.circle = ref;
@@ -122,7 +113,8 @@ class SetNativePropsOverlays extends React.Component<any, any> {
           <TouchableOpacity
             onPress={() => {
               this.handleColorChange('green');
-            }}>
+            }}
+          >
             <View style={styles.bubble}>
               <Text>Green</Text>
             </View>
@@ -130,7 +122,8 @@ class SetNativePropsOverlays extends React.Component<any, any> {
           <TouchableOpacity
             onPress={() => {
               this.handleColorChange('black');
-            }}>
+            }}
+          >
             <View style={styles.bubble}>
               <Text>Black</Text>
             </View>
@@ -138,7 +131,8 @@ class SetNativePropsOverlays extends React.Component<any, any> {
           <TouchableOpacity
             onPress={() => {
               this.handleColorChange('red');
-            }}>
+            }}
+          >
             <View style={styles.bubble}>
               <Text>Red</Text>
             </View>
@@ -154,24 +148,24 @@ const styles = StyleSheet.create({
     ...StyleSheet.absoluteFillObject,
     justifyContent: 'flex-end',
     alignItems: 'center',
-    paddingBottom: 10, // Ensure buttons are visible
+    paddingBottom: 10 // Ensure buttons are visible
   },
   map: {
-    ...StyleSheet.absoluteFillObject,
+    ...StyleSheet.absoluteFillObject
   },
   bubble: {
     backgroundColor: 'rgba(255,255,255,0.7)',
     paddingHorizontal: 18,
     paddingVertical: 12,
     borderRadius: 20,
-    zIndex: 11, // Ensure above other elements
+    zIndex: 11 // Ensure above other elements
   },
   buttonContainer: {
     flexDirection: 'row',
     marginVertical: 20,
     backgroundColor: 'transparent',
-    zIndex: 10, // Ensure above MapView
-  },
+    zIndex: 10 // Ensure above MapView
+  }
 });
 
 export default SetNativePropsOverlays;

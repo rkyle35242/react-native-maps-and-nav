@@ -139,6 +139,10 @@ public class MapView extends com.google.android.gms.maps.MapView implements Goog
     private LifecycleOwner currentLifecycleOwner;
     private boolean isLifecycleObserverAttached = false;
 
+    // When set, the map is rendered by a Navigation SDK view and the gms MapView base is left unused.
+    @Nullable
+    private NavigationHost navigationHost;
+
     private static final String[] PERMISSIONS = new String[]{
             "android.permission.ACCESS_FINE_LOCATION", "android.permission.ACCESS_COARSE_LOCATION"};
 
@@ -203,14 +207,82 @@ public class MapView extends com.google.android.gms.maps.MapView implements Goog
     }
 
 
+    @Nullable
+    public NavigationHost getNavigationHost() {
+        return navigationHost;
+    }
+
+    private void hostOnCreate(@Nullable Bundle savedInstanceState) {
+        if (navigationHost != null) {
+            navigationHost.onCreate(savedInstanceState);
+        } else {
+            super.onCreate(savedInstanceState);
+        }
+    }
+
+    private void hostOnStart() {
+        if (navigationHost != null) {
+            navigationHost.onStart();
+        } else {
+            super.onStart();
+        }
+    }
+
+    private void hostOnResume() {
+        if (navigationHost != null) {
+            navigationHost.onResume();
+        } else {
+            super.onResume();
+        }
+    }
+
+    private void hostOnStop() {
+        if (navigationHost != null) {
+            navigationHost.onStop();
+        } else {
+            super.onStop();
+        }
+    }
+
+    private void hostOnDestroy() {
+        if (navigationHost != null) {
+            navigationHost.onDestroy();
+        } else {
+            super.onDestroy();
+        }
+    }
+
+    private void hostOnSaveInstanceState(Bundle outState) {
+        if (navigationHost != null) {
+            navigationHost.onSaveInstanceState(outState);
+        } else {
+            super.onSaveInstanceState(outState);
+        }
+    }
+
+    private void hostGetMapAsync(OnMapReadyCallback callback) {
+        if (navigationHost != null) {
+            navigationHost.getMapAsync(callback);
+        } else {
+            super.getMapAsync(callback);
+        }
+    }
+
+    private void applyLocationSource() {
+        // The Navigation SDK drives the location layer with road-snapped locations.
+        if (navigationHost == null) {
+            map.setLocationSource(fusedLocationSource);
+        }
+    }
+
     @Override
     public void onCreate(LifecycleOwner owner) {
-        super.onCreate(null);
+        hostOnCreate(null);
     }
 
     @Override
     public void onStart(LifecycleOwner owner) {
-        super.onStart();
+        hostOnStart();
     }
 
     @Override
@@ -218,11 +290,11 @@ public class MapView extends com.google.android.gms.maps.MapView implements Goog
         if (hasPermissions() && map != null) {
             //noinspection MissingPermission
             map.setMyLocationEnabled(showUserLocation);
-            map.setLocationSource(fusedLocationSource);
+            applyLocationSource();
         }
         synchronized (MapView.this) {
             if (!destroyed) {
-                MapView.this.onResume();
+                hostOnResume();
             }
             paused = false;
         }
@@ -236,8 +308,12 @@ public class MapView extends com.google.android.gms.maps.MapView implements Goog
         }
         synchronized (MapView.this) {
             if (!paused) {
-                super.onPause();
-                MapView.this.onPause();
+                if (navigationHost != null) {
+                    navigationHost.onPause();
+                } else {
+                    super.onPause();
+                    MapView.this.onPause();
+                }
                 paused = true;
             }
         }
@@ -250,7 +326,7 @@ public class MapView extends com.google.android.gms.maps.MapView implements Goog
 
     @Override
     public void onStop(LifecycleOwner owner) {
-        super.onStop();
+        hostOnStop();
     }
 
     @Override
@@ -260,9 +336,33 @@ public class MapView extends com.google.android.gms.maps.MapView implements Goog
 
     public MapView(ThemedReactContext context,
                    GoogleMapOptions googleMapOptions) {
+        this(context, googleMapOptions, false);
+    }
+
+    public MapView(ThemedReactContext context,
+                   GoogleMapOptions googleMapOptions,
+                   boolean navigationEnabled) {
         super(context, googleMapOptions);
         this.context = context;
-        super.getMapAsync(this);
+        if (navigationEnabled) {
+            navigationHost = NavigationHost.create(context, googleMapOptions, new NavigationHost.Listener() {
+                @Override
+                public void onRecenterButtonClick() {
+                    dispatchEvent(new WritableNativeMap(), OnRecenterButtonClickEvent::new);
+                }
+
+                @Override
+                public void onPromptVisibilityChanged(boolean visible) {
+                    WritableMap payload = new WritableNativeMap();
+                    payload.putBoolean("visible", visible);
+                    dispatchEvent(payload, OnPromptVisibilityChangedEvent::new);
+                }
+            });
+        }
+        if (navigationHost != null) {
+            addView(navigationHost.getView(), new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+        }
+        hostGetMapAsync(this);
 
         final MapView view = this;
 
@@ -332,11 +432,11 @@ public class MapView extends com.google.android.gms.maps.MapView implements Goog
 
         attachLifecycleObserver();
         if (savedMapState != null) {
-            super.onCreate(savedMapState);
-            super.onStart();
-            super.onResume();
+            hostOnCreate(savedMapState);
+            hostOnStart();
+            hostOnResume();
             prepareAttacherView();
-            getMapAsync((map)->{
+            hostGetMapAsync((map)->{
                 onMapReady(map);
                 if (savedFeatures != null && !savedFeatures.isEmpty()) {
                     features.clear();
@@ -365,7 +465,7 @@ public class MapView extends com.google.android.gms.maps.MapView implements Goog
                     if (savedMapState == null) {
                         savedMapState = new Bundle();
                     }
-                    super.onSaveInstanceState(savedMapState);
+                    hostOnSaveInstanceState(savedMapState);
                 } catch (Exception e) {
                     Log.e("MapView", "Error saving state in onDetachedFromWindow: " + e.getMessage());
                     // Continue with cleanup even if state saving fails
@@ -380,7 +480,7 @@ public class MapView extends com.google.android.gms.maps.MapView implements Goog
 
         // These operations don't need synchronization
         try {
-            onStop();
+            hostOnStop();
         } catch (Exception e) {
             Log.e("MapView", "Error during stop in onDetachedFromWindow: " + e.getMessage());
         }
@@ -522,7 +622,7 @@ public class MapView extends com.google.android.gms.maps.MapView implements Goog
         if (hasPermissions()) {
             //noinspection MissingPermission
             map.setMyLocationEnabled(showUserLocation);
-            map.setLocationSource(fusedLocationSource);
+            applyLocationSource();
         }
 
         setShowsMyLocationButton(showMyLocationButton);
@@ -792,6 +892,8 @@ public class MapView extends com.google.android.gms.maps.MapView implements Goog
         builder.put(OnIndoorBuildingFocusedEvent.EVENT_NAME, MapBuilder.of("registrationName", OnIndoorBuildingFocusedEvent.EVENT_NAME));
         builder.put(OnIndoorLevelActivatedEvent.EVENT_NAME, MapBuilder.of("registrationName", OnIndoorLevelActivatedEvent.EVENT_NAME));
         builder.put(OnKmlReadyEvent.EVENT_NAME, MapBuilder.of("registrationName", OnKmlReadyEvent.EVENT_NAME));
+        builder.put(OnRecenterButtonClickEvent.EVENT_NAME, MapBuilder.of("registrationName", OnRecenterButtonClickEvent.EVENT_NAME));
+        builder.put(OnPromptVisibilityChangedEvent.EVENT_NAME, MapBuilder.of("registrationName", OnPromptVisibilityChangedEvent.EVENT_NAME));
         return builder.build();
     }
 
@@ -810,7 +912,7 @@ public class MapView extends com.google.android.gms.maps.MapView implements Goog
             if (!paused) {
                 pauseSafely();
             }
-            onDestroy();
+            hostOnDestroy();
             detachLifecycleObserver();
         } catch (Exception exception){
             Log.e("MapView", "exception with destroying", exception);
@@ -1000,7 +1102,7 @@ public class MapView extends com.google.android.gms.maps.MapView implements Goog
     public void setShowsUserLocation(boolean showUserLocation) {
         this.showUserLocation = showUserLocation; // hold onto this for lifecycle handling
         if (hasPermissions() && map != null) {
-            map.setLocationSource(fusedLocationSource);
+            applyLocationSource();
             //noinspection MissingPermission
             map.setMyLocationEnabled(showUserLocation);
         }

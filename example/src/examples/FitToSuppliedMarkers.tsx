@@ -1,8 +1,8 @@
 import React from 'react';
-import {StyleSheet, View, Dimensions} from 'react-native';
-import MapView, {Marker} from 'react-native-maps';
+import { StyleSheet, View, Dimensions } from 'react-native';
+import MapView, { Marker } from 'react-native-maps';
 
-const {width, height} = Dimensions.get('window');
+const { width, height } = Dimensions.get('window');
 
 const ASPECT_RATIO = width / height;
 const LATITUDE = 37.78825;
@@ -23,24 +23,24 @@ class FocusOnMarkers extends React.Component<any, any> {
     this.state = {
       a: {
         latitude: LATITUDE + SPACE,
-        longitude: LONGITUDE + SPACE,
+        longitude: LONGITUDE + SPACE
       },
       b: {
         latitude: LATITUDE - SPACE,
-        longitude: LONGITUDE - SPACE,
+        longitude: LONGITUDE - SPACE
       },
       c: {
         latitude: LATITUDE - SPACE * 2,
-        longitude: LONGITUDE - SPACE * 2,
+        longitude: LONGITUDE - SPACE * 2
       },
       d: {
         latitude: LATITUDE - SPACE * 3,
-        longitude: LONGITUDE - SPACE * 3,
+        longitude: LONGITUDE - SPACE * 3
       },
       e: {
         latitude: LATITUDE - SPACE * 4,
-        longitude: LONGITUDE - SPACE * 4,
-      },
+        longitude: LONGITUDE - SPACE * 4
+      }
     };
   }
 
@@ -106,8 +106,9 @@ class FocusOnMarkers extends React.Component<any, any> {
             latitude: LATITUDE,
             longitude: LONGITUDE,
             latitudeDelta: LATITUDE_DELTA,
-            longitudeDelta: LONGITUDE_DELTA,
-          }}>
+            longitudeDelta: LONGITUDE_DELTA
+          }}
+        >
           <Marker identifier="Marker1" coordinate={this.state.a} />
           <Marker identifier="Marker2" coordinate={this.state.b} />
           <Marker identifier="Marker3" coordinate={this.state.c} />
@@ -123,11 +124,11 @@ const styles = StyleSheet.create({
   container: {
     ...StyleSheet.absoluteFillObject,
     justifyContent: 'flex-end',
-    alignItems: 'center',
+    alignItems: 'center'
   },
   map: {
-    ...StyleSheet.absoluteFillObject,
-  },
+    ...StyleSheet.absoluteFillObject
+  }
 });
 
 export default FocusOnMarkers;

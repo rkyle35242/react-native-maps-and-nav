@@ -1,10 +1,10 @@
 import React from 'react';
-import {StyleSheet, View, Dimensions} from 'react-native';
+import { StyleSheet, View, Dimensions } from 'react-native';
 
-import MapView, {Marker} from 'react-native-maps';
+import MapView, { Marker } from 'react-native-maps';
 import PriceMarker from './PriceMarker';
 
-const {width, height} = Dimensions.get('window');
+const { width, height } = Dimensions.get('window');
 
 const ASPECT_RATIO = width / height;
 const LATITUDE = 37.78825;
@@ -24,12 +24,12 @@ class MarkerTypes extends React.Component<any, any> {
     this.state = {
       a: {
         latitude: LATITUDE + SPACE,
-        longitude: LONGITUDE + SPACE,
+        longitude: LONGITUDE + SPACE
       },
       b: {
         latitude: LATITUDE - SPACE,
-        longitude: LONGITUDE - SPACE,
-      },
+        longitude: LONGITUDE - SPACE
+      }
     };
   }
 
@@ -43,8 +43,9 @@ class MarkerTypes extends React.Component<any, any> {
             latitude: LATITUDE,
             longitude: LONGITUDE,
             latitudeDelta: LATITUDE_DELTA,
-            longitudeDelta: LONGITUDE_DELTA,
-          }}>
+            longitudeDelta: LONGITUDE_DELTA
+          }}
+        >
           <Marker
             coordinate={this.state.a}
             onSelect={e => log('onSelect', e)}
@@ -52,7 +53,8 @@ class MarkerTypes extends React.Component<any, any> {
             onDragStart={e => log('onDragStart', e)}
             onDragEnd={e => log('onDragEnd', e)}
             onPress={e => log('onPress', e)}
-            draggable>
+            draggable
+          >
             <PriceMarker amount={99} />
           </Marker>
           <Marker
@@ -74,11 +76,11 @@ const styles = StyleSheet.create({
   container: {
     ...StyleSheet.absoluteFillObject,
     justifyContent: 'flex-end',
-    alignItems: 'center',
+    alignItems: 'center'
   },
   map: {
-    ...StyleSheet.absoluteFillObject,
-  },
+    ...StyleSheet.absoluteFillObject
+  }
 });
 
 export default MarkerTypes;

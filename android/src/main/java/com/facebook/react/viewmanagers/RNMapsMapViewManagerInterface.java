@@ -69,6 +69,19 @@ public interface RNMapsMapViewManagerInterface<T extends View> extends ViewManag
   void setShowsTraffic(T view, boolean value);
   void setZoomTapEnabled(T view, boolean value);
   void setCameraZoomRange(T view, @Nullable ReadableMap value);
+  void setNavigationEnabled(T view, boolean value);
+  void setNavigationUIEnabledPreference(T view, @Nullable String value);
+  void setNavigationNightMode(T view, @Nullable String value);
+  void setNavigationStylingOptionsJSON(T view, @Nullable String value);
+  void setHeaderEnabled(T view, boolean value);
+  void setFooterEnabled(T view, boolean value);
+  void setTripProgressBarEnabled(T view, boolean value);
+  void setSpeedometerEnabled(T view, boolean value);
+  void setSpeedLimitIconEnabled(T view, boolean value);
+  void setRecenterButtonEnabled(T view, boolean value);
+  void setReportIncidentButtonEnabled(T view, boolean value);
+  void setTrafficPromptsEnabled(T view, boolean value);
+  void setTrafficIncidentCardsEnabled(T view, boolean value);
   void animateToRegion(T view, String regionJSON, int duration);
   void setCamera(T view, String cameraJSON);
   void animateCamera(T view, String cameraJSON, int duration);
@@ -76,4 +89,7 @@ public interface RNMapsMapViewManagerInterface<T extends View> extends ViewManag
   void fitToSuppliedMarkers(T view, String markersJSON, String edgePaddingJSON, boolean animated);
   void fitToCoordinates(T view, String coordinatesJSON, String edgePaddingJSON, boolean animated);
   void setIndoorActiveLevelIndex(T view, int activeLevelIndex);
+  void showRouteOverview(T view);
+  void setNavigationUIEnabled(T view, boolean enabled);
+  void followMyLocation(T view, String perspective, double zoomLevel);
 }

@@ -1,14 +1,14 @@
 import * as React from 'react';
-import {View, type NativeSyntheticEvent, type ViewProps} from 'react-native';
+import { View, type NativeSyntheticEvent, type ViewProps } from 'react-native';
 import decorateMapComponent, {
   USES_DEFAULT_IMPLEMENTATION,
   SUPPORTED,
   ProviderContext,
   type NativeComponent,
   type MapManagerCommand,
-  type UIManagerCommand,
+  type UIManagerCommand
 } from './decorateMapComponent';
-import type {LatLng, LineCapType, LineJoinType, Point} from './sharedTypes';
+import type { LatLng, LineCapType, LineJoinType, Point } from './sharedTypes';
 
 export type MapPolylineProps = ViewProps & {
   /**
@@ -146,7 +146,7 @@ export type MapPolylineProps = ViewProps & {
   zIndex?: number;
 };
 
-type NativeProps = MapPolylineProps & {ref: React.RefObject<View | null>};
+type NativeProps = MapPolylineProps & { ref: React.RefObject<View | null> };
 
 export class MapPolyline extends React.Component<MapPolylineProps> {
   // declaration only, as they are set through decorateMap
@@ -168,12 +168,7 @@ export class MapPolyline extends React.Component<MapPolylineProps> {
   }
 
   render() {
-    const {
-      strokeColor = '#000',
-      strokeWidth = 1,
-      lineJoin = 'round',
-      lineCap = 'round',
-    } = this.props;
+    const { strokeColor = '#000', strokeWidth = 1, lineJoin = 'round', lineCap = 'round' } = this.props;
     const AIRMapPolyline = this.getNativeComponent();
     return (
       <AIRMapPolyline
@@ -191,8 +186,8 @@ export class MapPolyline extends React.Component<MapPolylineProps> {
 export default decorateMapComponent(MapPolyline, 'Polyline', {
   google: {
     ios: SUPPORTED,
-    android: USES_DEFAULT_IMPLEMENTATION,
-  },
+    android: USES_DEFAULT_IMPLEMENTATION
+  }
 });
 
 export type PolylinePressEvent = NativeSyntheticEvent<{

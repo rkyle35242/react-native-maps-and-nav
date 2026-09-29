@@ -1,18 +1,14 @@
 import * as React from 'react';
-import {
-  StyleSheet,
-  type NativeSyntheticEvent,
-  type ViewProps,
-} from 'react-native';
+import { StyleSheet, type NativeSyntheticEvent, type ViewProps } from 'react-native';
 import decorateMapComponent, {
   SUPPORTED,
   NOT_SUPPORTED,
   ProviderContext,
   type NativeComponent,
   type MapManagerCommand,
-  type UIManagerCommand,
+  type UIManagerCommand
 } from './decorateMapComponent';
-import type {Frame, Point} from './sharedTypes';
+import type { Frame, Point } from './sharedTypes';
 
 export type MapCalloutSubviewProps = ViewProps & {
   /**
@@ -35,24 +31,19 @@ export class MapCalloutSubview extends React.Component<MapCalloutSubviewProps> {
   getUIManagerCommand!: (name: string) => UIManagerCommand;
   render() {
     const AIRMapCalloutSubview = this.getNativeComponent();
-    return (
-      <AIRMapCalloutSubview
-        {...this.props}
-        style={[styles.calloutSubview, this.props.style]}
-      />
-    );
+    return <AIRMapCalloutSubview {...this.props} style={[styles.calloutSubview, this.props.style]} />;
   }
 }
 
 const styles = StyleSheet.create({
-  calloutSubview: {},
+  calloutSubview: {}
 });
 
 export default decorateMapComponent(MapCalloutSubview, 'CalloutSubview', {
   google: {
     ios: SUPPORTED,
-    android: NOT_SUPPORTED,
-  },
+    android: NOT_SUPPORTED
+  }
 });
 
 type CalloutSubviewPressEvent = NativeSyntheticEvent<{

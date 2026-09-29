@@ -1,12 +1,7 @@
-import type {HostComponent, ViewProps, ColorValue} from 'react-native';
+import type { HostComponent, ViewProps, ColorValue } from 'react-native';
 
-import {codegenNativeComponent} from 'react-native';
-import type {
-  Double,
-  BubblingEventHandler,
-  Float,
-  WithDefault,
-} from 'react-native/Libraries/Types/CodegenTypes';
+import { codegenNativeComponent } from 'react-native';
+import type { Double, BubblingEventHandler, Float, WithDefault } from 'react-native/Libraries/Types/CodegenTypes';
 
 export type LatLng = Readonly<{
   latitude: Double; // Non-nullable Double for latitude
@@ -128,10 +123,7 @@ export interface ApplePolygonFabricNativeProps extends ViewProps {
   onPress?: PolygonPressEventHandler;
 }
 
-export default codegenNativeComponent<ApplePolygonFabricNativeProps>(
-  'RNMapsPolygon',
-  {
-    // iOS-only: on Android, polygons use the shared `RNMapsGooglePolygon` component.
-    excludedPlatforms: ['android'],
-  },
-) as HostComponent<ApplePolygonFabricNativeProps>;
+export default codegenNativeComponent<ApplePolygonFabricNativeProps>('RNMapsPolygon', {
+  // iOS-only: on Android, polygons use the shared `RNMapsGooglePolygon` component.
+  excludedPlatforms: ['android']
+}) as HostComponent<ApplePolygonFabricNativeProps>;

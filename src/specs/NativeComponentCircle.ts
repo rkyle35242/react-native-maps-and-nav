@@ -1,12 +1,7 @@
-import type {HostComponent, ViewProps, ColorValue} from 'react-native';
+import type { HostComponent, ViewProps, ColorValue } from 'react-native';
 
-import {codegenNativeComponent} from 'react-native';
-import type {
-  Double,
-  Float,
-  BubblingEventHandler,
-  WithDefault,
-} from 'react-native/Libraries/Types/CodegenTypes';
+import { codegenNativeComponent } from 'react-native';
+import type { Double, Float, BubblingEventHandler, WithDefault } from 'react-native/Libraries/Types/CodegenTypes';
 
 export type LatLng = Readonly<{
   latitude: Double; // Non-nullable Double for latitude
@@ -90,5 +85,5 @@ export interface CircleFabricNativeProps extends ViewProps {
 }
 
 export default codegenNativeComponent<CircleFabricNativeProps>('RNMapsCircle', {
-  excludedPlatforms: ['iOS'],
+  excludedPlatforms: ['iOS']
 }) as HostComponent<CircleFabricNativeProps>;

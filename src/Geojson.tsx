@@ -8,14 +8,14 @@ import type {
   LineString,
   MultiLineString,
   Polygon,
-  MultiPolygon,
+  MultiPolygon
 } from 'geojson';
-import Marker, {type MapMarkerProps as MarkerProps} from './MapMarker';
-import type {MapPolygonProps as PolygonProps} from './MapPolygon';
-import type {MapPolylineProps as PolylineProps} from './MapPolyline';
+import Marker, { type MapMarkerProps as MarkerProps } from './MapMarker';
+import type { MapPolygonProps as PolygonProps } from './MapPolygon';
+import type { MapPolylineProps as PolylineProps } from './MapPolyline';
 import Polyline from './MapPolyline';
 import MapPolygon from './MapPolygon';
-import type {LatLng} from './sharedTypes';
+import type { LatLng } from './sharedTypes';
 
 export type GeojsonProps = {
   /**
@@ -102,9 +102,7 @@ export type GeojsonProps = {
    * @platform iOS: Supported
    * @platform Android: Supported
    */
-  lineDashPattern?:
-    | PolygonProps['lineDashPattern']
-    | PolylineProps['lineDashPattern'];
+  lineDashPattern?: PolygonProps['lineDashPattern'] | PolylineProps['lineDashPattern'];
 
   /**
    * The offset (in points) at which to start drawing the dash pattern.
@@ -209,10 +207,7 @@ export type GeojsonProps = {
    * @platform iOS: Apple Maps: [Marker], Google Maps: [Marker, Polygon, Polyline]
    * @platform Android: Supported
    */
-  zIndex?:
-    | MarkerProps['zIndex']
-    | PolygonProps['zIndex']
-    | PolylineProps['zIndex'];
+  zIndex?: MarkerProps['zIndex'] | PolygonProps['zIndex'] | PolylineProps['zIndex'];
 };
 
 const Geojson = (props: GeojsonProps) => {
@@ -235,7 +230,7 @@ const Geojson = (props: GeojsonProps) => {
     miterLimit,
     lineDashPhase,
     lineDashPattern,
-    markerComponent,
+    markerComponent
   } = props;
   const pointOverlays = makePointOverlays(geojson.features);
   const lineOverlays = makeLineOverlays(geojson.features);
@@ -244,8 +239,7 @@ const Geojson = (props: GeojsonProps) => {
     <React.Fragment>
       {pointOverlays.map((overlay, index) => {
         const markerColor = getColor(color, overlay, 'marker-color');
-        const pointOverlayTracksViewChanges =
-          overlay.feature.properties?.tracksViewChanges || tracksViewChanges;
+        const pointOverlayTracksViewChanges = overlay.feature.properties?.tracksViewChanges || tracksViewChanges;
         return (
           <Marker
             key={index}
@@ -257,7 +251,8 @@ const Geojson = (props: GeojsonProps) => {
             zIndex={zIndex}
             anchor={anchor}
             centerOffset={centerOffset}
-            onPress={() => onPress && onPress(overlay)}>
+            onPress={() => onPress && onPress(overlay)}
+          >
             {markerComponent}
           </Marker>
         );
@@ -317,24 +312,20 @@ const makePointOverlays = (features: Feature[]): AnyPointOverlay[] => {
   return features
     .filter(isAnyPointFeature)
     .map(feature =>
-      makeCoordinatesForAnyPoint(feature.geometry).map(coordinates =>
-        makeOverlayForAnyPoint(coordinates, feature),
-      ),
+      makeCoordinatesForAnyPoint(feature.geometry).map(coordinates => makeOverlayForAnyPoint(coordinates, feature))
     )
     .reduce((prev, curr) => prev.concat(curr), [])
-    .map(overlay => ({...overlay, type: 'point'}));
+    .map(overlay => ({ ...overlay, type: 'point' }));
 };
 
 const makeLineOverlays = (features: Feature[]): AnyLineStringOverlay[] => {
   return features
     .filter(isAnyLineStringFeature)
     .map(feature =>
-      makeCoordinatesForAnyLine(feature.geometry).map(coordinates =>
-        makeOverlayForAnyLine(coordinates, feature),
-      ),
+      makeCoordinatesForAnyLine(feature.geometry).map(coordinates => makeOverlayForAnyLine(coordinates, feature))
     )
     .reduce((prev, curr) => prev.concat(curr), [])
-    .map(overlay => ({...overlay, type: 'polyline'}));
+    .map(overlay => ({ ...overlay, type: 'polyline' }));
 };
 
 const makePolygonOverlays = (features: Feature[]): AnyPolygonOverlay[] => {
@@ -342,57 +333,49 @@ const makePolygonOverlays = (features: Feature[]): AnyPolygonOverlay[] => {
     .filter(isMultiPolygonFeature)
     .map(feature =>
       makeCoordinatesForMultiPolygon(feature.geometry).map(coordinates =>
-        makeOverlayForAnyPolygon(coordinates, feature),
-      ),
+        makeOverlayForAnyPolygon(coordinates, feature)
+      )
     )
     .reduce((prev, curr) => prev.concat(curr), [])
-    .map(overlay => ({...overlay, type: 'polygon'}));
+    .map(overlay => ({ ...overlay, type: 'polygon' }));
 
   const polygons: AnyPolygonOverlay[] = features
     .filter(isPolygonFeature)
-    .map(feature =>
-      makeOverlayForAnyPolygon(
-        makeCoordinatesForPolygon(feature.geometry),
-        feature,
-      ),
-    )
-    .reduce<Omit<AnyPolygonOverlay, 'type'>[]>(
-      (prev, curr) => prev.concat(curr),
-      [],
-    )
-    .map(overlay => ({...overlay, type: 'polygon'}));
+    .map(feature => makeOverlayForAnyPolygon(makeCoordinatesForPolygon(feature.geometry), feature))
+    .reduce<Omit<AnyPolygonOverlay, 'type'>[]>((prev, curr) => prev.concat(curr), [])
+    .map(overlay => ({ ...overlay, type: 'polygon' }));
 
   return polygons.concat(multipolygons);
 };
 
 const makeOverlayForAnyPoint = (
   coordinates: LatLng,
-  feature: Feature<Point | MultiPoint>,
+  feature: Feature<Point | MultiPoint>
 ): Omit<AnyPointOverlay, 'type'> => {
-  return {feature, coordinates};
+  return { feature, coordinates };
 };
 
 const makeOverlayForAnyLine = (
   coordinates: LatLng[],
-  feature: Feature<LineString | MultiLineString>,
+  feature: Feature<LineString | MultiLineString>
 ): Omit<AnyLineStringOverlay, 'type'> => {
-  return {feature, coordinates};
+  return { feature, coordinates };
 };
 
 const makeOverlayForAnyPolygon = (
   coordinates: LatLng[][],
-  feature: Feature<Polygon | MultiPolygon>,
+  feature: Feature<Polygon | MultiPolygon>
 ): Omit<AnyPolygonOverlay, 'type'> => {
   return {
     feature,
     coordinates: coordinates[0],
-    holes: coordinates.length > 1 ? coordinates.slice(1) : undefined,
+    holes: coordinates.length > 1 ? coordinates.slice(1) : undefined
   };
 };
 
 const makePoint = (c: Position): LatLng => ({
   latitude: c[1],
-  longitude: c[0],
+  longitude: c[0]
 });
 
 const makeLine = (l: Position[]) => l.map(makePoint);
@@ -434,11 +417,7 @@ const getRgbaFromHex = (hex: string, alpha: number = 1) => {
   return `rgba(${r},${g},${b},${alpha})`;
 };
 
-const getColor = (
-  prop: string | undefined,
-  overlay: Overlay,
-  colorType: string,
-) => {
+const getColor = (prop: string | undefined, overlay: Overlay, colorType: string) => {
   let color = overlay.feature.properties?.[colorType];
 
   if (color) {
@@ -457,60 +436,37 @@ const getColor = (
   return undefined;
 };
 
-const getStrokeWidth = (
-  prop: GeojsonProps['strokeWidth'],
-  overlay: Overlay,
-) => {
+const getStrokeWidth = (prop: GeojsonProps['strokeWidth'], overlay: Overlay) => {
   return overlay.feature.properties?.['stroke-width'] ?? prop;
 };
 
 // GeoJSON.Feature type-guards
-const isPointFeature = (feature: Feature): feature is Feature<Point> =>
-  feature.geometry.type === 'Point';
+const isPointFeature = (feature: Feature): feature is Feature<Point> => feature.geometry.type === 'Point';
 
-const isMultiPointFeature = (
-  feature: Feature,
-): feature is Feature<MultiPoint> => feature.geometry.type === 'MultiPoint';
+const isMultiPointFeature = (feature: Feature): feature is Feature<MultiPoint> =>
+  feature.geometry.type === 'MultiPoint';
 
-const isAnyPointFeature = (
-  feature: Feature,
-): feature is Feature<Point> | Feature<MultiPoint> =>
+const isAnyPointFeature = (feature: Feature): feature is Feature<Point> | Feature<MultiPoint> =>
   isPointFeature(feature) || isMultiPointFeature(feature);
 
-const isLineStringFeature = (
-  feature: Feature,
-): feature is Feature<LineString> => feature.geometry.type === 'LineString';
+const isLineStringFeature = (feature: Feature): feature is Feature<LineString> =>
+  feature.geometry.type === 'LineString';
 
-const isMultiLineStringFeature = (
-  feature: Feature,
-): feature is Feature<MultiLineString> =>
+const isMultiLineStringFeature = (feature: Feature): feature is Feature<MultiLineString> =>
   feature.geometry.type === 'MultiLineString';
 
-const isAnyLineStringFeature = (
-  feature: Feature,
-): feature is Feature<LineString> | Feature<MultiLineString> =>
+const isAnyLineStringFeature = (feature: Feature): feature is Feature<LineString> | Feature<MultiLineString> =>
   isLineStringFeature(feature) || isMultiLineStringFeature(feature);
 
-const isPolygonFeature = (feature: Feature): feature is Feature<Polygon> =>
-  feature.geometry.type === 'Polygon';
+const isPolygonFeature = (feature: Feature): feature is Feature<Polygon> => feature.geometry.type === 'Polygon';
 
-const isMultiPolygonFeature = (
-  feature: Feature,
-): feature is Feature<MultiPolygon> => feature.geometry.type === 'MultiPolygon';
+const isMultiPolygonFeature = (feature: Feature): feature is Feature<MultiPolygon> =>
+  feature.geometry.type === 'MultiPolygon';
 
 type OverlayPressEvent = {
-  type:
-    | AnyPointOverlay['type']
-    | AnyLineStringOverlay['type']
-    | AnyPolygonOverlay['type'];
-  feature:
-    | AnyPointOverlay['feature']
-    | AnyLineStringOverlay['feature']
-    | AnyPolygonOverlay['feature'];
-  coordinates:
-    | AnyPointOverlay['coordinates']
-    | AnyLineStringOverlay['coordinates']
-    | AnyPolygonOverlay['coordinates'];
+  type: AnyPointOverlay['type'] | AnyLineStringOverlay['type'] | AnyPolygonOverlay['type'];
+  feature: AnyPointOverlay['feature'] | AnyLineStringOverlay['feature'] | AnyPolygonOverlay['feature'];
+  coordinates: AnyPointOverlay['coordinates'] | AnyLineStringOverlay['coordinates'] | AnyPolygonOverlay['coordinates'];
   holes?: AnyPolygonOverlay['holes'];
 };
 

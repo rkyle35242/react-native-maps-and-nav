@@ -1,8 +1,8 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 
-import {View, StyleSheet, TouchableOpacity, Text} from 'react-native';
+import { View, StyleSheet, TouchableOpacity, Text } from 'react-native';
 
-import MapView, {Marker} from 'react-native-maps';
+import MapView, { Marker } from 'react-native-maps';
 // @ts-ignore
 import carImage from './assets/car.png';
 
@@ -12,10 +12,10 @@ export default class NavigationMap extends Component<any, any> {
     super(props);
     this.state = {
       prevPos: null,
-      curPos: {latitude: 37.420814, longitude: -122.081949},
+      curPos: { latitude: 37.420814, longitude: -122.081949 },
       curAng: 45,
       latitudeDelta: 0.0922,
-      longitudeDelta: 0.0421,
+      longitudeDelta: 0.0421
     };
     this.changePosition = this.changePosition.bind(this);
     this.getRotation = this.getRotation.bind(this);
@@ -27,7 +27,7 @@ export default class NavigationMap extends Component<any, any> {
     const longitude = this.state.curPos.longitude + lonOffset;
     this.setState({
       prevPos: this.state.curPos,
-      curPos: {latitude, longitude},
+      curPos: { latitude, longitude }
     });
     this.updateMap();
   }
@@ -42,9 +42,9 @@ export default class NavigationMap extends Component<any, any> {
   }
 
   updateMap() {
-    const {curPos, prevPos, curAng} = this.state;
+    const { curPos, prevPos, curAng } = this.state;
     const curRot = this.getRotation(prevPos, curPos);
-    this.map.animateCamera({heading: curRot, center: curPos, pitch: curAng});
+    this.map.animateCamera({ heading: curRot, center: curPos, pitch: curAng });
   }
 
   render() {
@@ -59,35 +59,24 @@ export default class NavigationMap extends Component<any, any> {
           initialRegion={{
             ...this.state.curPos,
             latitudeDelta: this.state.latitudeDelta,
-            longitudeDelta: this.state.longitudeDelta,
-          }}>
-          <Marker
-            coordinate={this.state.curPos}
-            anchor={{x: 0.5, y: 0.5}}
-            image={carImage}
-          />
+            longitudeDelta: this.state.longitudeDelta
+          }}
+        >
+          <Marker coordinate={this.state.curPos} anchor={{ x: 0.5, y: 0.5 }} image={carImage} />
         </MapView>
         <View style={styles.buttonContainerUpDown}>
-          <TouchableOpacity
-            style={[styles.button, styles.up]}
-            onPress={() => this.changePosition(0.0001, 0)}>
+          <TouchableOpacity style={[styles.button, styles.up]} onPress={() => this.changePosition(0.0001, 0)}>
             <Text>+ Lat</Text>
           </TouchableOpacity>
-          <TouchableOpacity
-            style={[styles.button, styles.down]}
-            onPress={() => this.changePosition(-0.0001, 0)}>
+          <TouchableOpacity style={[styles.button, styles.down]} onPress={() => this.changePosition(-0.0001, 0)}>
             <Text>- Lat</Text>
           </TouchableOpacity>
         </View>
         <View style={styles.buttonContainerLeftRight}>
-          <TouchableOpacity
-            style={[styles.button, styles.left]}
-            onPress={() => this.changePosition(0, -0.0001)}>
+          <TouchableOpacity style={[styles.button, styles.left]} onPress={() => this.changePosition(0, -0.0001)}>
             <Text>- Lon</Text>
           </TouchableOpacity>
-          <TouchableOpacity
-            style={[styles.button, styles.right]}
-            onPress={() => this.changePosition(0, 0.0001)}>
+          <TouchableOpacity style={[styles.button, styles.right]} onPress={() => this.changePosition(0, 0.0001)}>
             <Text>+ Lon</Text>
           </TouchableOpacity>
         </View>
@@ -99,17 +88,17 @@ export default class NavigationMap extends Component<any, any> {
 const styles = StyleSheet.create({
   flex: {
     flex: 1,
-    width: '100%',
+    width: '100%'
   },
   buttonContainerUpDown: {
     ...StyleSheet.absoluteFillObject,
     flexDirection: 'row',
-    justifyContent: 'center',
+    justifyContent: 'center'
   },
   buttonContainerLeftRight: {
     ...StyleSheet.absoluteFillObject,
     flexDirection: 'column',
-    justifyContent: 'center',
+    justifyContent: 'center'
   },
   button: {
     backgroundColor: 'rgba(100,100,100,0.2)',
@@ -118,18 +107,18 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     borderRadius: 20,
     height: 50,
-    width: 50,
+    width: 50
   },
   up: {
-    alignSelf: 'flex-start',
+    alignSelf: 'flex-start'
   },
   down: {
-    alignSelf: 'flex-end',
+    alignSelf: 'flex-end'
   },
   left: {
-    alignSelf: 'flex-start',
+    alignSelf: 'flex-start'
   },
   right: {
-    alignSelf: 'flex-end',
-  },
+    alignSelf: 'flex-end'
+  }
 });

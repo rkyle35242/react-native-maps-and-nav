@@ -1,17 +1,9 @@
 import React from 'react';
-import {
-  StyleSheet,
-  View,
-  Text,
-  Dimensions,
-  TouchableOpacity,
-  Alert,
-  Platform,
-} from 'react-native';
-import MapView, {Marker, Callout, CalloutSubview} from 'react-native-maps';
+import { StyleSheet, View, Text, Dimensions, TouchableOpacity, Alert, Platform } from 'react-native';
+import MapView, { Marker, Callout, CalloutSubview } from 'react-native-maps';
 import CustomCallout from './CustomCallout';
 
-const {width, height} = Dimensions.get('window');
+const { width, height } = Dimensions.get('window');
 const ASPECT_RATIO = width / height;
 const LATITUDE = 37.78825;
 const LONGITUDE = -122.4324;
@@ -32,34 +24,34 @@ class Callouts extends React.Component<any, any> {
         latitude: LATITUDE,
         longitude: LONGITUDE,
         latitudeDelta: LATITUDE_DELTA,
-        longitudeDelta: LONGITUDE_DELTA,
+        longitudeDelta: LONGITUDE_DELTA
       },
       markers: [
         {
           coordinate: {
             latitude: LATITUDE + SPACE,
-            longitude: LONGITUDE + SPACE,
-          },
+            longitude: LONGITUDE + SPACE
+          }
         },
         {
           coordinate: {
             latitude: LATITUDE + SPACE,
-            longitude: LONGITUDE - SPACE,
-          },
+            longitude: LONGITUDE - SPACE
+          }
         },
         {
           coordinate: {
             latitude: LATITUDE,
-            longitude: LONGITUDE,
-          },
+            longitude: LONGITUDE
+          }
         },
         {
           coordinate: {
             latitude: LATITUDE,
-            longitude: LONGITUDE - SPACE / 2,
-          },
-        },
-      ],
+            longitude: LONGITUDE - SPACE / 2
+          }
+        }
+      ]
     };
   }
 
@@ -72,14 +64,10 @@ class Callouts extends React.Component<any, any> {
   }
 
   render() {
-    const {region, markers} = this.state;
+    const { region, markers } = this.state;
     return (
       <View style={styles.container}>
-        <MapView
-          provider={this.props.provider}
-          style={styles.map}
-          initialRegion={region}
-          zoomTapEnabled={false}>
+        <MapView provider={this.props.provider} style={styles.map} initialRegion={region} zoomTapEnabled={false}>
           <Marker
             ref={ref => {
               this.marker1 = ref;
@@ -97,28 +85,31 @@ class Callouts extends React.Component<any, any> {
           </Marker>
           <Marker
             coordinate={markers[2].coordinate}
-            calloutOffset={{x: -8, y: 28}}
-            calloutAnchor={{x: 0.5, y: 0.4}}
+            calloutOffset={{ x: -8, y: 28 }}
+            calloutAnchor={{ x: 0.5, y: 0.4 }}
             ref={ref => {
               this.marker2 = ref;
-            }}>
+            }}
+          >
             <Callout
               alphaHitTest
               tooltip
               onPress={_ => {
                 Alert.alert('callout pressed');
               }}
-              style={styles.customView}>
+              style={styles.customView}
+            >
               <CustomCallout>
                 <Text>{`This is a custom callout bubble view ${this.state.cnt}`}</Text>
                 {Platform.OS === 'ios' && (
                   <CalloutSubview
                     onPress={() => {
-                      this.setState({cnt: this.state.cnt + 1}, () => {
+                      this.setState({ cnt: this.state.cnt + 1 }, () => {
                         this.marker2.redrawCallout();
                       });
                     }}
-                    style={[styles.calloutButton]}>
+                    style={[styles.calloutButton]}
+                  >
                     <Text>Click me</Text>
                   </CalloutSubview>
                 )}
@@ -140,14 +131,10 @@ class Callouts extends React.Component<any, any> {
           </View>
         </View>
         <View style={styles.buttonContainer}>
-          <TouchableOpacity
-            onPress={() => this.show()}
-            style={[styles.bubble, styles.button]}>
+          <TouchableOpacity onPress={() => this.show()} style={[styles.bubble, styles.button]}>
             <Text>Show</Text>
           </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => this.hide()}
-            style={[styles.bubble, styles.button]}>
+          <TouchableOpacity onPress={() => this.hide()} style={[styles.bubble, styles.button]}>
             <Text>Hide</Text>
           </TouchableOpacity>
         </View>
@@ -159,40 +146,40 @@ class Callouts extends React.Component<any, any> {
 const styles = StyleSheet.create({
   customView: {
     width: 140,
-    height: Platform.select({android: 100, default: 140}),
+    height: Platform.select({ android: 100, default: 140 })
   },
   plainView: {
-    width: 60,
+    width: 60
   },
   container: {
     ...StyleSheet.absoluteFillObject,
     justifyContent: 'flex-end',
-    alignItems: 'center',
+    alignItems: 'center'
   },
   map: {
-    ...StyleSheet.absoluteFillObject,
+    ...StyleSheet.absoluteFillObject
   },
   bubble: {
     flex: 1,
     backgroundColor: 'rgba(255,255,255,0.7)',
     paddingHorizontal: 18,
     paddingVertical: 12,
-    borderRadius: 20,
+    borderRadius: 20
   },
   latlng: {
     width: 200,
-    alignItems: 'stretch',
+    alignItems: 'stretch'
   },
   button: {
     width: 80,
     paddingHorizontal: 12,
     alignItems: 'center',
-    marginHorizontal: 10,
+    marginHorizontal: 10
   },
   buttonContainer: {
     flexDirection: 'row',
     marginVertical: 20,
-    backgroundColor: 'transparent',
+    backgroundColor: 'transparent'
   },
   calloutButton: {
     width: 'auto',
@@ -202,8 +189,8 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     alignItems: 'center',
     marginHorizontal: 10,
-    marginVertical: 10,
-  },
+    marginVertical: 10
+  }
 });
 
 export default Callouts;

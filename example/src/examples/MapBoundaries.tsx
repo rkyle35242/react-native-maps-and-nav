@@ -1,9 +1,9 @@
-import React, {useRef, useState} from 'react';
-import {StyleSheet, View, Text, Dimensions} from 'react-native';
+import React, { useRef, useState } from 'react';
+import { StyleSheet, View, Text, Dimensions } from 'react-native';
 
-import MapView, {BoundingBox} from 'react-native-maps';
+import MapView, { BoundingBox } from 'react-native-maps';
 
-const {width, height} = Dimensions.get('window');
+const { width, height } = Dimensions.get('window');
 
 const ASPECT_RATIO = width / height;
 const LATITUDE = 37.78825;
@@ -16,7 +16,7 @@ const MapBoundaries = (props: any) => {
     latitude: LATITUDE,
     longitude: LONGITUDE,
     latitudeDelta: LATITUDE_DELTA,
-    longitudeDelta: LONGITUDE_DELTA,
+    longitudeDelta: LONGITUDE_DELTA
   });
 
   const [mapBoundaries, setMapBoundaries] = useState<BoundingBox | null>(null);
@@ -53,32 +53,32 @@ const styles = StyleSheet.create({
   container: {
     ...StyleSheet.absoluteFillObject,
     justifyContent: 'flex-end',
-    alignItems: 'center',
+    alignItems: 'center'
   },
   map: {
-    ...StyleSheet.absoluteFillObject,
+    ...StyleSheet.absoluteFillObject
   },
   bubble: {
     backgroundColor: 'rgba(255,255,255,0.7)',
     paddingHorizontal: 18,
     paddingVertical: 12,
-    borderRadius: 20,
+    borderRadius: 20
   },
   latlng: {
     width: 200,
-    alignItems: 'stretch',
+    alignItems: 'stretch'
   },
   button: {
     width: 80,
     paddingHorizontal: 12,
     alignItems: 'center',
-    marginHorizontal: 10,
+    marginHorizontal: 10
   },
   buttonContainer: {
     flexDirection: 'row',
     marginVertical: 20,
-    backgroundColor: 'transparent',
-  },
+    backgroundColor: 'transparent'
+  }
 });
 
 export default MapBoundaries;

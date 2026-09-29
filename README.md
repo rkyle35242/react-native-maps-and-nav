@@ -54,6 +54,8 @@ See [Setup Instructions for the Included Example Project](docs/examples-setup.md
 
 [`<Geojson />` Component API](docs/geojson.md)
 
+[`<NavigationView />` (Google Navigation SDK)](#navigation-google-navigation-sdk)
+
 ## General Usage
 
 ```js
@@ -80,7 +82,7 @@ declaratively controlling features on the map.
     latitude: 37.78825,
     longitude: -122.4324,
     latitudeDelta: 0.0922,
-    longitudeDelta: 0.0421,
+    longitudeDelta: 0.0421
   }}
 />
 ```
@@ -116,16 +118,11 @@ render() {
 ### Rendering a list of markers on a map
 
 ```jsx
-import {Marker} from 'react-native-maps';
+import { Marker } from 'react-native-maps';
 
 <MapView region={this.state.region} onRegionChange={this.onRegionChange}>
   {this.state.markers.map((marker, index) => (
-    <Marker
-      key={index}
-      coordinate={marker.latlng}
-      title={marker.title}
-      description={marker.description}
-    />
+    <Marker key={index} coordinate={marker.latlng} title={marker.title} description={marker.description} />
   ))}
 </MapView>;
 ```
@@ -137,10 +134,7 @@ import {Marker} from 'react-native-maps';
 3. Now you can use the following code:
 
 ```jsx
-<Marker
-  coordinate={{latitude: latitude, longitude: longitude}}
-  image={{uri: 'custom_pin'}}
-/>
+<Marker coordinate={{ latitude: latitude, longitude: longitude }} image={{ uri: 'custom_pin' }} />
 ```
 
 Note: You can also pass the image binary data like `image={require('custom_pin.png')}`, but this will not scale good with the different screen sizes.
@@ -150,7 +144,7 @@ Note: You can also pass the image binary data like `image={require('custom_pin.p
 Note: This has performance implications, if you wish for a simpler solution go with a custom image (save your self the headache)
 
 ```jsx
-<Marker coordinate={{latitude: latitude, longitude: longitude}}>
+<Marker coordinate={{ latitude: latitude, longitude: longitude }}>
   <MyCustomMarkerView {...marker} />
 </Marker>
 ```
@@ -158,7 +152,7 @@ Note: This has performance implications, if you wish for a simpler solution go w
 ### Rendering a custom Marker with a custom Callout
 
 ```jsx
-import {Callout} from 'react-native-maps';
+import { Callout } from 'react-native-maps';
 
 <Marker coordinate={marker.latlng}>
   <MyCustomMarkerView {...marker} />
@@ -184,7 +178,7 @@ import {Callout} from 'react-native-maps';
 #### Tile Overlay using tile server
 
 ```jsx
-import {UrlTile} from 'react-native-maps';
+import { UrlTile } from 'react-native-maps';
 
 <MapView region={this.state.region} onRegionChange={this.onRegionChange}>
   <UrlTile
@@ -220,7 +214,7 @@ For IOS: configure [App Transport Security](https://developer.apple.com/library/
 Tiles can be stored locally within device using xyz tiling scheme and displayed as tile overlay as well. This is usefull especially for offline map usage when tiles are available for selected map region within device storage.
 
 ```jsx
-import {LocalTile} from 'react-native-maps';
+import { LocalTile } from 'react-native-maps';
 
 <MapView region={this.state.region} onRegionChange={this.onRegionChange}>
   <LocalTile
@@ -527,8 +521,8 @@ Pass an array of coordinates to focus a map region on said coordinates.
 ```javascript
 const styles = StyleSheet.create({
   map: {
-    ...StyleSheet.absoluteFillObject,
-  },
+    ...StyleSheet.absoluteFillObject
+  }
 });
 ```
 
@@ -570,7 +564,7 @@ Bad:
 ```jsx
 <View style={StyleSheet.absoluteFillObject}>
   <MapView style={StyleSheet.absoluteFillObject}>
-    <View style={{position: 'absolute', top: 100, left: 50}} />
+    <View style={{ position: 'absolute', top: 100, left: 50 }} />
   </MapView>
 </View>
 ```
@@ -580,7 +574,7 @@ Good:
 ```jsx
 <View style={StyleSheet.absoluteFillObject}>
   <MapView style={StyleSheet.absoluteFillObject} />
-  <View style={{position: 'absolute', top: 100, left: 50}} />
+  <View style={{ position: 'absolute', top: 100, left: 50 }} />
 </View>
 ```
 
@@ -610,6 +604,229 @@ onRegionChangeComplete={ (region, gesture) => {
 ```
 
 Source: https://github.com/react-native-maps/react-native-maps/issues/846#issuecomment-1210079461
+
+## Navigation (Google Navigation SDK)
+
+`<NavigationView />` renders a Google map inside the [Google Navigation SDK](https://developers.google.com/maps/documentation/navigation) view, with turn-by-turn guidance UI. It accepts every `MapView` prop and child (`Marker`, `Polyline`, `Polygon`, `Circle`, `Callout`, `Overlay`, ...). Guidance is controlled through `NavigationProvider` and `useNavigation()`.
+
+Navigation is opt-in and requires:
+
+- The New Architecture (Fabric / TurboModules).
+- A Google Cloud project with the Navigation SDK enabled for your API key.
+- Android `minSdkVersion` 24+ and iOS 16+.
+- Location permissions requested by your app before starting navigation.
+
+### Android setup
+
+In `android/gradle.properties`:
+
+```properties
+reactNativeMapsNavigationEnabled=true
+```
+
+This replaces `play-services-maps` with the Navigation SDK, which bundles its own copy of the Maps SDK. Optionally pin the version with `googleNavigationSdkVersion` in `rootProject.ext` (default `7.9.0`).
+
+In `android/app/build.gradle`, enable core library desugaring and exclude `play-services-maps` from every dependency:
+
+```groovy
+android {
+  compileOptions {
+    coreLibraryDesugaringEnabled true
+  }
+}
+
+dependencies {
+  coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs_nio:2.1.5'
+}
+
+configurations.all {
+  exclude group: 'com.google.android.gms', module: 'play-services-maps'
+}
+```
+
+The API key is read from the same `com.google.android.geo.API_KEY` manifest entry used by react-native-maps.
+
+### iOS setup
+
+In your `Podfile`, before `use_native_modules!`/`use_react_native!`:
+
+```ruby
+$RNMapsEnableGoogleNavigation = true
+# $RNMapsGoogleNavigationVersion = '11.1.0' # optional
+
+pod 'react-native-maps', :path => '../node_modules/react-native-maps', :subspecs => ['GoogleNavigation']
+```
+
+The `GoogleNavigation` subspec replaces the `Google` subspec; do not include both. The Navigation SDK is distributed through Swift Package Manager and is added to the Pods project automatically on `pod install`.
+
+Provide your API key as usual with `[GMSServices provideAPIKey:@"API_KEY"]`, and add to `Info.plist`:
+
+```xml
+<key>UIBackgroundModes</key>
+<array>
+  <string>location</string>
+  <string>audio</string>
+</array>
+<key>NSMotionUsageDescription</key>
+<string>Used to improve navigation features.</string>
+```
+
+### Usage
+
+Wrap the part of your app that uses navigation in a `NavigationProvider`:
+
+```jsx
+import { NavigationProvider, TaskRemovedBehavior } from 'react-native-maps';
+
+export default function App() {
+  return (
+    <NavigationProvider
+      termsAndConditionsDialogOptions={{
+        title: 'Terms and Conditions',
+        companyName: 'Your Company'
+      }}
+      taskRemovedBehavior={TaskRemovedBehavior.CONTINUE_SERVICE}
+    >
+      <DeliveryScreen />
+    </NavigationProvider>
+  );
+}
+```
+
+Render a `NavigationView` and drive guidance with `useNavigation()`:
+
+```jsx
+import { useEffect, useRef } from 'react';
+import {
+  Marker,
+  NavigationSessionStatus,
+  NavigationView,
+  RouteStatus,
+  TravelMode,
+  useNavigation
+} from 'react-native-maps';
+
+const DROPOFF = { latitude: 37.4220679, longitude: -122.0859545 };
+
+function DeliveryScreen() {
+  const mapRef = useRef(null);
+  const { navigationController, setOnArrival, removeAllListeners } = useNavigation();
+
+  useEffect(() => {
+    setOnArrival(event => {
+      if (event.isFinalDestination) {
+        navigationController.stopGuidance();
+      }
+    });
+    return () => removeAllListeners();
+  }, [navigationController, setOnArrival, removeAllListeners]);
+
+  const start = async () => {
+    if (!(await navigationController.showTermsAndConditionsDialog())) {
+      return;
+    }
+    const status = await navigationController.init();
+    if (status !== NavigationSessionStatus.OK) {
+      return;
+    }
+    const routeStatus = await navigationController.setDestination(
+      { coordinate: DROPOFF, title: 'Drop-off' },
+      { routingOptions: { travelMode: TravelMode.DRIVING } }
+    );
+    if (routeStatus === RouteStatus.OK) {
+      await navigationController.startGuidance();
+      mapRef.current?.followMyLocation('tilted');
+    }
+  };
+
+  return (
+    <NavigationView
+      ref={mapRef}
+      style={{ flex: 1 }}
+      onMapReady={start}
+      speedometerEnabled
+      navigationNightMode="auto"
+      onRecenterButtonClick={() => console.log('recenter')}
+    >
+      <Marker coordinate={DROPOFF} title="Drop-off" />
+    </NavigationView>
+  );
+}
+```
+
+For testing without driving, simulate movement along the route after `startGuidance()`:
+
+```js
+navigationController.simulator.simulateLocationsAlongExistingRoute({
+  speedMultiplier: 5
+});
+```
+
+Coordinates use the same `{latitude, longitude}` shape as the rest of react-native-maps.
+
+### NavigationView props
+
+In addition to all `MapView` props (`provider` is always Google):
+
+| Prop                            | Type                                   | Default       | Note                                                                |
+| ------------------------------- | -------------------------------------- | ------------- | ------------------------------------------------------------------- |
+| `navigationUIEnabledPreference` | `'automatic' \| 'disabled'`            | `'automatic'` | `automatic` shows the navigation UI once the session is initialized |
+| `navigationNightMode`           | `'auto' \| 'forceDay' \| 'forceNight'` | `'auto'`      |                                                                     |
+| `headerEnabled`                 | `boolean`                              | `true`        | Turn-by-turn header                                                 |
+| `footerEnabled`                 | `boolean`                              | `true`        | ETA card                                                            |
+| `tripProgressBarEnabled`        | `boolean`                              | `true`        |                                                                     |
+| `speedometerEnabled`            | `boolean`                              | `false`       |                                                                     |
+| `speedLimitIconEnabled`         | `boolean`                              | `true`        |                                                                     |
+| `recenterButtonEnabled`         | `boolean`                              | `true`        |                                                                     |
+| `reportIncidentButtonEnabled`   | `boolean`                              | `true`        |                                                                     |
+| `trafficPromptsEnabled`         | `boolean`                              | `true`        |                                                                     |
+| `trafficIncidentCardsEnabled`   | `boolean`                              | `true`        |                                                                     |
+| `androidStylingOptions`         | `AndroidStylingOptions`                |               | Header colors and text sizes (Android)                              |
+| `iOSStylingOptions`             | `IOSStylingOptions`                    |               | Header colors (iOS)                                                 |
+| `onRecenterButtonClick`         | `() => void`                           |               |                                                                     |
+| `onPromptVisibilityChanged`     | `(visible: boolean) => void`           |               | A traffic or incident prompt was shown or hidden                    |
+
+The `ref` is the underlying `MapView`, which also provides:
+
+| Method                                      | Description                                                        |
+| ------------------------------------------- | ------------------------------------------------------------------ |
+| `showRouteOverview()`                       | Pans and zooms to show the remaining route                         |
+| `setNavigationUIEnabled(enabled)`           | Overrides `navigationUIEnabledPreference`                          |
+| `followMyLocation(perspective, zoomLevel?)` | `'tilted' \| 'topDownNorthUp' \| 'topDownHeadingUp'`; follows user |
+
+### useNavigation()
+
+Returns `navigationController` plus listener setters. Each setter takes a callback, or `null` to clear it; `removeAllListeners()` clears them all.
+
+| Controller method                                     | Description                                                                                          |
+| ----------------------------------------------------- | ---------------------------------------------------------------------------------------------------- |
+| `showTermsAndConditionsDialog(override?)`             | Must be accepted before `init()`; resolves `true` if accepted                                        |
+| `areTermsAccepted()` / `resetTermsAccepted()`         |                                                                                                      |
+| `init()`                                              | Starts the navigation session; resolves a `NavigationSessionStatus`                                  |
+| `cleanup()`                                           | Stops guidance and ends the session                                                                  |
+| `setDestination(waypoint, options?)`                  | Resolves a `RouteStatus`                                                                             |
+| `setDestinations(waypoints, options?)`                | `options`: `routingOptions` or `routeTokenOptions`, and `displayOptions`                             |
+| `continueToNextDestination()` / `clearDestinations()` |                                                                                                      |
+| `startGuidance()` / `stopGuidance()`                  |                                                                                                      |
+| `getCurrentTimeAndDistance()`                         |                                                                                                      |
+| `getCurrentRouteSegment()` / `getRouteSegments()`     |                                                                                                      |
+| `getTraveledPath()`                                   |                                                                                                      |
+| `setAudioGuidanceSettings(settings)`                  |                                                                                                      |
+| `setSpeedAlertOptions(options)`                       |                                                                                                      |
+| `setBackgroundLocationUpdatesEnabled(enabled)`        | iOS only                                                                                             |
+| `setTurnByTurnLoggingEnabled(enabled)`                | Enables `onTurnByTurn` events                                                                        |
+| `simulator`                                           | `simulateLocation`, `simulateLocationsAlongExistingRoute`, `pause`/`resume`/`stopLocationSimulation` |
+
+Listener setters: `setOnStartGuidance`, `setOnArrival`, `setOnLocationChanged`, `setOnRawLocationChanged` (Android), `setOnNavigationReady`, `setOnRouteChanged`, `setOnReroutingRequestedByOffRoute`, `setOnTrafficUpdated` (Android), `setOnRemainingTimeOrDistanceChanged`, `setOnTurnByTurn`, `setLogDebugInfo`.
+
+### Limitations
+
+- Only one navigation session exists per app; all `NavigationView`s share it.
+- The Navigation SDK controls the camera during guidance, so avoid passing `region` or `camera` to a `NavigationView`.
+- On iOS, `Heatmap` and KML (`kmlSrc`) are unavailable with the `GoogleNavigation` subspec, because Google-Maps-iOS-Utils is not compatible with the Maps SDK version the Navigation SDK requires.
+- Styling options accept plain colors only; `PlatformColor` values are ignored.
+
+The navigation controller is adapted from [googlemaps/react-native-navigation-sdk](https://github.com/googlemaps/react-native-navigation-sdk) (Apache-2.0).
 
 ## License
 

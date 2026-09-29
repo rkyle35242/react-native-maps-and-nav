@@ -8,8 +8,8 @@ module.exports = {
   dependency: {
     platforms: {
       android: {
-        cmakeListsPath: 'src/main/jni/CMakeLists.txt',
-      },
-    },
-  },
+        cmakeListsPath: 'src/main/jni/CMakeLists.txt'
+      }
+    }
+  }
 };

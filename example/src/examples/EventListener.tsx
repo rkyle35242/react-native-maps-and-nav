@@ -1,9 +1,9 @@
 import React from 'react';
-import {StyleSheet, View, Text, Dimensions, ScrollView} from 'react-native';
-import MapView, {Marker, Polygon, Polyline, Callout} from 'react-native-maps';
+import { StyleSheet, View, Text, Dimensions, ScrollView } from 'react-native';
+import MapView, { Marker, Polygon, Polyline, Callout } from 'react-native-maps';
 import PriceMarker from './PriceMarker';
 
-const {width, height} = Dimensions.get('window');
+const { width, height } = Dimensions.get('window');
 
 const ASPECT_RATIO = width / height;
 const LATITUDE = 37.78825;
@@ -18,13 +18,11 @@ class Event extends React.Component<any, any> {
   }
 
   render() {
-    const {event} = this.props;
+    const { event } = this.props;
     return (
       <View style={styles.event}>
         <Text style={styles.eventName}>{event.name}</Text>
-        <Text style={styles.eventData}>
-          {JSON.stringify(event.data, null, 2)}
-        </Text>
+        <Text style={styles.eventData}>{JSON.stringify(event.data, null, 2)}</Text>
       </View>
     );
   }
@@ -39,9 +37,9 @@ class EventListener extends React.Component<any, any> {
         latitude: LATITUDE,
         longitude: LONGITUDE,
         latitudeDelta: LATITUDE_DELTA,
-        longitudeDelta: LONGITUDE_DELTA,
+        longitudeDelta: LONGITUDE_DELTA
       },
-      events: [],
+      events: []
     };
   }
 
@@ -49,7 +47,7 @@ class EventListener extends React.Component<any, any> {
     return {
       id: id++,
       name,
-      data: e.nativeEvent ? e.nativeEvent : e,
+      data: e.nativeEvent ? e.nativeEvent : e
     };
   }
 
@@ -59,7 +57,7 @@ class EventListener extends React.Component<any, any> {
         e.persist(); // Avoids warnings relating to https://fb.me/react-event-pooling
       }
       this.setState((prevState: any) => ({
-        events: [this.makeEvent(e, name), ...prevState.events.slice(0, 10)],
+        events: [this.makeEvent(e, name), ...prevState.events.slice(0, 10)]
       }));
     };
   }
@@ -75,9 +73,7 @@ class EventListener extends React.Component<any, any> {
           showsMyLocationButton
           onRegionChangeStart={this.recordEvent('Map::onRegionChangeStart')}
           onRegionChange={this.recordEvent('Map::onRegionChange')}
-          onRegionChangeComplete={this.recordEvent(
-            'Map::onRegionChangeComplete',
-          )}
+          onRegionChangeComplete={this.recordEvent('Map::onRegionChangeComplete')}
           onPress={this.recordEvent('Map::onPress')}
           onPanDrag={this.recordEvent('Map::onPanDrag')}
           onLongPress={this.recordEvent('Map::onLongPress')}
@@ -85,17 +81,18 @@ class EventListener extends React.Component<any, any> {
           onMarkerSelect={this.recordEvent('Map::onMarkerSelect')}
           onMarkerDeselect={this.recordEvent('Map::onMarkerDeselect')}
           onCalloutPress={this.recordEvent('Map::onCalloutPress')}
-          onUserLocationChange={this.recordEvent('Map::onUserLocationChange')}>
+          onUserLocationChange={this.recordEvent('Map::onUserLocationChange')}
+        >
           <Marker
             coordinate={{
               latitude: LATITUDE + LATITUDE_DELTA / 2,
-              longitude: LONGITUDE + LONGITUDE_DELTA / 2,
+              longitude: LONGITUDE + LONGITUDE_DELTA / 2
             }}
           />
           <Marker
             coordinate={{
               latitude: LATITUDE - LATITUDE_DELTA / 2,
-              longitude: LONGITUDE - LONGITUDE_DELTA / 2,
+              longitude: LONGITUDE - LONGITUDE_DELTA / 2
             }}
           />
           <Marker
@@ -105,11 +102,10 @@ class EventListener extends React.Component<any, any> {
             onPress={this.recordEvent('Marker::onPress')}
             onSelect={this.recordEvent('Marker::onSelect')}
             onDeselect={this.recordEvent('Marker::onDeselect')}
-            onCalloutPress={this.recordEvent('Marker::onCalloutPress')}>
+            onCalloutPress={this.recordEvent('Marker::onCalloutPress')}
+          >
             <PriceMarker amount={99} />
-            <Callout
-              style={styles.callout}
-              onPress={this.recordEvent('Callout::onPress')}>
+            <Callout style={styles.callout} onPress={this.recordEvent('Callout::onPress')}>
               <View>
                 <Text>Well hello there...</Text>
               </View>
@@ -122,16 +118,16 @@ class EventListener extends React.Component<any, any> {
             coordinates={[
               {
                 latitude: LATITUDE + LATITUDE_DELTA / 5,
-                longitude: LONGITUDE + LONGITUDE_DELTA / 4,
+                longitude: LONGITUDE + LONGITUDE_DELTA / 4
               },
               {
                 latitude: LATITUDE + LATITUDE_DELTA / 3,
-                longitude: LONGITUDE + LONGITUDE_DELTA / 4,
+                longitude: LONGITUDE + LONGITUDE_DELTA / 4
               },
               {
                 latitude: LATITUDE + LATITUDE_DELTA / 4,
-                longitude: LONGITUDE + LONGITUDE_DELTA / 2,
-              },
+                longitude: LONGITUDE + LONGITUDE_DELTA / 2
+              }
             ]}
           />
           <Polyline
@@ -141,16 +137,16 @@ class EventListener extends React.Component<any, any> {
             coordinates={[
               {
                 latitude: LATITUDE + LATITUDE_DELTA / 5,
-                longitude: LONGITUDE - LONGITUDE_DELTA / 4,
+                longitude: LONGITUDE - LONGITUDE_DELTA / 4
               },
               {
                 latitude: LATITUDE + LATITUDE_DELTA / 3,
-                longitude: LONGITUDE - LONGITUDE_DELTA / 4,
+                longitude: LONGITUDE - LONGITUDE_DELTA / 4
               },
               {
                 latitude: LATITUDE + LATITUDE_DELTA / 4,
-                longitude: LONGITUDE - LONGITUDE_DELTA / 2,
-              },
+                longitude: LONGITUDE - LONGITUDE_DELTA / 2
+              }
             ]}
           />
         </MapView>
@@ -170,7 +166,7 @@ const styles = StyleSheet.create({
   container: {
     ...StyleSheet.absoluteFillObject,
     justifyContent: 'flex-end',
-    alignItems: 'center',
+    alignItems: 'center'
   },
   eventList: {
     position: 'absolute',
@@ -178,54 +174,54 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     bottom: 0,
-    backgroundColor: '#fff', // Ensure it's not transparent
+    backgroundColor: '#fff' // Ensure it's not transparent
   },
   map: {
     position: 'absolute',
     top: 0,
     left: 0,
     right: 0,
-    bottom: height / 3, // Adjust to one-third of the screen
+    bottom: height / 3 // Adjust to one-third of the screen
   },
   event: {
     borderBottomWidth: 1,
     borderBottomColor: '#ccc',
-    padding: 8,
+    padding: 8
   },
   eventData: {
     fontSize: 10,
     fontFamily: 'courier',
-    color: '#555',
+    color: '#555'
   },
   eventName: {
     fontSize: 13,
     fontWeight: 'bold',
-    color: '#222',
+    color: '#222'
   },
   callout: {
-    width: 60,
+    width: 60
   },
   bubble: {
     backgroundColor: 'rgba(255,255,255,0.7)',
     paddingHorizontal: 18,
     paddingVertical: 12,
-    borderRadius: 20,
+    borderRadius: 20
   },
   latlng: {
     width: 200,
-    alignItems: 'stretch',
+    alignItems: 'stretch'
   },
   button: {
     width: 80,
     paddingHorizontal: 12,
     alignItems: 'center',
-    marginHorizontal: 10,
+    marginHorizontal: 10
   },
   buttonContainer: {
     flexDirection: 'row',
     marginVertical: 20,
-    backgroundColor: 'transparent',
-  },
+    backgroundColor: 'transparent'
+  }
 });
 
 export default EventListener;

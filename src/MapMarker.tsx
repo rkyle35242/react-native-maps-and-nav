@@ -5,7 +5,7 @@ import {
   Platform,
   type ViewProps,
   type ImageURISource,
-  type ImageRequireSource,
+  type ImageRequireSource
 } from 'react-native';
 
 import decorateMapComponent, {
@@ -15,15 +15,12 @@ import decorateMapComponent, {
   googleMapIsInstalled,
   type MapManagerCommand,
   type NativeComponent,
-  type UIManagerCommand,
+  type UIManagerCommand
 } from './decorateMapComponent';
-import {
-  Commands,
-  type MapMarkerNativeComponentType,
-} from './MapMarkerNativeComponent';
+import { Commands, type MapMarkerNativeComponentType } from './MapMarkerNativeComponent';
 
-import {Commands as FabricCommands} from './specs/NativeComponentMarker';
-import type {AppleMarkerPriority} from './specs/NativeComponentMarker';
+import { Commands as FabricCommands } from './specs/NativeComponentMarker';
+import type { AppleMarkerPriority } from './specs/NativeComponentMarker';
 
 import type {
   CalloutPressEvent,
@@ -33,12 +30,12 @@ import type {
   MarkerDragStartEndEvent,
   MarkerPressEvent,
   MarkerSelectEvent,
-  Point,
+  Point
 } from './sharedTypes';
-import type {Modify} from './sharedTypesInternal';
+import type { Modify } from './sharedTypesInternal';
 
-import {PROVIDER_GOOGLE} from './ProviderConstants';
-import {fixImageProp} from './fixImageProp';
+import { PROVIDER_GOOGLE } from './ProviderConstants';
+import { fixImageProp } from './fixImageProp';
 
 type AppleMarkerVisibility = 'hidden' | 'adaptive' | 'visible';
 
@@ -363,10 +360,7 @@ export type MapMarkerProps = ViewProps & {
 
 type OmittedProps = Omit<MapMarkerProps, 'stopPropagation'>;
 
-export type NativeProps = Modify<
-  OmittedProps,
-  {icon?: string; image?: MapMarkerProps['image'] | string}
-> & {
+export type NativeProps = Modify<OmittedProps, { icon?: string; image?: MapMarkerProps['image'] | string }> & {
   ref: React.RefObject<MapMarkerNativeComponentType | null>;
 };
 
@@ -428,7 +422,7 @@ export class MapMarker extends React.Component<MapMarkerProps> {
           // @ts-ignore
           this.marker.current,
           coordinate.latitude,
-          coordinate.longitude,
+          coordinate.longitude
         );
       } else {
         Commands.setCoordinates(this.marker.current, coordinate);
@@ -455,14 +449,10 @@ export class MapMarker extends React.Component<MapMarkerProps> {
           this.marker.current,
           coordinate.latitude,
           coordinate.longitude,
-          duration,
+          duration
         );
       } else {
-        Commands.animateMarkerToCoordinate(
-          this.marker.current,
-          coordinate,
-          duration,
-        );
+        Commands.animateMarkerToCoordinate(this.marker.current, coordinate, duration);
       }
     }
   }
@@ -479,12 +469,10 @@ export class MapMarker extends React.Component<MapMarkerProps> {
   }
 
   render() {
-    const {stopPropagation = false} = this.props;
+    const { stopPropagation = false } = this.props;
     if (this.fabricMarker === undefined) {
       const provider = this.context;
-      this.fabricMarker =
-        !(Platform.OS === 'ios' && provider === PROVIDER_GOOGLE) ||
-        googleMapIsInstalled;
+      this.fabricMarker = !(Platform.OS === 'ios' && provider === PROVIDER_GOOGLE) || googleMapIsInstalled;
     }
 
     let icon: any = this.props.icon;
@@ -539,8 +527,8 @@ export class MapMarker extends React.Component<MapMarkerProps> {
 const styles = StyleSheet.create({
   marker: {
     position: 'absolute',
-    backgroundColor: 'transparent',
-  },
+    backgroundColor: 'transparent'
+  }
 });
 
 MapMarker.Animated = Animated.createAnimatedComponent(MapMarker);
@@ -548,6 +536,6 @@ MapMarker.Animated = Animated.createAnimatedComponent(MapMarker);
 export default decorateMapComponent(MapMarker, 'Marker', {
   google: {
     ios: SUPPORTED,
-    android: USES_DEFAULT_IMPLEMENTATION,
-  },
+    android: USES_DEFAULT_IMPLEMENTATION
+  }
 });

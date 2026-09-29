@@ -1,9 +1,9 @@
 import React from 'react';
-import {Dimensions, StyleSheet, Text, View} from 'react-native';
+import { Dimensions, StyleSheet, Text, View } from 'react-native';
 
-import MapView, {Marker} from 'react-native-maps';
+import MapView, { Marker } from 'react-native-maps';
 
-const {width, height} = Dimensions.get('window');
+const { width, height } = Dimensions.get('window');
 
 const ASPECT_RATIO = width / height;
 const LATITUDE = 37.733858;
@@ -24,15 +24,14 @@ class ZIndexMarkers extends React.Component<any, any> {
     for (let i = 1; i < NUM_MARKERS; i++) {
       markerInfo.push({
         latitude: (Math.random() * 2 - 1) * MARKERS_LATITUDE_DELTA + LATITUDE,
-        longitude:
-          (Math.random() * 2 - 1) * MARKERS_LONGITUDE_DELTA + LONGITUDE,
+        longitude: (Math.random() * 2 - 1) * MARKERS_LONGITUDE_DELTA + LONGITUDE,
         isSpecial: Math.random() < PERCENT_SPECIAL_MARKERS,
-        id: i,
+        id: i
       });
     }
 
     this.state = {
-      markerInfo,
+      markerInfo
     };
   }
 
@@ -58,15 +57,13 @@ class ZIndexMarkers extends React.Component<any, any> {
             latitude: LATITUDE,
             longitude: LONGITUDE,
             latitudeDelta: MAP_LATITUDE_DELTA,
-            longitudeDelta: MAP_LONGITUDE_DELTA,
-          }}>
+            longitudeDelta: MAP_LONGITUDE_DELTA
+          }}
+        >
           {markers}
         </MapView>
         <View style={styles.textContainer}>
-          <Text>
-            The yellow markers have a higher zIndex and appear above other
-            markers.
-          </Text>
+          <Text>The yellow markers have a higher zIndex and appear above other markers.</Text>
         </View>
       </View>
     );
@@ -77,21 +74,21 @@ const styles = StyleSheet.create({
   container: {
     ...StyleSheet.absoluteFillObject,
     justifyContent: 'flex-end',
-    alignItems: 'center',
+    alignItems: 'center'
   },
   map: {
-    ...StyleSheet.absoluteFillObject,
+    ...StyleSheet.absoluteFillObject
   },
   textContainer: {
     backgroundColor: 'white',
     borderRadius: 4,
     marginHorizontal: 40,
     marginVertical: 20,
-    padding: 10,
+    padding: 10
   },
   specialMarker: {
-    zIndex: 1,
-  },
+    zIndex: 1
+  }
 });
 
 export default ZIndexMarkers;

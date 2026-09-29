@@ -1,27 +1,20 @@
 import React from 'react';
-import {
-  StyleSheet,
-  View,
-  Text,
-  Animated,
-  Dimensions,
-  TouchableOpacity,
-} from 'react-native';
+import { StyleSheet, View, Text, Animated, Dimensions, TouchableOpacity } from 'react-native';
 
-import MapView, {Marker} from 'react-native-maps';
+import MapView, { Marker } from 'react-native-maps';
 
 const screen = Dimensions.get('window');
 
 class LegalLabel extends React.Component<any, any> {
   state = {
     _legalLabelPositionY: new Animated.Value(10),
-    legalLabelPositionY: 10,
+    legalLabelPositionY: 10
   };
 
   componentDidMount() {
-    this.state._legalLabelPositionY.addListener(({value}) => {
+    this.state._legalLabelPositionY.addListener(({ value }) => {
       this.setState({
-        legalLabelPositionY: value,
+        legalLabelPositionY: value
       });
     });
   }
@@ -34,19 +27,19 @@ class LegalLabel extends React.Component<any, any> {
     Animated.sequence([
       Animated.spring(this.state._legalLabelPositionY, {
         toValue: 100,
-        useNativeDriver: true,
+        useNativeDriver: true
       }),
       Animated.spring(this.state._legalLabelPositionY, {
         toValue: 10,
-        useNativeDriver: true,
-      }),
+        useNativeDriver: true
+      })
     ]).start();
   };
 
   render() {
     const latlng = {
       latitude: 37.78825,
-      longitude: -122.4324,
+      longitude: -122.4324
     };
 
     const ASPECT_RATIO = screen.width / screen.height;
@@ -54,7 +47,7 @@ class LegalLabel extends React.Component<any, any> {
     const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
 
     return (
-      <View style={{...StyleSheet.absoluteFillObject}}>
+      <View style={{ ...StyleSheet.absoluteFillObject }}>
         <MapView
           provider={this.props.provider}
           style={styles.map}
@@ -62,17 +55,18 @@ class LegalLabel extends React.Component<any, any> {
             top: 0,
             left: 0,
             bottom: this.state.legalLabelPositionY,
-            right: 10,
+            right: 10
           }}
           appleLogoInsets={{
             bottom: 50,
-            left: 10,
+            left: 10
           }}
           initialRegion={{
             ...latlng,
             latitudeDelta: LATITUDE_DELTA,
-            longitudeDelta: LONGITUDE_DELTA,
-          }}>
+            longitudeDelta: LONGITUDE_DELTA
+          }}
+        >
           <Marker coordinate={latlng} />
         </MapView>
 
@@ -84,8 +78,8 @@ class LegalLabel extends React.Component<any, any> {
 
         <View style={styles.bio}>
           <Text style={styles.bioText}>
-            Bio description lorem ipsum Ullamco exercitation aliqua ullamco
-            nostrud dolor et aliquip fugiat do aute fugiat velit in aliqua sit.
+            Bio description lorem ipsum Ullamco exercitation aliqua ullamco nostrud dolor et aliquip fugiat do aute
+            fugiat velit in aliqua sit.
           </Text>
         </View>
 
@@ -106,21 +100,21 @@ const styles = StyleSheet.create({
   bio: {
     marginHorizontal: padding,
     marginBottom: 0,
-    paddingVertical: padding / 2,
+    paddingVertical: padding / 2
   },
   bioText: {
     fontSize: 16,
-    lineHeight: 16 * 1.5,
+    lineHeight: 16 * 1.5
   },
   username: {
     paddingLeft: photoSize + padding + padding,
-    paddingTop: padding,
+    paddingTop: padding
   },
   usernameText: {
     fontSize: 36,
     lineHeight: 36,
     color: 'blue',
-    textDecorationLine: 'underline',
+    textDecorationLine: 'underline'
   },
   photo: {
     padding: 2,
@@ -131,20 +125,20 @@ const styles = StyleSheet.create({
     borderWidth: StyleSheet.hairlineWidth,
     backgroundColor: '#ccc',
     width: photoSize,
-    height: photoSize,
+    height: photoSize
   },
   photoInner: {
     alignItems: 'center',
     justifyContent: 'center',
-    flex: 1,
+    flex: 1
   },
   photoText: {
     fontSize: 9,
-    textAlign: 'center',
+    textAlign: 'center'
   },
   map: {
-    height: mapHeight,
-  },
+    height: mapHeight
+  }
 });
 
 export default LegalLabel;

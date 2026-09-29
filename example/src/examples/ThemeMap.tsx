@@ -1,8 +1,8 @@
 import React from 'react';
-import {StyleSheet, View, Text, Dimensions, ScrollView} from 'react-native';
-import MapView, {Marker} from 'react-native-maps';
+import { StyleSheet, View, Text, Dimensions, ScrollView } from 'react-native';
+import MapView, { Marker } from 'react-native-maps';
 
-const {width, height} = Dimensions.get('window');
+const { width, height } = Dimensions.get('window');
 
 const ASPECT_RATIO = width / height;
 const LATITUDE = 37.78825;
@@ -19,8 +19,8 @@ class ThemeMap extends React.Component<any, any> {
         latitude: LATITUDE,
         longitude: LONGITUDE,
         latitudeDelta: LATITUDE_DELTA,
-        longitudeDelta: LONGITUDE_DELTA,
-      },
+        longitudeDelta: LONGITUDE_DELTA
+      }
     };
   }
 
@@ -36,12 +36,9 @@ class ThemeMap extends React.Component<any, any> {
             zoomEnabled={false}
             pitchEnabled={false}
             rotateEnabled={false}
-            initialRegion={this.state.region}>
-            <Marker
-              title="This is a title"
-              description="This is a description"
-              coordinate={this.state.region}
-            />
+            initialRegion={this.state.region}
+          >
+            <Marker title="This is a title" description="This is a description" coordinate={this.state.region} />
           </MapView>
 
           <Text>{'\n'}Light</Text>
@@ -53,12 +50,9 @@ class ThemeMap extends React.Component<any, any> {
             pitchEnabled={false}
             rotateEnabled={false}
             initialRegion={this.state.region}
-            userInterfaceStyle="light">
-            <Marker
-              title="This is a title"
-              description="This is a description"
-              coordinate={this.state.region}
-            />
+            userInterfaceStyle="light"
+          >
+            <Marker title="This is a title" description="This is a description" coordinate={this.state.region} />
           </MapView>
           <Text>{'\n'}Dark</Text>
           <MapView
@@ -69,12 +63,9 @@ class ThemeMap extends React.Component<any, any> {
             pitchEnabled={false}
             rotateEnabled={false}
             initialRegion={this.state.region}
-            userInterfaceStyle="dark">
-            <Marker
-              title="This is a title"
-              description="This is a description"
-              coordinate={this.state.region}
-            />
+            userInterfaceStyle="dark"
+          >
+            <Marker title="This is a title" description="This is a description" coordinate={this.state.region} />
           </MapView>
         </ScrollView>
       </View>
@@ -86,16 +77,16 @@ const styles = StyleSheet.create({
   container: {
     ...StyleSheet.absoluteFillObject,
     justifyContent: 'flex-end',
-    alignItems: 'center',
+    alignItems: 'center'
   },
   scrollview: {
     alignItems: 'center',
-    paddingVertical: 70,
+    paddingVertical: 70
   },
   map: {
     width: 200,
-    height: 200,
-  },
+    height: 200
+  }
 });
 
 export default ThemeMap;

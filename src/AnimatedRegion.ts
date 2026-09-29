@@ -1,28 +1,21 @@
-import {Animated} from 'react-native';
-import type {Region} from './sharedTypes';
+import { Animated } from 'react-native';
+import type { Region } from './sharedTypes';
 
 const AnimatedWithChildren = Object.getPrototypeOf(Animated.ValueXY);
 if (__DEV__) {
   if (AnimatedWithChildren.name !== 'AnimatedWithChildren') {
-    console.error(
-      'AnimatedRegion could not obtain AnimatedWithChildren base class',
-    );
+    console.error('AnimatedRegion could not obtain AnimatedWithChildren base class');
   }
 }
 
-const configTypes: (keyof Region)[] = [
-  'latitude',
-  'longitude',
-  'latitudeDelta',
-  'longitudeDelta',
-];
+const configTypes: (keyof Region)[] = ['latitude', 'longitude', 'latitudeDelta', 'longitudeDelta'];
 
 const defaultValues = {
   // probably want to come up with better defaults
   latitude: 0,
   longitude: 0,
   latitudeDelta: 0,
-  longitudeDelta: 0,
+  longitudeDelta: 0
 };
 
 let _uniqueId = 1;
@@ -44,18 +37,9 @@ export default class AnimatedMapRegion extends AnimatedWithChildren {
   constructor(valueIn: Props = {}) {
     super();
     this.latitude = getAnimatedValue(valueIn.latitude, defaultValues.latitude);
-    this.longitude = getAnimatedValue(
-      valueIn.longitude,
-      defaultValues.longitude,
-    );
-    this.latitudeDelta = getAnimatedValue(
-      valueIn.latitudeDelta,
-      defaultValues.latitudeDelta,
-    );
-    this.longitudeDelta = getAnimatedValue(
-      valueIn.longitudeDelta,
-      defaultValues.longitudeDelta,
-    );
+    this.longitude = getAnimatedValue(valueIn.longitude, defaultValues.longitude);
+    this.latitudeDelta = getAnimatedValue(valueIn.latitudeDelta, defaultValues.latitudeDelta);
+    this.longitudeDelta = getAnimatedValue(valueIn.longitudeDelta, defaultValues.longitudeDelta);
     this._regionListeners = {};
   }
 
@@ -85,7 +69,7 @@ export default class AnimatedMapRegion extends AnimatedWithChildren {
       latitude: this.latitude.__getValue(),
       longitude: this.longitude.__getValue(),
       latitudeDelta: this.latitudeDelta.__getValue(),
-      longitudeDelta: this.longitudeDelta.__getValue(),
+      longitudeDelta: this.longitudeDelta.__getValue()
     };
   }
 
@@ -120,7 +104,7 @@ export default class AnimatedMapRegion extends AnimatedWithChildren {
       latitude: this.latitude.addListener(jointCallback),
       longitude: this.longitude.addListener(jointCallback),
       latitudeDelta: this.latitudeDelta.addListener(jointCallback),
-      longitudeDelta: this.longitudeDelta.addListener(jointCallback),
+      longitudeDelta: this.longitudeDelta.addListener(jointCallback)
     };
     return id;
   }
@@ -129,9 +113,7 @@ export default class AnimatedMapRegion extends AnimatedWithChildren {
     this.latitude.removeListener(this._regionListeners[id].latitude);
     this.longitude.removeListener(this._regionListeners[id].longitude);
     this.latitudeDelta.removeListener(this._regionListeners[id].latitudeDelta);
-    this.longitudeDelta.removeListener(
-      this._regionListeners[id].longitudeDelta,
-    );
+    this.longitudeDelta.removeListener(this._regionListeners[id].longitudeDelta);
     delete this._regionListeners[id];
   }
 
@@ -144,8 +126,8 @@ export default class AnimatedMapRegion extends AnimatedWithChildren {
             ...config,
             toValue: config[type],
             // may help to eliminate some dev warnings and perf issues
-            useNativeDriver: !!config?.useNativeDriver,
-          }),
+            useNativeDriver: !!config?.useNativeDriver
+          })
         );
       }
     }
@@ -161,8 +143,8 @@ export default class AnimatedMapRegion extends AnimatedWithChildren {
             ...config,
             toValue: config[type],
             // may help to eliminate some dev warnings and perf issues
-            useNativeDriver: !!config?.useNativeDriver,
-          }),
+            useNativeDriver: !!config?.useNativeDriver
+          })
         );
       }
     }
