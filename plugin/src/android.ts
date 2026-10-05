@@ -1,9 +1,9 @@
-import {withAndroidManifest, type ConfigPlugin} from '@expo/config-plugins';
-import type {ConfigPluginProps} from './types';
+import { withAndroidManifest, type ConfigPlugin } from '@expo/config-plugins';
+import type { ConfigPluginProps } from './types';
 import {
   addMetaDataItemToMainApplication,
   getMainApplicationOrThrow,
-  removeMetaDataItemFromMainApplication,
+  removeMetaDataItemFromMainApplication
 } from '@expo/config-plugins/build/android/Manifest';
 
 const withMapsAndroid: ConfigPlugin<ConfigPluginProps> = (config, props) => {
@@ -16,13 +16,10 @@ const withMapsAndroid: ConfigPlugin<ConfigPluginProps> = (config, props) => {
       addMetaDataItemToMainApplication(
         mainApplication,
         'com.google.android.geo.API_KEY',
-        props?.androidGoogleMapsApiKey,
+        props?.androidGoogleMapsApiKey
       );
     } else {
-      removeMetaDataItemFromMainApplication(
-        mainApplication,
-        'com.google.android.geo.API_KEY',
-      );
+      removeMetaDataItemFromMainApplication(mainApplication, 'com.google.android.geo.API_KEY');
     }
 
     return conf;

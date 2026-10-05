@@ -27,7 +27,7 @@ If you're using Expo, you can add react-native-maps to your project by adding it
 ```json
 {
   "expo": {
-    "plugins": ["react-native-maps"]
+    "plugins": ["react-native-maps-and-nav"]
   }
 }
 ```
@@ -39,7 +39,7 @@ If you're using Google as the map provider, also provide an API key for the resp
   "expo": {
     "plugins": [
       [
-        "react-native-maps",
+        "react-native-maps-and-nav",
         {
           "iosGoogleMapsApiKey": "YOUR_KEY_HERE",
           "androidGoogleMapsApiKey": "YOUR_KEY_HERE"
@@ -49,6 +49,26 @@ If you're using Google as the map provider, also provide an API key for the resp
   }
 }
 ```
+
+For `NavigationView` on iOS, opt in to the Navigation SDK:
+
+```json
+{
+  "expo": {
+    "plugins": [
+      [
+        "react-native-maps-and-nav",
+        {
+          "iosGoogleMapsApiKey": "YOUR_KEY_HERE",
+          "iosGoogleNavigationEnabled": true
+        }
+      ]
+    ]
+  }
+}
+```
+
+The plugin selects the `react-native-maps-and-nav/GoogleNavigation` CocoaPods subspec and sets the iOS deployment target to 16.0. The iOS API key is required. For bare React Native projects, select `react-native-maps-and-nav/GoogleNavigation` in the Podfile, set `$RNMapsEnableGoogleNavigation = true`, and use an iOS 16.0 deployment target before installing pods.
 
 ## For bare workflow projects, you'll need to follow the iOS and Android setup instructions below.
 
@@ -116,20 +136,20 @@ Add the following to your Podfile above the `use_native_modules!` function and r
 ```ruby
 # React Native Maps dependencies
 
-rn_maps_path = '../node_modules/react-native-maps'
-pod 'react-native-maps/Google', :path => rn_maps_path
+rn_maps_path = '../node_modules/react-native-maps-and-nav'
+pod 'react-native-maps-and-nav/Google', :path => rn_maps_path
 ```
 
 ### Overriding Google Maps dependency versions
 
-You can optionally pin specific versions for the Google Maps dependencies by setting global variables in your `Podfile` **before** the `react-native-maps/Google` pod declaration:
+You can optionally pin specific versions for the Google Maps dependencies by setting global variables in your `Podfile` **before** the `react-native-maps-and-nav/Google` pod declaration:
 
 ```ruby
 $RNMapsGoogleMapsVersion = '10.10.0'
 $RNMapsGoogleMapsUtilsVersion = '7.0.0'
 
-rn_maps_path = '../node_modules/react-native-maps'
-pod 'react-native-maps/Google', :path => rn_maps_path
+rn_maps_path = '../node_modules/react-native-maps-and-nav'
+pod 'react-native-maps-and-nav/Google', :path => rn_maps_path
 ```
 
 The app's Info.plist file must contain a NSLocationWhenInUseUsageDescription with a user-facing purpose string explaining clearly and completely why your app needs the location, otherwise Apple will reject your app submission. This is required whether or not you are accessing the users location, as Google Maps iOS SDK contains the code required to access the users location.

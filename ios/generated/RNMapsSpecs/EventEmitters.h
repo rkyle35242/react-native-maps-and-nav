@@ -292,6 +292,14 @@ class RNMapsGoogleMapViewEventEmitter : public ViewEventEmitter {
       OnUserLocationChangeCoordinate coordinate;
     OnUserLocationChangeError error;
     };
+
+  struct OnRecenterButtonClick {
+      
+    };
+
+  struct OnPromptVisibilityChanged {
+      bool visible;
+    };
   void onIndoorBuildingFocused(OnIndoorBuildingFocused value) const;
 
   void onIndoorLevelActivated(OnIndoorLevelActivated value) const;
@@ -329,6 +337,10 @@ class RNMapsGoogleMapViewEventEmitter : public ViewEventEmitter {
   void onRegionChangeComplete(OnRegionChangeComplete value) const;
 
   void onUserLocationChange(OnUserLocationChange value) const;
+
+  void onRecenterButtonClick(OnRecenterButtonClick value) const;
+
+  void onPromptVisibilityChanged(OnPromptVisibilityChanged value) const;
 };
 class RNMapsGoogleMarkerEventEmitter : public ViewEventEmitter {
  public:
@@ -775,6 +787,14 @@ class RNMapsMapViewEventEmitter : public ViewEventEmitter {
       OnUserLocationChangeCoordinate coordinate;
     OnUserLocationChangeError error;
     };
+
+  struct OnRecenterButtonClick {
+      
+    };
+
+  struct OnPromptVisibilityChanged {
+      bool visible;
+    };
   void onCalloutPress(OnCalloutPress value) const;
 
   void onDoublePress(OnDoublePress value) const;
@@ -816,6 +836,10 @@ class RNMapsMapViewEventEmitter : public ViewEventEmitter {
   void onRegionChangeComplete(OnRegionChangeComplete value) const;
 
   void onUserLocationChange(OnUserLocationChange value) const;
+
+  void onRecenterButtonClick(OnRecenterButtonClick value) const;
+
+  void onPromptVisibilityChanged(OnPromptVisibilityChanged value) const;
 };
 class RNMapsMarkerEventEmitter : public ViewEventEmitter {
  public:

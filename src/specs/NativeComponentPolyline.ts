@@ -1,12 +1,7 @@
-import type {HostComponent, ViewProps, ColorValue} from 'react-native';
+import type { HostComponent, ViewProps, ColorValue } from 'react-native';
 
-import {codegenNativeComponent} from 'react-native';
-import type {
-  Double,
-  Float,
-  BubblingEventHandler,
-  WithDefault,
-} from 'react-native/Libraries/Types/CodegenTypes';
+import { codegenNativeComponent } from 'react-native';
+import type { Double, Float, BubblingEventHandler, WithDefault } from 'react-native/Libraries/Types/CodegenTypes';
 
 export type LatLng = Readonly<{
   latitude: Double; // Non-nullable Double for latitude
@@ -118,7 +113,6 @@ export interface PolylineFabricNativeProps extends ViewProps {
   tappable?: boolean;
 }
 
-export default codegenNativeComponent<PolylineFabricNativeProps>(
-  'RNMapsPolyline',
-  {excludedPlatforms: ['iOS']},
-) as HostComponent<PolylineFabricNativeProps>;
+export default codegenNativeComponent<PolylineFabricNativeProps>('RNMapsPolyline', {
+  excludedPlatforms: ['iOS']
+}) as HostComponent<PolylineFabricNativeProps>;

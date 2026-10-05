@@ -1,5 +1,5 @@
-import type {NativeSyntheticEvent} from 'react-native';
-import type {LatLng, Point} from './sharedTypes';
+import type { NativeSyntheticEvent } from 'react-native';
+import type { LatLng, Point } from './sharedTypes';
 
 // All types in this file are directly exported with the package for external
 // use.

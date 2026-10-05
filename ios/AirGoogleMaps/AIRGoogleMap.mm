@@ -13,7 +13,9 @@
 #import "AIRGoogleMapPolygon.h"
 #import "AIRGoogleMapPolyline.h"
 #import "AIRGoogleMapCircle.h"
+#ifdef HAVE_GOOGLE_MAPS_UTILS
 #import "AIRGoogleMapHeatmap.h"
+#endif
 #import "AIRGoogleMapUrlTile.h"
 #import "AIRGoogleMapWMSTile.h"
 #import "AIRGoogleMapOverlay.h"
@@ -284,10 +286,12 @@ id regionAsJSON(MKCoordinateRegion region) {
     AIRGoogleMapOverlay *overlay = (AIRGoogleMapOverlay*)subview;
     overlay.overlay.map = self;
     [self.overlays addObject:overlay];
+#ifdef HAVE_GOOGLE_MAPS_UTILS
   } else if ([subview isKindOfClass:[AIRGoogleMapHeatmap class]]){
     AIRGoogleMapHeatmap *heatmap = (AIRGoogleMapHeatmap*)subview;
     heatmap.heatmap.map = self;
     [self.heatmaps addObject:heatmap];
+#endif
   } else {
     NSArray<id<RCTComponent>> *childSubviews = [subview reactSubviews];
     for (int i = 0; i < childSubviews.count; i++) {
@@ -336,10 +340,12 @@ id regionAsJSON(MKCoordinateRegion region) {
     AIRGoogleMapOverlay *overlay = (AIRGoogleMapOverlay*)subview;
     overlay.overlay.map = nil;
     [self.overlays removeObject:overlay];
+#ifdef HAVE_GOOGLE_MAPS_UTILS
   } else if ([subview isKindOfClass:[AIRGoogleMapHeatmap class]]){
     AIRGoogleMapHeatmap *heatmap = (AIRGoogleMapHeatmap*)subview;
     heatmap.heatmap.map = nil;
     [self.heatmaps removeObject:heatmap];
+#endif
   } else {
     NSArray<id<RCTComponent>> *childSubviews = [subview reactSubviews];
     for (int i = 0; i < childSubviews.count; i++) {
@@ -1103,6 +1109,7 @@ id regionAsJSON(MKCoordinateRegion region) {
 }
 
 - (void) setKMLData:(NSData *) urlData {
+#if HAVE_GOOGLE_MAPS_UTILS
     GMUKMLParser *parser = [[GMUKMLParser alloc] initWithData:urlData];
     [parser parse];
 
@@ -1143,7 +1150,7 @@ id regionAsJSON(MKCoordinateRegion region) {
     id event = @{@"markers": markers};
     if (self.onKmlReady) self.onKmlReady(event);
   #else
-      REQUIRES_GOOGLE_MAPS_UTILS();
+    REQUIRES_GOOGLE_MAPS_UTILS("setKMLData:");
   #endif
 }
 
@@ -1176,8 +1183,9 @@ id regionAsJSON(MKCoordinateRegion region) {
       }];
       [dataTask resume];
   }
-
-
+#else
+  REQUIRES_GOOGLE_MAPS_UTILS("setKmlSrc:");
+#endif
 }
 
 

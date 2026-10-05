@@ -1,10 +1,7 @@
-import type {HostComponent, ViewProps} from 'react-native';
+import type { HostComponent, ViewProps } from 'react-native';
 
-import {codegenNativeComponent} from 'react-native';
-import type {
-  Double,
-  BubblingEventHandler,
-} from 'react-native/Libraries/Types/CodegenTypes';
+import { codegenNativeComponent } from 'react-native';
+import type { Double, BubblingEventHandler } from 'react-native/Libraries/Types/CodegenTypes';
 
 export type LatLng = Readonly<{
   latitude: Double; // Non-nullable Double for latitude
@@ -55,9 +52,6 @@ export interface CalloutFabricNativeProps extends ViewProps {
   tooltip?: boolean;
 }
 
-export default codegenNativeComponent<CalloutFabricNativeProps>(
-  'RNMapsCallout',
-  {
-    excludedPlatforms: ['iOS'],
-  },
-) as HostComponent<CalloutFabricNativeProps>;
+export default codegenNativeComponent<CalloutFabricNativeProps>('RNMapsCallout', {
+  excludedPlatforms: ['iOS']
+}) as HostComponent<CalloutFabricNativeProps>;

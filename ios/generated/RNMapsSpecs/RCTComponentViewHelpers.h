@@ -21,6 +21,9 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)fitToSuppliedMarkers:(NSString *)markersJSON edgePaddingJSON:(NSString *)edgePaddingJSON animated:(BOOL)animated;
 - (void)fitToCoordinates:(NSString *)coordinatesJSON edgePaddingJSON:(NSString *)edgePaddingJSON animated:(BOOL)animated;
 - (void)setIndoorActiveLevelIndex:(NSInteger)activeLevelIndex;
+- (void)showRouteOverview;
+- (void)setNavigationUIEnabled:(BOOL)enabled;
+- (void)followMyLocation:(NSString *)perspective zoomLevel:(double)zoomLevel;
 @end
 
 RCT_EXTERN inline void RCTRNMapsGoogleMapViewHandleCommand(
@@ -224,6 +227,68 @@ if ([commandName isEqualToString:@"setIndoorActiveLevelIndex"]) {
   return;
 }
 
+if ([commandName isEqualToString:@"showRouteOverview"]) {
+#if RCT_DEBUG
+  if ([args count] != 0) {
+    RCTLogError(@"%@ command %@ received %d arguments, expected %d.", @"RNMapsGoogleMapView", commandName, (int)[args count], 0);
+    return;
+  }
+#endif
+
+  
+
+  [componentView showRouteOverview];
+  return;
+}
+
+if ([commandName isEqualToString:@"setNavigationUIEnabled"]) {
+#if RCT_DEBUG
+  if ([args count] != 1) {
+    RCTLogError(@"%@ command %@ received %d arguments, expected %d.", @"RNMapsGoogleMapView", commandName, (int)[args count], 1);
+    return;
+  }
+#endif
+
+  NSObject *arg0 = args[0];
+#if RCT_DEBUG
+  if (!RCTValidateTypeOfViewCommandArgument(arg0, [NSNumber class], @"boolean", @"RNMapsGoogleMapView", commandName, @"1st")) {
+    return;
+  }
+#endif
+  BOOL enabled = [(NSNumber *)arg0 boolValue];
+
+  [componentView setNavigationUIEnabled:enabled];
+  return;
+}
+
+if ([commandName isEqualToString:@"followMyLocation"]) {
+#if RCT_DEBUG
+  if ([args count] != 2) {
+    RCTLogError(@"%@ command %@ received %d arguments, expected %d.", @"RNMapsGoogleMapView", commandName, (int)[args count], 2);
+    return;
+  }
+#endif
+
+  NSObject *arg0 = args[0];
+#if RCT_DEBUG
+  if (!RCTValidateTypeOfViewCommandArgument(arg0, [NSString class], @"string", @"RNMapsGoogleMapView", commandName, @"1st")) {
+    return;
+  }
+#endif
+  NSString * perspective = (NSString *)arg0;
+
+NSObject *arg1 = args[1];
+#if RCT_DEBUG
+  if (!RCTValidateTypeOfViewCommandArgument(arg1, [NSNumber class], @"double", @"RNMapsGoogleMapView", commandName, @"2nd")) {
+    return;
+  }
+#endif
+  double zoomLevel = [(NSNumber *)arg1 doubleValue];
+
+  [componentView followMyLocation:perspective zoomLevel:zoomLevel];
+  return;
+}
+
 #if RCT_DEBUG
   RCTLogError(@"%@ received command %@, which is not a supported command.", @"RNMapsGoogleMapView", commandName);
 #endif
@@ -380,6 +445,9 @@ if ([commandName isEqualToString:@"redraw"]) {
 - (void)fitToSuppliedMarkers:(NSString *)markersJSON edgePaddingJSON:(NSString *)edgePaddingJSON animated:(BOOL)animated;
 - (void)fitToCoordinates:(NSString *)coordinatesJSON edgePaddingJSON:(NSString *)edgePaddingJSON animated:(BOOL)animated;
 - (void)setIndoorActiveLevelIndex:(NSInteger)activeLevelIndex;
+- (void)showRouteOverview;
+- (void)setNavigationUIEnabled:(BOOL)enabled;
+- (void)followMyLocation:(NSString *)perspective zoomLevel:(double)zoomLevel;
 @end
 
 RCT_EXTERN inline void RCTRNMapsMapViewHandleCommand(
@@ -580,6 +648,68 @@ if ([commandName isEqualToString:@"setIndoorActiveLevelIndex"]) {
   NSInteger activeLevelIndex = [(NSNumber *)arg0 intValue];
 
   [componentView setIndoorActiveLevelIndex:activeLevelIndex];
+  return;
+}
+
+if ([commandName isEqualToString:@"showRouteOverview"]) {
+#if RCT_DEBUG
+  if ([args count] != 0) {
+    RCTLogError(@"%@ command %@ received %d arguments, expected %d.", @"RNMapsMapView", commandName, (int)[args count], 0);
+    return;
+  }
+#endif
+
+  
+
+  [componentView showRouteOverview];
+  return;
+}
+
+if ([commandName isEqualToString:@"setNavigationUIEnabled"]) {
+#if RCT_DEBUG
+  if ([args count] != 1) {
+    RCTLogError(@"%@ command %@ received %d arguments, expected %d.", @"RNMapsMapView", commandName, (int)[args count], 1);
+    return;
+  }
+#endif
+
+  NSObject *arg0 = args[0];
+#if RCT_DEBUG
+  if (!RCTValidateTypeOfViewCommandArgument(arg0, [NSNumber class], @"boolean", @"RNMapsMapView", commandName, @"1st")) {
+    return;
+  }
+#endif
+  BOOL enabled = [(NSNumber *)arg0 boolValue];
+
+  [componentView setNavigationUIEnabled:enabled];
+  return;
+}
+
+if ([commandName isEqualToString:@"followMyLocation"]) {
+#if RCT_DEBUG
+  if ([args count] != 2) {
+    RCTLogError(@"%@ command %@ received %d arguments, expected %d.", @"RNMapsMapView", commandName, (int)[args count], 2);
+    return;
+  }
+#endif
+
+  NSObject *arg0 = args[0];
+#if RCT_DEBUG
+  if (!RCTValidateTypeOfViewCommandArgument(arg0, [NSString class], @"string", @"RNMapsMapView", commandName, @"1st")) {
+    return;
+  }
+#endif
+  NSString * perspective = (NSString *)arg0;
+
+NSObject *arg1 = args[1];
+#if RCT_DEBUG
+  if (!RCTValidateTypeOfViewCommandArgument(arg1, [NSNumber class], @"double", @"RNMapsMapView", commandName, @"2nd")) {
+    return;
+  }
+#endif
+  double zoomLevel = [(NSNumber *)arg1 doubleValue];
+
+  [componentView followMyLocation:perspective zoomLevel:zoomLevel];
   return;
 }
 

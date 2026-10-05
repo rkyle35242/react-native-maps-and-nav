@@ -111,6 +111,11 @@ using namespace facebook::react;
     // do nothing (google only)
 }
 
+// Navigation commands are only supported by the Google Navigation map.
+- (void)showRouteOverview {}
+- (void)setNavigationUIEnabled:(BOOL)enabled {}
+- (void)followMyLocation:(NSString *)perspective zoomLevel:(double)zoomLevel {}
+
 #pragma mark - Native commands
 
 - (void)handleCommand:(const NSString *)commandName args:(const NSArray *)args

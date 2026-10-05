@@ -6,9 +6,9 @@ import decorateMapComponent, {
   ProviderContext,
   type NativeComponent,
   type MapManagerCommand,
-  type UIManagerCommand,
+  type UIManagerCommand
 } from './decorateMapComponent';
-import type {ViewProps} from 'react-native';
+import type { ViewProps } from 'react-native';
 
 export type MapUrlTileProps = ViewProps & {
   /**
@@ -164,6 +164,6 @@ export class MapUrlTile extends React.Component<MapUrlTileProps> {
 export default decorateMapComponent(MapUrlTile, 'UrlTile', {
   google: {
     ios: SUPPORTED,
-    android: USES_DEFAULT_IMPLEMENTATION,
-  },
+    android: USES_DEFAULT_IMPLEMENTATION
+  }
 });

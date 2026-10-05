@@ -1,15 +1,15 @@
 import * as React from 'react';
-import {View, type ViewProps} from 'react-native';
+import { View, type ViewProps } from 'react-native';
 import decorateMapComponent, {
   USES_DEFAULT_IMPLEMENTATION,
   SUPPORTED,
   ProviderContext,
   type NativeComponent,
   type MapManagerCommand,
-  type UIManagerCommand,
+  type UIManagerCommand
 } from './decorateMapComponent';
-import type {PolygonPressEvent} from './MapPolygon.types';
-import type {LatLng, LineCapType, LineJoinType} from './sharedTypes';
+import type { PolygonPressEvent } from './MapPolygon.types';
+import type { LatLng, LineCapType, LineJoinType } from './sharedTypes';
 
 export type MapPolygonProps = ViewProps & {
   /**
@@ -145,7 +145,7 @@ export type MapPolygonProps = ViewProps & {
   zIndex?: number;
 };
 
-type NativeProps = MapPolygonProps & {ref: React.RefObject<View | null>};
+type NativeProps = MapPolygonProps & { ref: React.RefObject<View | null> };
 
 export class MapPolygon extends React.Component<MapPolygonProps> {
   // declaration only, as they are set through decorateMap
@@ -167,22 +167,15 @@ export class MapPolygon extends React.Component<MapPolygonProps> {
   }
 
   render() {
-    const {strokeColor = '#000', strokeWidth = 1} = this.props;
+    const { strokeColor = '#000', strokeWidth = 1 } = this.props;
     const AIRMapPolygon = this.getNativeComponent();
-    return (
-      <AIRMapPolygon
-        {...this.props}
-        strokeColor={strokeColor}
-        strokeWidth={strokeWidth}
-        ref={this.polygon}
-      />
-    );
+    return <AIRMapPolygon {...this.props} strokeColor={strokeColor} strokeWidth={strokeWidth} ref={this.polygon} />;
   }
 }
 
 export default decorateMapComponent(MapPolygon, 'Polygon', {
   google: {
     ios: SUPPORTED,
-    android: USES_DEFAULT_IMPLEMENTATION,
-  },
+    android: USES_DEFAULT_IMPLEMENTATION
+  }
 });

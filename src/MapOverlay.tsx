@@ -6,7 +6,7 @@ import {
   type ViewProps,
   type ImageURISource,
   type ImageRequireSource,
-  type NativeSyntheticEvent,
+  type NativeSyntheticEvent
 } from 'react-native';
 
 import decorateMapComponent, {
@@ -15,11 +15,11 @@ import decorateMapComponent, {
   USES_DEFAULT_IMPLEMENTATION,
   type MapManagerCommand,
   type NativeComponent,
-  type UIManagerCommand,
+  type UIManagerCommand
 } from './decorateMapComponent';
-import type {LatLng, Point} from './sharedTypes';
-import type {Modify} from './sharedTypesInternal';
-import {fixImageProp} from './fixImageProp';
+import type { LatLng, Point } from './sharedTypes';
+import type { Modify } from './sharedTypesInternal';
+import { fixImageProp } from './fixImageProp';
 
 export type MapOverlayProps = ViewProps & {
   /**
@@ -75,12 +75,12 @@ export type MapOverlayProps = ViewProps & {
   tappable?: boolean;
 };
 
-type NativeProps = Modify<MapOverlayProps, {image?: string}>;
+type NativeProps = Modify<MapOverlayProps, { image?: string }>;
 
 function normalizeBounds(bounds: [number, number][]): any {
   return {
-    northEast: {latitude: bounds[0][0], longitude: bounds[0][1]},
-    southWest: {latitude: bounds[1][0], longitude: bounds[1][1]},
+    northEast: { latitude: bounds[0][0], longitude: bounds[0][1] },
+    southWest: { latitude: bounds[1][0], longitude: bounds[1][1] }
   };
 }
 
@@ -97,7 +97,7 @@ export class MapOverlay extends React.Component<MapOverlayProps> {
   private fabricOverlay?: Boolean = undefined;
 
   render() {
-    const {opacity = 1.0, bounds} = this.props;
+    const { opacity = 1.0, bounds } = this.props;
 
     if (this.fabricOverlay === undefined) {
       this.fabricOverlay = Platform.OS === 'android';
@@ -164,8 +164,8 @@ type OverlayPressEvent = NativeSyntheticEvent<{
 const styles = StyleSheet.create({
   overlay: {
     position: 'absolute',
-    backgroundColor: 'transparent',
-  },
+    backgroundColor: 'transparent'
+  }
 });
 
 MapOverlay.Animated = Animated.createAnimatedComponent(MapOverlay);
@@ -173,6 +173,6 @@ MapOverlay.Animated = Animated.createAnimatedComponent(MapOverlay);
 export default decorateMapComponent(MapOverlay, 'Overlay', {
   google: {
     ios: SUPPORTED,
-    android: USES_DEFAULT_IMPLEMENTATION,
-  },
+    android: USES_DEFAULT_IMPLEMENTATION
+  }
 });

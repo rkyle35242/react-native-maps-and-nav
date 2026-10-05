@@ -1,5 +1,5 @@
 import * as React from 'react';
-import type {ViewProps} from 'react-native';
+import type { ViewProps } from 'react-native';
 
 import decorateMapComponent, {
   USES_DEFAULT_IMPLEMENTATION,
@@ -7,7 +7,7 @@ import decorateMapComponent, {
   ProviderContext,
   type NativeComponent,
   type MapManagerCommand,
-  type UIManagerCommand,
+  type UIManagerCommand
 } from './decorateMapComponent';
 
 export type MapLocalTileProps = ViewProps & {
@@ -55,6 +55,6 @@ export class MapLocalTile extends React.Component<MapLocalTileProps> {
 export default decorateMapComponent(MapLocalTile, 'LocalTile', {
   google: {
     ios: SUPPORTED,
-    android: USES_DEFAULT_IMPLEMENTATION,
-  },
+    android: USES_DEFAULT_IMPLEMENTATION
+  }
 });

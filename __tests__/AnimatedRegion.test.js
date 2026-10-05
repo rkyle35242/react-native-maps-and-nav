@@ -1,11 +1,11 @@
-import {Animated} from 'react-native';
+import { Animated } from 'react-native';
 import AnimatedRegion from '../src/AnimatedRegion';
 
 const VALUES = {
   latitude: 5,
   longitude: 5,
   latitudeDelta: 0,
-  longitudeDelta: 0,
+  longitudeDelta: 0
 };
 
 describe('AnimatedRegion', () => {
@@ -28,7 +28,7 @@ describe('AnimatedRegion', () => {
   it('uses Animated.Value instances', () => {
     const animatedRegion = new AnimatedRegion({
       latitude: new Animated.Value(VALUES.latitude),
-      longitude: new Animated.Value(VALUES.longitude),
+      longitude: new Animated.Value(VALUES.longitude)
     });
 
     expect(animatedRegion.latitude instanceof Animated.Value).toBe(true);

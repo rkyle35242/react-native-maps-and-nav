@@ -1,14 +1,14 @@
 import * as React from 'react';
-import {View, type ViewProps} from 'react-native';
+import { View, type ViewProps } from 'react-native';
 import decorateMapComponent, {
   USES_DEFAULT_IMPLEMENTATION,
   SUPPORTED,
   ProviderContext,
   type NativeComponent,
   type MapManagerCommand,
-  type UIManagerCommand,
+  type UIManagerCommand
 } from './decorateMapComponent';
-import type {LatLng, LineCapType, LineJoinType} from './sharedTypes';
+import type { LatLng, LineCapType, LineJoinType } from './sharedTypes';
 
 export type MapCircleProps = ViewProps & {
   /**
@@ -119,7 +119,7 @@ export type MapCircleProps = ViewProps & {
   zIndex?: number;
 };
 
-type NativeProps = MapCircleProps & {ref: React.RefObject<View | null>};
+type NativeProps = MapCircleProps & { ref: React.RefObject<View | null> };
 
 export class MapCircle extends React.Component<MapCircleProps> {
   // declaration only, as they are set through decorateMap
@@ -141,22 +141,15 @@ export class MapCircle extends React.Component<MapCircleProps> {
   }
 
   render() {
-    const {strokeColor = '#000', strokeWidth = 1} = this.props;
+    const { strokeColor = '#000', strokeWidth = 1 } = this.props;
     const AIRMapCircle = this.getNativeComponent();
-    return (
-      <AIRMapCircle
-        {...this.props}
-        strokeColor={strokeColor}
-        strokeWidth={strokeWidth}
-        ref={this.circle}
-      />
-    );
+    return <AIRMapCircle {...this.props} strokeColor={strokeColor} strokeWidth={strokeWidth} ref={this.circle} />;
   }
 }
 
 export default decorateMapComponent(MapCircle, 'Circle', {
   google: {
     ios: SUPPORTED,
-    android: USES_DEFAULT_IMPLEMENTATION,
-  },
+    android: USES_DEFAULT_IMPLEMENTATION
+  }
 });

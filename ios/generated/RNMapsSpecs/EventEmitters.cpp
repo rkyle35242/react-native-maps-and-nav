@@ -384,6 +384,24 @@ void RNMapsGoogleMapViewEventEmitter::onUserLocationChange(OnUserLocationChange 
 }
 
 
+void RNMapsGoogleMapViewEventEmitter::onRecenterButtonClick(OnRecenterButtonClick event) const {
+  dispatchEvent("recenterButtonClick", [](jsi::Runtime &runtime) {
+    auto payload = jsi::Object(runtime);
+    
+    return payload;
+  });
+}
+
+
+void RNMapsGoogleMapViewEventEmitter::onPromptVisibilityChanged(OnPromptVisibilityChanged event) const {
+  dispatchEvent("promptVisibilityChanged", [event=std::move(event)](jsi::Runtime &runtime) {
+    auto payload = jsi::Object(runtime);
+    payload.setProperty(runtime, "visible", event.visible);
+    return payload;
+  });
+}
+
+
 void RNMapsGoogleMarkerEventEmitter::onCalloutPress(OnCalloutPress event) const {
   dispatchEvent("calloutPress", [event=std::move(event)](jsi::Runtime &runtime) {
     auto payload = jsi::Object(runtime);
@@ -944,6 +962,24 @@ void RNMapsMapViewEventEmitter::onUserLocationChange(OnUserLocationChange event)
   error.setProperty(runtime, "message", event.error.message);
   payload.setProperty(runtime, "error", error);
 }
+    return payload;
+  });
+}
+
+
+void RNMapsMapViewEventEmitter::onRecenterButtonClick(OnRecenterButtonClick event) const {
+  dispatchEvent("recenterButtonClick", [](jsi::Runtime &runtime) {
+    auto payload = jsi::Object(runtime);
+    
+    return payload;
+  });
+}
+
+
+void RNMapsMapViewEventEmitter::onPromptVisibilityChanged(OnPromptVisibilityChanged event) const {
+  dispatchEvent("promptVisibilityChanged", [event=std::move(event)](jsi::Runtime &runtime) {
+    auto payload = jsi::Object(runtime);
+    payload.setProperty(runtime, "visible", event.visible);
     return payload;
   });
 }

@@ -29,6 +29,7 @@
 #endif
 #import "RCTFabricComponentsPlugins.h"
 #import <React/RCTConversions.h>
+#import <React/RCTLog.h>
 #import <React/RCTUtils.h>
 #import "RCTConvert+GMSMapViewType.h"
 #if __has_include(<ReactNativeMaps/RCTConvert+AirMap.h>)
@@ -37,6 +38,9 @@
 #else
 #import "RCTConvert+AirMap.h"
 #import "UIView+AirMap.h"
+#endif
+#if HAVE_GOOGLE_NAVIGATION
+#import "RNMapsMapNavigation.h"
 #endif
 
 
@@ -50,6 +54,9 @@ using namespace facebook::react;
     AIRGoogleMapManager* _legacyMapManager;
     NSMutableDictionary<NSNumber*, UIView*>* _pendingInsertsSubviews;
     NSMutableArray *_polygons;
+#if HAVE_GOOGLE_NAVIGATION
+    RNMapsMapNavigation *_navigation;
+#endif
 }
 
 
@@ -112,6 +119,94 @@ using namespace facebook::react;
     }
 
 }
+
+- (void)showRouteOverview
+{
+#if HAVE_GOOGLE_NAVIGATION
+    [_navigation showRouteOverview];
+#endif
+}
+
+- (void)setNavigationUIEnabled:(BOOL)enabled
+{
+#if HAVE_GOOGLE_NAVIGATION
+    [_navigation setNavigationUIEnabled:enabled];
+#endif
+}
+
+- (void)followMyLocation:(NSString *)perspective zoomLevel:(double)zoomLevel
+{
+#if HAVE_GOOGLE_NAVIGATION
+    [_navigation followMyLocation:perspective zoomLevel:zoomLevel];
+#endif
+}
+
+#if HAVE_GOOGLE_NAVIGATION
+- (void)layoutSubviews
+{
+    [super layoutSubviews];
+    // Attaching the navigation session requires a non-zero map size.
+    [_navigation attachIfNeeded];
+}
+
+- (void)prepareNavigation
+{
+    _navigation = [[RNMapsMapNavigation alloc] initWithMapView:_view];
+    __weak RNMapsGoogleMapView *weakSelf = self;
+    _navigation.onRecenterButtonClick = ^{
+        RNMapsGoogleMapView *strongSelf = weakSelf;
+        if (strongSelf && strongSelf->_eventEmitter) {
+            auto emitter = std::static_pointer_cast<RNMapsGoogleMapViewEventEmitter const>(strongSelf->_eventEmitter);
+            emitter->onRecenterButtonClick({});
+        }
+    };
+    _navigation.onPromptVisibilityChanged = ^(BOOL visible) {
+        RNMapsGoogleMapView *strongSelf = weakSelf;
+        if (strongSelf && strongSelf->_eventEmitter) {
+            auto emitter = std::static_pointer_cast<RNMapsGoogleMapViewEventEmitter const>(strongSelf->_eventEmitter);
+            emitter->onPromptVisibilityChanged({.visible = (bool)visible});
+        }
+    };
+}
+
+- (void)updateNavigationProps:(const RNMapsGoogleMapViewProps &)newViewProps
+                     oldProps:(const RNMapsGoogleMapViewProps &)oldViewProps
+                        force:(BOOL)force
+{
+#define REMAP_NAVIGATION_BOOL_PROP(name, setter)                       \
+    if (force || oldViewProps.name != newViewProps.name) {             \
+        [_navigation setter:newViewProps.name];                        \
+    }
+
+    if (force || oldViewProps.navigationUIEnabledPreference != newViewProps.navigationUIEnabledPreference) {
+        [_navigation setNavigationUIEnabledPreference:
+            newViewProps.navigationUIEnabledPreference == RNMapsGoogleMapViewNavigationUIEnabledPreference::Disabled
+                ? @"disabled" : @"automatic"];
+    }
+    if (force || oldViewProps.navigationNightMode != newViewProps.navigationNightMode) {
+        NSString *nightMode = @"auto";
+        if (newViewProps.navigationNightMode == RNMapsGoogleMapViewNavigationNightMode::ForceDay) {
+            nightMode = @"forceDay";
+        } else if (newViewProps.navigationNightMode == RNMapsGoogleMapViewNavigationNightMode::ForceNight) {
+            nightMode = @"forceNight";
+        }
+        [_navigation setNightMode:nightMode];
+    }
+    if (force || oldViewProps.navigationStylingOptionsJSON != newViewProps.navigationStylingOptionsJSON) {
+        [_navigation setStylingOptionsJSON:RCTNSStringFromString(newViewProps.navigationStylingOptionsJSON)];
+    }
+    REMAP_NAVIGATION_BOOL_PROP(headerEnabled, setHeaderEnabled)
+    REMAP_NAVIGATION_BOOL_PROP(footerEnabled, setFooterEnabled)
+    REMAP_NAVIGATION_BOOL_PROP(tripProgressBarEnabled, setTripProgressBarEnabled)
+    REMAP_NAVIGATION_BOOL_PROP(speedometerEnabled, setSpeedometerEnabled)
+    REMAP_NAVIGATION_BOOL_PROP(speedLimitIconEnabled, setSpeedLimitIconEnabled)
+    REMAP_NAVIGATION_BOOL_PROP(recenterButtonEnabled, setRecenterButtonEnabled)
+    REMAP_NAVIGATION_BOOL_PROP(reportIncidentButtonEnabled, setReportIncidentButtonEnabled)
+    REMAP_NAVIGATION_BOOL_PROP(trafficPromptsEnabled, setTrafficPromptsEnabled)
+    REMAP_NAVIGATION_BOOL_PROP(trafficIncidentCardsEnabled, setTrafficIncidentCardsEnabled)
+#undef REMAP_NAVIGATION_BOOL_PROP
+}
+#endif
 
 #pragma mark - Native commands
 
@@ -503,6 +598,10 @@ using namespace facebook::react;
       _pendingInsertsSubviews = [NSMutableDictionary new];
     [_view removeFromSuperview];
     _view = nil;
+#if HAVE_GOOGLE_NAVIGATION
+    [_navigation invalidate];
+    _navigation = nil;
+#endif
 }
 
 
@@ -552,6 +651,18 @@ using namespace facebook::react;
 
     if (!_view){
         [self prepareContentView];
+#if HAVE_GOOGLE_NAVIGATION
+        if (newViewProps.navigationEnabled) {
+            [self prepareNavigation];
+            [self updateNavigationProps:newViewProps oldProps:oldViewProps force:YES];
+        }
+    } else if (_navigation) {
+        [self updateNavigationProps:newViewProps oldProps:oldViewProps force:NO];
+#else
+        if (newViewProps.navigationEnabled) {
+            RCTLogError(@"react-native-maps: navigationEnabled requires the GoogleNavigation subspec ($RNMapsEnableGoogleNavigation = true).");
+        }
+#endif
     }
 
 #define REMAP_MAPVIEW_PROP(name)                    \
