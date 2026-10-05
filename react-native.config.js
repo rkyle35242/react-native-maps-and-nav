@@ -8,6 +8,7 @@ module.exports = {
   dependency: {
     platforms: {
       android: {
+        sourceDir: 'dist/android',
         cmakeListsPath: 'src/main/jni/CMakeLists.txt'
       }
     }

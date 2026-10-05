@@ -3,7 +3,7 @@
   "compilerOptions": {
     "baseUrl": "./",
     "paths": {
-      "react-native-maps": ["./src/index"]
+      "react-native-maps-and-nav": ["./src/index"]
     },
     "declaration": true,
     "declarationMap": false,

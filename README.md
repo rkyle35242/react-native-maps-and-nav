@@ -654,7 +654,7 @@ In your `Podfile`, before `use_native_modules!`/`use_react_native!`:
 $RNMapsEnableGoogleNavigation = true
 # $RNMapsGoogleNavigationVersion = '11.1.0' # optional
 
-pod 'react-native-maps', :path => '../node_modules/react-native-maps', :subspecs => ['GoogleNavigation']
+pod 'react-native-maps-and-nav/GoogleNavigation', :path => '../node_modules/react-native-maps-and-nav'
 ```
 
 The `GoogleNavigation` subspec replaces the `Google` subspec; do not include both. The Navigation SDK is distributed through Swift Package Manager and is added to the Pods project automatically on `pod install`.
@@ -676,7 +676,7 @@ Provide your API key as usual with `[GMSServices provideAPIKey:@"API_KEY"]`, and
 Wrap the part of your app that uses navigation in a `NavigationProvider`:
 
 ```jsx
-import { NavigationProvider, TaskRemovedBehavior } from 'react-native-maps';
+import { NavigationProvider, TaskRemovedBehavior } from 'react-native-maps-and-nav';
 
 export default function App() {
   return (
@@ -704,7 +704,7 @@ import {
   RouteStatus,
   TravelMode,
   useNavigation
-} from 'react-native-maps';
+} from 'react-native-maps-and-nav';
 
 const DROPOFF = { latitude: 37.4220679, longitude: -122.0859545 };
 
@@ -725,7 +725,13 @@ function DeliveryScreen() {
     if (!(await navigationController.showTermsAndConditionsDialog())) {
       return;
     }
-    const status = await navigationController.init();
+    let status;
+    try {
+      status = await navigationController.init();
+    } catch (error) {
+      console.error('Navigation initialization failed', error);
+      return;
+    }
     if (status !== NavigationSessionStatus.OK) {
       return;
     }
@@ -802,7 +808,7 @@ Returns `navigationController` plus listener setters. Each setter takes a callba
 | ----------------------------------------------------- | ---------------------------------------------------------------------------------------------------- |
 | `showTermsAndConditionsDialog(override?)`             | Must be accepted before `init()`; resolves `true` if accepted                                        |
 | `areTermsAccepted()` / `resetTermsAccepted()`         |                                                                                                      |
-| `init()`                                              | Starts the navigation session; resolves a `NavigationSessionStatus`                                  |
+| `init()`                                              | Starts the session; resolves `OK` or rejects with a native initialization error                      |
 | `cleanup()`                                           | Stops guidance and ends the session                                                                  |
 | `setDestination(waypoint, options?)`                  | Resolves a `RouteStatus`                                                                             |
 | `setDestinations(waypoints, options?)`                | `options`: `routingOptions` or `routeTokenOptions`, and `displayOptions`                             |

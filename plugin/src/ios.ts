@@ -1,5 +1,10 @@
 import type { ConfigPlugin } from '@expo/config-plugins/build/Plugin.types';
-import { withAppDelegate, withInfoPlist, withPodfile } from '@expo/config-plugins/build/plugins/ios-plugins';
+import {
+  withAppDelegate,
+  withInfoPlist,
+  withPodfile,
+  withXcodeProject
+} from '@expo/config-plugins/build/plugins/ios-plugins';
 
 import { mergeContents, removeContents, type MergeResults } from '@expo/config-plugins/build/utils/generateCode';
 import type { ConfigPluginProps } from './types';
@@ -7,6 +12,11 @@ import type { ConfigPluginProps } from './types';
 export const MATCH_INIT = /\bsuper\.application\(\w+?, didFinishLaunchingWithOptions: \w+?\)/g;
 
 export const withMapsIOS: ConfigPlugin<ConfigPluginProps> = (config, props) => {
+  const useGoogleNavigation = !!props?.iosGoogleNavigationEnabled;
+  if (useGoogleNavigation && !props?.iosGoogleMapsApiKey) {
+    throw new Error('iosGoogleNavigationEnabled requires iosGoogleMapsApiKey.');
+  }
+
   // Set in Info.plist
   if (props?.iosGoogleMapsApiKey) {
     config = withInfoPlist(config, async conf => {
@@ -24,8 +34,29 @@ export const withMapsIOS: ConfigPlugin<ConfigPluginProps> = (config, props) => {
 
   // Technically adds react-native-maps (Apple maps) and google maps.
   config = withMapsCocoaPods(config, {
-    useGoogleMaps: !!props?.iosGoogleMapsApiKey
+    useGoogleMaps: !!props?.iosGoogleMapsApiKey,
+    useGoogleNavigation
   });
+
+  if (useGoogleNavigation) {
+    config = withXcodeProject(config, mod => {
+      const targets = Object.values(mod.modResults.pbxNativeTargetSection()).filter(
+        (target): target is { name: string; productType: string } =>
+          typeof target === 'object' && target !== null && 'name' in target && 'productType' in target
+      );
+      for (const target of targets) {
+        if (target.productType.replace(/"/g, '') === 'com.apple.product-type.application') {
+          mod.modResults.updateBuildProperty(
+            'IPHONEOS_DEPLOYMENT_TARGET',
+            '16.0',
+            undefined,
+            target.name.replace(/"/g, '')
+          );
+        }
+      }
+      return mod;
+    });
+  }
 
   // Adds/Removes AppDelegate setup for Google Maps API on iOS
   config = withGoogleMapsAppDelegate(config, {
@@ -80,10 +111,24 @@ export function removeGoogleMapsAppDelegateInit(src: string): MergeResults {
  * @param useGoogleMaps if GoogleMaps for iOS is used
  * @returns Podfile with react-native-maps integration configured.
  */
-export function addMapsCocoapods(src: string, useGoogleMaps: boolean): MergeResults {
-  let newSrc = '  rn_maps_path = File.dirname(`node --print "require.resolve(\'react-native-maps/package.json\')"`) \n';
+export function addMapsCocoapods(src: string, useGoogleMaps: boolean, useGoogleNavigation = false): MergeResults {
+  let newSrc = '';
+  const packageName = useGoogleNavigation ? 'react-native-maps-and-nav' : 'react-native-maps';
 
-  if (useGoogleMaps) {
+  if (useGoogleNavigation) {
+    const platformLine = /^platform\s+:ios\s*,.*$/m;
+    if (!platformLine.test(src)) {
+      throw new Error('Google Navigation requires an iOS platform declaration in the Podfile.');
+    }
+    src = src.replace(platformLine, "platform :ios, '16.0'");
+    newSrc += '  $RNMapsEnableGoogleNavigation = true\n';
+  }
+
+  newSrc += `  rn_maps_path = File.dirname(\`node --print "require.resolve('${packageName}/package.json')"\`) \n`;
+
+  if (useGoogleNavigation) {
+    newSrc += `  pod '${packageName}/GoogleNavigation', :path => rn_maps_path \n`;
+  } else if (useGoogleMaps) {
     newSrc += "  pod 'react-native-maps/Google', :path => rn_maps_path \n";
   }
 
@@ -97,16 +142,21 @@ export function addMapsCocoapods(src: string, useGoogleMaps: boolean): MergeResu
   });
 }
 
-const withMapsCocoaPods: ConfigPlugin<{ useGoogleMaps: boolean }> = (config, { useGoogleMaps }) => {
+const withMapsCocoaPods: ConfigPlugin<{ useGoogleMaps: boolean; useGoogleNavigation: boolean }> = (
+  config,
+  { useGoogleMaps, useGoogleNavigation }
+) => {
   return withPodfile(config, async conf => {
     let results: MergeResults;
 
     try {
-      results = addMapsCocoapods(conf.modResults.contents, useGoogleMaps);
+      results = addMapsCocoapods(conf.modResults.contents, useGoogleMaps, useGoogleNavigation);
     } catch (error: any) {
       if (error.code === 'ERR_NO_MATCH') {
         throw new Error(
-          "Cannot add react-native-maps to the project's ios/Podfile because it's malformed. Please report this with a copy of your project Podfile."
+          `Cannot add ${
+            useGoogleNavigation ? 'react-native-maps-and-nav' : 'react-native-maps'
+          } to the project's ios/Podfile because it's malformed. Please report this with a copy of your project Podfile.`
         );
       }
       throw error;

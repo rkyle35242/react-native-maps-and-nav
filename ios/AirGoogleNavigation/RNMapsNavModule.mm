@@ -821,14 +821,14 @@ RCT_EXPORT_MODULE(RNMapsNavModule);
 - (void)startUpdatingLocation:(RCTPromiseResolveBlock)resolve reject:(RCTPromiseRejectBlock)reject {
   dispatch_async(dispatch_get_main_queue(), ^{
     [self->_session.roadSnappedLocationProvider startUpdatingLocation];
-    resolve(@(YES));
+    resolve(nil);
   });
 }
 
 - (void)stopUpdatingLocation:(RCTPromiseResolveBlock)resolve reject:(RCTPromiseRejectBlock)reject {
   dispatch_async(dispatch_get_main_queue(), ^{
     [self->_session.roadSnappedLocationProvider stopUpdatingLocation];
-    resolve(@(YES));
+    resolve(nil);
   });
 }
 

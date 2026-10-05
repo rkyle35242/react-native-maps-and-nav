@@ -86,13 +86,6 @@ function colorToNumber(color: Parameters<typeof processColor>[0]) {
   return typeof processed === 'number' ? processed : undefined;
 }
 
-const SESSION_ERROR_CODES: Record<string, NavigationSessionStatus> = {
-  notAuthorized: NavigationSessionStatus.NOT_AUTHORIZED,
-  termsNotAccepted: NavigationSessionStatus.TERMS_NOT_ACCEPTED,
-  networkError: NavigationSessionStatus.NETWORK_ERROR,
-  locationPermissionMissing: NavigationSessionStatus.LOCATION_PERMISSION_MISSING
-};
-
 type ListenerSetter<K extends keyof NavigationListeners> = (
   listener: NavigationListeners[K] | null | undefined
 ) => void;
@@ -225,14 +218,9 @@ export function useNavigationController(
       resetTermsAccepted: () => getNavModule().resetTermsAccepted(),
 
       init: async () => {
-        try {
-          await getNavModule().initializeNavigationSession(true, taskRemovedBehavior);
-          listeners.current.onNavigationReady?.();
-          return NavigationSessionStatus.OK;
-        } catch (error) {
-          const code = (error as { code?: string } | null)?.code;
-          return (code && SESSION_ERROR_CODES[code]) || NavigationSessionStatus.UNKNOWN_ERROR;
-        }
+        await getNavModule().initializeNavigationSession(true, taskRemovedBehavior);
+        listeners.current.onNavigationReady?.();
+        return NavigationSessionStatus.OK;
       },
 
       cleanup: () => getNavModule().cleanup(),

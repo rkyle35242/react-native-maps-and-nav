@@ -1109,6 +1109,7 @@ id regionAsJSON(MKCoordinateRegion region) {
 }
 
 - (void) setKMLData:(NSData *) urlData {
+#if HAVE_GOOGLE_MAPS_UTILS
     GMUKMLParser *parser = [[GMUKMLParser alloc] initWithData:urlData];
     [parser parse];
 
@@ -1149,7 +1150,7 @@ id regionAsJSON(MKCoordinateRegion region) {
     id event = @{@"markers": markers};
     if (self.onKmlReady) self.onKmlReady(event);
   #else
-      REQUIRES_GOOGLE_MAPS_UTILS();
+    REQUIRES_GOOGLE_MAPS_UTILS("setKMLData:");
   #endif
 }
 
@@ -1182,8 +1183,9 @@ id regionAsJSON(MKCoordinateRegion region) {
       }];
       [dataTask resume];
   }
-
-
+#else
+  REQUIRES_GOOGLE_MAPS_UTILS("setKmlSrc:");
+#endif
 }
 
 

@@ -218,6 +218,7 @@ export interface NavigationController {
   /** Uses the options passed to `NavigationProvider`, merged with `optionsOverride`. */
   showTermsAndConditionsDialog(optionsOverride?: Partial<TermsAndConditionsDialogOptions>): Promise<boolean>;
   resetTermsAccepted(): Promise<void>;
+  /** Resolves with `OK`; rejects with the native initialization error on failure. */
   init(): Promise<NavigationSessionStatus>;
   cleanup(): Promise<void>;
   setDestination(waypoint: Waypoint, options?: SetDestinationsOptions): Promise<RouteStatus>;

@@ -29,6 +29,7 @@
     "app.plugin.js",
     "plugin/build",
     "react-native-maps.podspec",
+    "react-native-maps-and-nav.podspec",
     "react-native.config.js",
     "!android/build",
     "!ios/build",
